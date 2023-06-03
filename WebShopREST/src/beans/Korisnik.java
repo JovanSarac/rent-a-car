@@ -2,6 +2,7 @@ package beans;
 
 
 public class Korisnik {
+	public String id;
 	public String korisnickoIme;
 	public String lozinka;
 	public String ime;
@@ -10,23 +11,33 @@ public class Korisnik {
 	public String datumRodjenja;
 	
 	public Korisnik() {
-		korisnickoIme="";
-		lozinka="";
-		ime="";
-		prezime="";
-		pol="";
-		datumRodjenja="";
+		super();
 	}
 
-	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
+	public Korisnik(String id,String korisnickoIme, String lozinka, String ime, String prezime, String pol,
 			String datumRodjenja) {
 		super();
+		this.id = id;
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.pol = pol;
 		this.datumRodjenja = datumRodjenja;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Korisnik [id=" + id + ", korisnickoIme=" + korisnickoIme + ", lozinka=" + lozinka + ", ime=" + ime
+				+ ", prezime=" + prezime + ", pol=" + pol + ", datumRodjenja=" + datumRodjenja + "]";
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getKorisnickoIme() {
