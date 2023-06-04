@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -71,13 +72,14 @@ public class KorisnikService {
 				+ "    </head>\r\n"
 				+ "    <body>\r\n"
 				+ "        <h1>Izmjenite podatke o profilu:</h1>\r\n"
+				+ "<form action=\"/WebShopREST/rest/korisnici/" + korisnik.getKorisnickoIme() + "\" method=\"post\">"
 				+ "        <table>\r\n"
 				+ "            <tr>\r\n"
 				+ "                <td align=\"left\">\r\n"
 				+ "                    <label>Korisnicko ime: </label>\r\n"
 				+ "                </td>\r\n"
 				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"korIme\" type=\"text\" value=\"" + korisnik.getKorisnickoIme() + "\">\r\n"
+				+ "                    <input name=\"korIme\" disabled type=\"text\" value=\"" + korisnik.getKorisnickoIme() + "\">\r\n"
 				+ "                </td>\r\n"
 				+ "            </tr>\r\n"
 				+ "            <tr>\r\n"
@@ -101,7 +103,10 @@ public class KorisnikService {
 				+ "                    <label>Pol: </label>\r\n"
 				+ "                </td>\r\n"
 				+ "                <td align=\"left\">\r\n"
-				+ "                    <input type=\"pol\" type=\"text\" value=\"" + korisnik.getPol() + "\">\r\n"
+				+ "                   <select name=\"pol\">\r\n"
+				+ "              			<option value=\"Musko\">Musko</option>\r\n"
+				+ "              			<option value=\"Zensko\">Zensko</option>\r\n"
+				+ "            		  </select>"
 				+ "                </td>\r\n"
 				+ "            </tr>\r\n"
 				+ "            <tr>\r\n"
@@ -109,16 +114,42 @@ public class KorisnikService {
 				+ "                    <label>Datum rodjenja: </label>\r\n"
 				+ "                </td>\r\n"
 				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"datumrodj\" type=\"text\" value=\"" + korisnik.getDatumRodjenja() + "\">\r\n"
+				+ "                    <input name=\"datumrodj\" type=\"date\" value=\"" + korisnik.getDatumRodjenja() + "\">\r\n"
 				+ "                </td>\r\n"
 				+ "            </tr>\r\n"
+				+ "<tr>"
+				+ "	<td>"
+				+ "</td>"
+				+ " <td>"
+				+ "		<input type=\"submit\" value=\"Izmeni\">"
+				+ "</td>"
+				+ "</tr>"
 				+ "        </table>\r\n"
+				+ "</form>"
+				+ "<a href=\"/WebShopREST/pocetnastrana.html#/profil\">Vrati se nazad na prikaz profila</a>"
 				+ "    </body>\r\n"
 				+ "</html>";
 		
 		return stringhtml;
 		
 	}
+	@POST
+    @Path("/{korisnickoIme}")
+	@Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String izmenaKorisnika(@PathParam("korisnickoIme") String korisnickoIme,
+    		@FormParam("ime") String ime,@FormParam("prezime") String prezime,
+    		@FormParam("pol") String pol,@FormParam("datumrodj") String datumrodj)
+    {
+        System.out.println("Zapoceta izmena");
+        KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+        Korisnik k = new Korisnik(korisnickoIme,ime,prezime,pol,datumrodj);
+        if(dao.izmeniKorisnika(k)) {
+        	return "Uspjesno je izvresna izmjena korisnika:" + k.getKorisnickoIme();
+        }else {
+        	return "Doslo je do greske prilikom izmjene korisnika:" + k.getKorisnickoIme();
+        }
+    }
 	
 	 @POST
 	 @Path("/prijava")

@@ -71,7 +71,27 @@ public class KorisnikDAO {
     	return null;
     	
     }
-
+    
+    public boolean izmeniKorisnika(Korisnik noviKorisnik) {
+    	Korisnik stariKorisnik = nadjiKorisnikaKorIme(noviKorisnik.getKorisnickoIme());
+    	int index = korisnici.indexOf(stariKorisnik);
+    	
+    	stariKorisnik.setIme(noviKorisnik.getIme());
+    	stariKorisnik.setPrezime(noviKorisnik.getPrezime());
+    	System.out.println(noviKorisnik.getPol());
+    	stariKorisnik.setPol(noviKorisnik.getPol());
+    	stariKorisnik.setDatumRodjenja(noviKorisnik.getDatumRodjenja());
+    	
+    	if(index!=-1) {
+    		korisnici.set(index, stariKorisnik);
+    		writeToFileJSON();
+    		return true;
+    	}else {
+    		return false;
+    	}
+    	
+    	
+    }
 
 
 	private Integer nextId(){

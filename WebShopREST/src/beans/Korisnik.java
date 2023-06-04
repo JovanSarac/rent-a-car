@@ -14,12 +14,20 @@ public class Korisnik {
 		super();
 	}
 
-	public Korisnik(String id,String korisnickoIme, String lozinka, String ime, String prezime, String pol,
+	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
 			String datumRodjenja) {
 		super();
-		this.id = id;
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.pol = pol;
+		this.datumRodjenja = datumRodjenja;
+	}
+	public Korisnik(String korisnickoIme, String ime, String prezime, String pol,
+			String datumRodjenja) {
+		super();
+		this.korisnickoIme = korisnickoIme;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.pol = pol;
