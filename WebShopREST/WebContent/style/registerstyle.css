@@ -1,0 +1,46 @@
+.containerregister {
+      width: 350px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .containerregister h2 {
+      text-align: center;
+    }
+    
+    .containerregister label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .containerregister input[type="text"],
+    .containerregister input[type="password"],
+    .containerregister input[type="date"],
+    .containerregister select {
+      width: 100%;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+    
+    .containerregister input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #0015ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .containerregister p {
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .containerregister p a {
+      color: #0015ff;
+    }

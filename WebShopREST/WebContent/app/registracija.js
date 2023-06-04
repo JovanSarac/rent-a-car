@@ -5,7 +5,7 @@ Vue.component("registracija", {
 			}
 	},
 	template: ` 
-<div>
+<div class="containerregister">
 	<h1>Registracija korisnika</h1>
 	<form action="/WebShopREST/rest/korisnici/registruj" method="post" v-on:submit="validacija">
             <table>
@@ -80,10 +80,14 @@ Vue.component("registracija", {
                 </tr>
             </table>
        </form>
+       <p>Već imate nalog? <a href="" v-on:click="prijava()">Prijavite se</a></p>
 </div>		  
 `
 	, 
 	methods : {
+		prijava:function(){
+			router.push(`/`);
+		},
 		validacija:function(event){
 			let uspjeh =  true;
 			
