@@ -70,7 +70,7 @@ public class KorisnikService {
 				+ "\r\n"
 				+ "    </head>\r\n"
 				+ "    <body>\r\n"
-				+ "        <h1>Pofil</h1>\r\n"
+				+ "        <h1>Izmjenite podatke o profilu:</h1>\r\n"
 				+ "        <table>\r\n"
 				+ "            <tr>\r\n"
 				+ "                <td align=\"left\">\r\n"
@@ -122,7 +122,7 @@ public class KorisnikService {
 	
 	 @POST
 	 @Path("/prijava")
-	 @Produces(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.TEXT_HTML)
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public Response prijavljivanje(KorisnikDTO korisnikDTO)
 	    {
@@ -144,9 +144,30 @@ public class KorisnikService {
 	                    .entity("{\"error\": \"Pogresna lozinka\"}")
 	                    .build();
 	        }
-	        System.out.println("Uspjesna prijava");
-	        return Response.status(200).build();
+	        //System.out.println("Uspjesna prijava");
+	        //return Response.status(200).build();
+	        request.getSession().setAttribute("ulogovaniKorisnik", korisnik);
+	        System.out.println(request.getSession().getAttribute("ulogovaniKorisnik"));
+	        return Response.status(Response.Status.ACCEPTED).entity("/WebShopREST/pocetnastrana.html").build();
 	    }
+	 
+	 @GET
+	 @Path("/prijava/{korisnickoIme}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public Korisnik vratiKorisnika(@PathParam("korisnickoIme") String korisnickoIme) {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 System.out.println("Pronadjeni korisnik je :\n" + dao.nadjiKorisnikaKorIme(korisnickoIme));
+		 return dao.nadjiKorisnikaKorIme(korisnickoIme);
+	 }
+	 @GET
+	 @Path("/prijava")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public Korisnik pronadjKorisnika() {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
+		 System.out.println("Pronadjeni korisnik je :\n" + dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme()));
+		 return dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme());
+	 }
 	
 
 }

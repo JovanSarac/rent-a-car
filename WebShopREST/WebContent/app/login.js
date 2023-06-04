@@ -45,14 +45,18 @@ Vue.component("login", {
 			if(uspjeh){
 				event.preventDefault();
 				console.log('usao u prijavu')
-				axios.post('/WebShopREST/rest/korisnici/prijava', this.korisnik)
+				axios.post('/WebShopREST/rest/korisnici/prijava/' , this.korisnik)
 				.then(response => {
-					if(response.status === 200){						
+					//if(response.status === 200){						
 						//document.getElementsByName('porukagreska')[0].hidden = false;
-						router.push(`pocetna`);						
-					}else{
+						//router.push(`pocetna/`+ this.korisnik.korisnickoIme);	
+						console.log(response);
+                        window.alert(["Uspjesna prijava"]);
+                        window.location.href = response.data;
+                        console.log(window.location.href);			
+					//}else{
 						//document.getElementsByName('porukagreska')[0].hidden = false;
-					}
+					//}
 					})
 		            .catch(error => {
 						console.error(error);

@@ -3,6 +3,7 @@
   <display-name>WebShopREST</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
+    <welcome-file>pocetnastrana.html</welcome-file>
   </welcome-file-list>
   <!-- Obavezan Jersey REST Service servlet -->
   <servlet>
