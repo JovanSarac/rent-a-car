@@ -12,9 +12,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import dao.KorisnikDAO;
+import dto.KorisnikDTO;
 @Path ("/korisnici")
 public class KorisnikService {
 	@Context
@@ -117,5 +119,34 @@ public class KorisnikService {
 		return stringhtml;
 		
 	}
+	
+	 @POST
+	 @Path("/prijava")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public Response prijavljivanje(KorisnikDTO korisnikDTO)
+	    {
+	        System.out.println("Zapoceta prijava");
+	        KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+	        Korisnik korisnik = dao.nadjiKorisnikaKorIme(korisnikDTO.korisnickoIme);
+	        
+	        if(korisnik == null)
+	        {
+	            System.out.println("Pogresno korisnicko ime");
+	            return Response.status(Response.Status.BAD_REQUEST)
+	                    .entity("{\"error\": \"Pogresno korisnicko ime\"}")
+	                    .build();
+	        }
+	        if(!korisnik.getLozinka().equals(korisnikDTO.lozinka))
+	        {
+	            System.out.println("Pogresna lozinka");
+	            return Response.status(Response.Status.BAD_REQUEST)
+	                    .entity("{\"error\": \"Pogresna lozinka\"}")
+	                    .build();
+	        }
+	        System.out.println("Uspjesna prijava");
+	        return Response.status(200).build();
+	    }
+	
 
 }

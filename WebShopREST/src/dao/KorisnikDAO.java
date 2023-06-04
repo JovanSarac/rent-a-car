@@ -61,6 +61,16 @@ public class KorisnikDAO {
     	}
     	return null;
     }
+    
+    public Korisnik nadjiKorisnikaKorIme(String korisnickoIme) {
+    	for(Korisnik k : korisnici) {
+    		if(k.getKorisnickoIme().equals(korisnickoIme)) {
+    			return k;
+    		}
+    	}
+    	return null;
+    	
+    }
 
 
 

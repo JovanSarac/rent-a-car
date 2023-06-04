@@ -1,0 +1,27 @@
+        ul.menu-bar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            background-color: #3498db; /* Plava boja */
+            overflow: hidden;
+        }
+
+        ul.menu-bar li {
+            float: left;
+        }
+
+        ul.menu-bar li a {
+            display: block;
+            color: #fff; /* Bela boja teksta */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        ul.menu-bar li a:hover {
+            background-color: #2980b9; /* Tamnija nijansa plave boje pri hoveru */
+        }
+
+        ul.menu-bar li.right {
+            float: right;
+        }
