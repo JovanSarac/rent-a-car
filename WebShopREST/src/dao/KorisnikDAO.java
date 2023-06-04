@@ -52,6 +52,15 @@ public class KorisnikDAO {
         System.out.println("nema nijedan");
         return true;
     }
+    
+    public Korisnik nadjiKorisnika(String id) {
+    	for(Korisnik k : korisnici) {
+    		if(k.getId().equals(id)) {
+    			return k;
+    		}
+    	}
+    	return null;
+    }
 
 
 
