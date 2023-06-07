@@ -1,4 +1,5 @@
-/services/
+/.DS_Store
+/beans/
 /dao/
 /dto/
-/beans/
+/services/
