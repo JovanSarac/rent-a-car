@@ -86,7 +86,7 @@ Vue.component("registracija", {
 	, 
 	methods : {
 		prijava:function(){
-			router.push(`/`);
+			router.push(`/login`);
 		},
 		validacija:function(event){
 			let uspjeh =  true;

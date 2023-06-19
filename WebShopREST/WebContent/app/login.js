@@ -18,9 +18,8 @@ Vue.component("login", {
     </form>
     <p>Nemate nalog? <a href="#/Registracija">Registracija</a></p>
     <p hidden style="color:red" name="porukagreska">Ne postoji nalog sa unijetim podacima!</p>
-</div>
-`
-	, 
+    </div>
+`, 
 	methods : {
 		prijava:function(event){
 			let uspjeh =  true;
@@ -63,9 +62,9 @@ Vue.component("login", {
 						});
 			}
 			return uspjeh;
-		}
-	}	
-			
+		},
+
+		}		
 			
 		
 });

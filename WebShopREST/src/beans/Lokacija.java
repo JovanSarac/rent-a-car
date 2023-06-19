@@ -1,19 +1,29 @@
 package beans;
 
 public class Lokacija {
+	public String id;
 	public double geografskaDuzina;
 	public double geografskaSirina;
-	public Adresa adresa;
+	public String adresa;
 	
 	public Lokacija() {
 		
 	}
 
-	public Lokacija(double geografskaDuzina, double geografskaSirina, Adresa adresa) {
+	public Lokacija(String id, double geografskaDuzina, double geografskaSirina, String adresa) {
 		super();
+		this.id = id;
 		this.geografskaDuzina = geografskaDuzina;
 		this.geografskaSirina = geografskaSirina;
 		this.adresa = adresa;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public double getGeografskaDuzina() {
@@ -32,17 +42,18 @@ public class Lokacija {
 		this.geografskaSirina = geografskaSirina;
 	}
 
-	public Adresa getAdresa() {
+	public String getAdresa() {
 		return adresa;
 	}
 
-	public void setAdresa(Adresa adresa) {
+	public void setAdresa(String adresa) {
 		this.adresa = adresa;
 	}
 
 	@Override
 	public String toString() {
-		return "Lokacija [geografskaDuzina=" + geografskaDuzina + ", geografskaSirina=" + geografskaSirina + ", adresa="
-				+ adresa + "]";
+		return "Lokacija [id=" + id + ", geografskaDuzina=" + geografskaDuzina + ", geografskaSirina="
+				+ geografskaSirina + ", adresa=" + adresa + "]";
 	}
+	
 }

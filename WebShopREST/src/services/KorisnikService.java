@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+
 import javax.annotation.PostConstruct;
 
 import javax.servlet.ServletContext;
@@ -16,7 +18,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
+import beans.Lokacija;
 import dao.KorisnikDAO;
+import dao.LokacijaDAO;
 import dto.KorisnikDTO;
 @Path ("/korisnici")
 public class KorisnikService {
@@ -34,6 +38,10 @@ public class KorisnikService {
 		if(ctx.getAttribute("korisnikDao")==null) {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("korisnikDao", new KorisnikDAO(contextPath));
+		}
+		if(ctx.getAttribute("lokacijaDAO")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("lokacijaDAO", new LokacijaDAO(contextPath));
 		}
 
 	}
@@ -198,6 +206,15 @@ public class KorisnikService {
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
 		 System.out.println("Pronadjeni korisnik je :\n" + dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme()));
 		 return dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme());
+	 }
+	 
+	 @GET
+	 @Path("/lokacije")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Lokacija> nadjiSveLokacije() {
+		 LokacijaDAO dao = (LokacijaDAO) ctx.getAttribute("lokacijaDAO");		
+		 System.out.println("IMA UKUONO " + dao.nadjiSveLokacije().size());
+		 return (ArrayList<Lokacija>) dao.nadjiSveLokacije();
 	 }
 	
 
