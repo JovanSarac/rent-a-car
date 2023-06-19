@@ -1,35 +1,73 @@
-        ul.menu-bar {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            background-color: #3498db; /* Plava boja */
-            overflow: hidden;
-        }
+ul.menu-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #3498db;
+  overflow: hidden;
+}
 
-        ul.menu-bar li {
-            float: left;
-        }
+ul.menu-bar li {
+  float: left;
+}
 
-        ul.menu-bar li a {
-            display: block;
-            color: #fff; /* Bela boja teksta */
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        ul.menu-bar li p {
-            display: block;
-            color: #fff; 
-            margin: 0;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
+ul.menu-bar li a,
+ul.menu-bar li button {
+  display: block;
+  color: #fff; 
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
 
-        ul.menu-bar li a:hover {
-            background-color: #2980b9; /* Tamnija nijansa plave boje pri hoveru */
-        }
+ul.menu-bar li button {
+  background-color: #3498db; 
+  border: none;
+}
 
-        ul.menu-bar li.right {
-            float: right;
-        }
+ul.menu-bar li a:hover,
+ul.menu-bar li button:hover {
+  background-color: #2980b9; 
+}
+
+ul.menu-bar li.right {
+  float: right;
+}
+
+     
+.objects-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column; 
+}
+
+.object-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.object-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.object-details {
+  flex: 1;
+}
+
+.object-details h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.object-details p {
+  margin: 0;
+}
+        
+        

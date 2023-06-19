@@ -39,10 +39,6 @@ public class KorisnikService {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("korisnikDao", new KorisnikDAO(contextPath));
 		}
-		if(ctx.getAttribute("lokacijaDAO")==null) {
-			String contextPath = ctx.getRealPath("");
-        	ctx.setAttribute("lokacijaDAO", new LokacijaDAO(contextPath));
-		}
 
 	}
 
@@ -208,14 +204,5 @@ public class KorisnikService {
 		 return dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme());
 	 }
 	 
-	 @GET
-	 @Path("/lokacije")
-	 @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<Lokacija> nadjiSveLokacije() {
-		 LokacijaDAO dao = (LokacijaDAO) ctx.getAttribute("lokacijaDAO");		
-		 System.out.println("IMA UKUONO " + dao.nadjiSveLokacije().size());
-		 return (ArrayList<Lokacija>) dao.nadjiSveLokacije();
-	 }
-	
 
 }
