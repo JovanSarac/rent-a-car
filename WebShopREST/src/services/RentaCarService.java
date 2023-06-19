@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -64,5 +65,13 @@ public class RentaCarService {
 		RentaCarDAO repo = (RentaCarDAO) ctx.getAttribute("objectDAO");
         return (repo.Sacuvaj(noviObjekat) != null);
     }
+	
+	@GET
+	@Path("/trazi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<RentaCar> pretraziObjekte(@QueryParam("naziv") String naziv, @QueryParam("lokacija") String lokacija, @QueryParam("ocena") double ocena) {
+	  RentaCarDAO dao = (RentaCarDAO) ctx.getAttribute("objectDAO");
+	  return dao.pretrazi(naziv, lokacija, ocena);
+	}
 
 }

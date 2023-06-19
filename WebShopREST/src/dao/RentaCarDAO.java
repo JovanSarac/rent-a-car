@@ -92,6 +92,23 @@ public class RentaCarDAO {
 	    }else {
 	    	System.out.println("ne kreira");
 	    }
-	}	
+	}
+	
+	public ArrayList<RentaCar> pretrazi(String naziv, String lokacija, double ocjena) {
+	    ArrayList<RentaCar> pretrazeni = new ArrayList<RentaCar>(); // Declare the variable before the loop
+	    for (RentaCar object : objekti) {
+	        boolean nameCondition = naziv == null || naziv.isEmpty() || object.getNaziv().toLowerCase().contains(naziv.toLowerCase());
+	        boolean cityCondition = lokacija == null || lokacija.isEmpty() || object.getLokacija().getMjesto().toLowerCase().contains(lokacija.toLowerCase());
+	        boolean vece = false;
+	        if (ocjena == 0) vece = true;
+	        else if (object.getOcena() > ocjena) vece = true;
+
+	        if (nameCondition && cityCondition && vece) {
+	            pretrazeni.add(object);
+	        }
+	    }
+	    return pretrazeni;
+	}
+
 }
 

@@ -70,4 +70,30 @@ ul.menu-bar li.right {
   margin: 0;
 }
         
-        
+.pretraga-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pretraga-container input[type="text"] {
+  width: 250px;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.pretraga-container input[type="number"] {
+  width: 250px;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+
+.pretraga-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+   background-color: #3498db; 
+}        
