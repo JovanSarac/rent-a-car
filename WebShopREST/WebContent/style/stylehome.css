@@ -91,6 +91,11 @@ ul.menu-bar li.right {
   font-size: 16px;
 }
 
+.pretraga-container select {
+  width: 250px;
+  padding: 10px;
+  font-size: 16px;
+}
 
 .pretraga-container button {
   padding: 10px 20px;
