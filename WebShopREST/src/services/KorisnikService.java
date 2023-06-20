@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
+import beans.Korisnik.Uloga;
 import beans.Lokacija;
 import dao.KorisnikDAO;
 import dao.LokacijaDAO;
@@ -179,11 +180,17 @@ public class KorisnikService {
 	                    .entity("{\"error\": \"Pogresna lozinka\"}")
 	                    .build();
 	        }
-	        //System.out.println("Uspjesna prijava");
-	        //return Response.status(200).build();
+	        
 	        request.getSession().setAttribute("ulogovaniKorisnik", korisnik);
 	        System.out.println(request.getSession().getAttribute("ulogovaniKorisnik"));
-	        return Response.status(Response.Status.ACCEPTED).entity("/WebShopREST/pocetnastrana.html").build();
+	        //System.out.println("Uspjesna prijava");
+	        if (korisnik.getUloga().equals(Uloga.kupac)) {
+	        	System.out.println("NADJEN KUPAC EZ");
+	            return Response.status(Response.Status.OK).entity("1").build();
+	        } else if (korisnik.getUloga().equals(Uloga.administrator)) {
+	            return Response.status(Response.Status.OK).entity("2").build();
+	        } else  
+	            return Response.status(Response.Status.OK).entity("3").build();
 	    }
 	 
 	 @GET

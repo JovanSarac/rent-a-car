@@ -1,21 +1,27 @@
 package beans;
 
+import beans.TipKupca.Tip;
 
 public class Korisnik {
+	
+	public enum Uloga { administrator, menadzer, kupac};
+	
 	public String id;
 	public String korisnickoIme;
 	public String lozinka;
 	public String ime;
 	public String prezime;
+	public Uloga uloga;
 	public String pol;
 	public String datumRodjenja;
+	public TipKupca vrstaKupca;
 	
 	public Korisnik() {
 		super();
 	}
 
 	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
-			String datumRodjenja) {
+			String datumRodjenja, Uloga ulog, TipKupca tip) {
 		super();
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -23,6 +29,11 @@ public class Korisnik {
 		this.prezime = prezime;
 		this.pol = pol;
 		this.datumRodjenja = datumRodjenja;
+		this.uloga = ulog;
+		this.vrstaKupca = tip;
+	    
+
+		
 	}
 	public Korisnik(String korisnickoIme, String ime, String prezime, String pol,
 			String datumRodjenja) {
@@ -42,6 +53,22 @@ public class Korisnik {
 	public String toString() {
 		return "Korisnik [id=" + id + ", korisnickoIme=" + korisnickoIme + ", lozinka=" + lozinka + ", ime=" + ime
 				+ ", prezime=" + prezime + ", pol=" + pol + ", datumRodjenja=" + datumRodjenja + "]";
+	}
+
+	public Uloga getUloga() {
+		return uloga;
+	}
+
+	public void setUloga(Uloga uloga) {
+		this.uloga = uloga;
+	}
+
+	public TipKupca getVrstaKupca() {
+		return vrstaKupca;
+	}
+
+	public void setVrstaKupca(TipKupca vrstaKupca) {
+		this.vrstaKupca = vrstaKupca;
 	}
 
 	public void setId(String id) {

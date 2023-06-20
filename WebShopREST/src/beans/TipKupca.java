@@ -7,6 +7,8 @@ public class TipKupca {
 	public double procenat;
 	public int brojBodova;
 	
+	public TipKupca () {}
+	
 	public TipKupca(Tip tipKupca, double procenat, int brojBodova) {
 		super();
 		this.tipKupca = tipKupca;

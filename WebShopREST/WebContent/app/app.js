@@ -1,7 +1,9 @@
 const Login = { template: '<login></login>'}
 const Reqistracija = { template: '<registracija></registracija>' }
 const Neulogovani = {template: '<neulogovani></neulogovani>'}
-//const PocetnaStranica = { template: '<pocetna-stranica></pocetna-stranica>' }
+const PocetnaKupac = {template: '<pocetnaKupac></pocetnaKupac>'}
+const Profil = {template: "<profil></profil>"}
+
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -9,7 +11,10 @@ const router = new VueRouter({
 		{ path: '/', component: Neulogovani},
 		{ path: '/login', component: Login},
 		{ path: '/registracija', component: Reqistracija},
-		//{ path: '/pocetna/:korisnickoIme', component: PocetnaStranica},
+		{ path: '/pocetna-kupac', component: PocetnaKupac},
+		{ path: '/profil', component: Profil},
+		
+		
 	] 
 }	
 );

@@ -41,30 +41,33 @@ Vue.component("login", {
 				event.preventDefault();
 				return false;
 			}
-			if(uspjeh){
-				event.preventDefault();
-				console.log('usao u prijavu')
-				axios.post('/WebShopREST/rest/korisnici/prijava/' , this.korisnik)
-				.then(response => {
-					//if(response.status === 200){						
-						//document.getElementsByName('porukagreska')[0].hidden = false;
-						//router.push(`pocetna/`+ this.korisnik.korisnickoIme);	
-						console.log(response);
-                        window.alert(["Uspjesna prijava"]);
-                        window.location.href = response.data;
-                        console.log(window.location.href);			
-					//}else{
-						//document.getElementsByName('porukagreska')[0].hidden = false;
-					//}
-					})
-		            .catch(error => {
-						console.error(error);
-						});
-			}
-			return uspjeh;
-		},
+			if (uspjeh) {
+      event.preventDefault();
+      console.log('usao u prijavu');
+      axios
+        .post('/WebShopREST/rest/korisnici/prijava/', this.korisnik)
+        .then(response => {
+          console.log(response);
+          if (response.data == '1') {
+            console.log('Uspjesna prijava kao kupac');
+            router.push('/pocetna-kupac')
+          } else if (response.data == '2') {
+            console.log('Uspjesna prijava kao administrator');
+          } else if (response.data == '3') {
+            console.log('Uspjesna prijava kao menadzer');
+          } else {
+            console.log('Neuspjesna prijava');
+            document.getElementsByName('porukagreska')[0].hidden = false;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
 
-		}		
+    return uspjeh;
+  }
+}
 			
 		
 });

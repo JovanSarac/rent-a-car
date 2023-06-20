@@ -1,7 +1,7 @@
 Vue.component("registracija", {
 	data: function () {
 		    return{
-				noviKorisnik:{id: null, korisnickoIme: null, lozinka:null, ime:null, prezime:null, pol:null, datumRodjenja:null}
+				noviKorisnik:{id: null, korisnickoIme: null, lozinka:null, ime:null, prezime:null, pol:null, datumRodjenja:null, uloga: 'kupac',  vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0} }
 			}
 	},
 	template: ` 
