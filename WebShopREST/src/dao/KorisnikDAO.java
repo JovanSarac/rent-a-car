@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import beans.RentaCar;
 
 
 public class KorisnikDAO {	
@@ -41,6 +42,10 @@ public class KorisnikDAO {
         writeToFileJSON();
         return korisnik;
     }
+	
+	 public List<Korisnik> nadjiSveKorisnike() {
+	        return korisnici;
+	    }
 
     private boolean korisnickoImeJedinstveno(Korisnik korisnik){
     	System.out.println("ime jedinstveno");
@@ -132,5 +137,19 @@ public class KorisnikDAO {
 	    }else {
 	    	System.out.println("ne kreira");
 	    }
-	}	
+	}
+	
+	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme) {
+	    ArrayList<Korisnik> pretrazeni = new ArrayList<Korisnik>(); 
+	    for (Korisnik object : korisnici) {
+	        boolean nameCondition = ime == null || ime.isEmpty() || object.getIme().toLowerCase().contains(ime.toLowerCase());
+	        boolean cityCondition = prezime == null || prezime.isEmpty() || object.getPrezime().toLowerCase().contains(prezime.toLowerCase());
+	        boolean korImeCondition = korIme == null || korIme.isEmpty() || object.getKorisnickoIme().toLowerCase().contains(korIme.toLowerCase());
+
+	        if (nameCondition && cityCondition && korImeCondition) {
+	            pretrazeni.add(object);
+	        }
+	    }
+	    return pretrazeni;
+	}
 }

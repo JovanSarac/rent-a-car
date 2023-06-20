@@ -49,9 +49,9 @@ public class RentaCarService {
 	 @GET
 	 @Path("/")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<RentaCar> nadjiSveLokacije() {
+	 public ArrayList<RentaCar> nadjiSveObjekte() {
 		 RentaCarDAO dao = (RentaCarDAO) ctx.getAttribute("objectDAO");		
-		 System.out.println("IMA UKUONO " + dao.nadjiSveObjekte().size());
+		 System.out.println("IMA UKUONO " + dao.nadjiSveObjekte().size() + "objekata");
 		 return (ArrayList<RentaCar>) dao.nadjiSveObjekte();
 	 }
 	

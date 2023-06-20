@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +21,10 @@ import javax.ws.rs.core.Response;
 import beans.Korisnik;
 import beans.Korisnik.Uloga;
 import beans.Lokacija;
+import beans.RentaCar;
 import dao.KorisnikDAO;
 import dao.LokacijaDAO;
+import dao.RentaCarDAO;
 import dto.KorisnikDTO;
 @Path ("/korisnici")
 public class KorisnikService {
@@ -49,6 +52,16 @@ public class KorisnikService {
 	public String test() {
 		return "Proba da li radi";
 	}
+	
+	@GET
+	@Path("/")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Korisnik> nadjiSveKorisnike() {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");	
+		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike().size() + "korisnika");
+		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike();
+	}
+	
 	
 	@POST
     @Path("/registruj")
@@ -210,6 +223,14 @@ public class KorisnikService {
 		 System.out.println("Pronadjeni korisnik je :\n" + dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme()));
 		 return dao.nadjiKorisnikaKorIme(ulogovaniKorisnik.getKorisnickoIme());
 	 }
+	 
+	 @GET
+	 @Path("/trazi")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme) {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 return dao.pretrazi(ime, prezime, korisnickoIme);
+		}
 	 
 
 }

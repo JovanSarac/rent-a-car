@@ -53,6 +53,7 @@ Vue.component("login", {
             router.push('/pocetna-kupac')
           } else if (response.data == '2') {
             console.log('Uspjesna prijava kao administrator');
+            router.push('/pocetna-administrator')
           } else if (response.data == '3') {
             console.log('Uspjesna prijava kao menadzer');
           } else {

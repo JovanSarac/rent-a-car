@@ -11,6 +11,7 @@ Vue.component("profil", {
     },
 	template: ` 
 <div >
+    <main-menu :korisnik="korisnik"></main-menu>
     <h1>Prikaz podataka vaseg profila:</h1>
     <table border="1">
         <tr>

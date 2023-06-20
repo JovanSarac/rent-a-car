@@ -95,7 +95,7 @@ public class RentaCarDAO {
 	}
 	
 	public ArrayList<RentaCar> pretrazi(String naziv, String lokacija, double ocjena) {
-	    ArrayList<RentaCar> pretrazeni = new ArrayList<RentaCar>(); // Declare the variable before the loop
+	    ArrayList<RentaCar> pretrazeni = new ArrayList<RentaCar>(); 
 	    for (RentaCar object : objekti) {
 	        boolean nameCondition = naziv == null || naziv.isEmpty() || object.getNaziv().toLowerCase().contains(naziv.toLowerCase());
 	        boolean cityCondition = lokacija == null || lokacija.isEmpty() || object.getLokacija().getMjesto().toLowerCase().contains(lokacija.toLowerCase());
