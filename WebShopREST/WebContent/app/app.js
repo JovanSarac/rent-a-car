@@ -6,6 +6,8 @@ const ProfilKupac = {template: "<profil-kupac></profil-kupac>"}
 const PocetnaAdministrator = {template: "<pocetna-administrator></pocetna-administrator>"}
 const ProfilAdministrator = {template: "<profil-administrator></profil-administrator>"}
 const SviKorisnici = { template: "<pregled-korisnika></pregled-korisnika>" }
+const NoviObjekat = { template: "<novi-objekat></novi-objekat>" }
+
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -17,8 +19,8 @@ const router = new VueRouter({
 		{ path: '/pocetna-administrator', component: PocetnaAdministrator},
 		{ path: '/profil-kupac', component: ProfilKupac},
 		{ path: '/profil-administrator', component: ProfilAdministrator},
-		{ path:  '/pregled-korisnika', component: SviKorisnici}
-		
+		{ path:  '/pregled-korisnika', component: SviKorisnici},
+		{ path:  '/novi-objekat', component: NoviObjekat}
 		
 	] 
 }	

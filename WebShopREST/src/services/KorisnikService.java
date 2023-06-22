@@ -43,6 +43,10 @@ public class KorisnikService {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("korisnikDao", new KorisnikDAO(contextPath));
 		}
+		if(ctx.getAttribute("rentaCarDao")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("rentaCarDao", new RentaCarDAO(contextPath));
+		}
 
 	}
 
@@ -232,5 +236,15 @@ public class KorisnikService {
 		 return dao.pretrazi(ime, prezime, korisnickoIme);
 		}
 	 
+	 @GET
+	 @Path("/traziSlobodne")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Korisnik> traziMenadzere() {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 RentaCarDAO daoObjekat = (RentaCarDAO) ctx.getAttribute("rentaCarDao");
+		 return (ArrayList<Korisnik>) dao.nadjiMenadzere(daoObjekat.nadjiSveObjekte());
+		 
+		}
+
 
 }

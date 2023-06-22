@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
 import beans.RentaCar;
+import beans.Korisnik.Uloga;
 
 
 public class KorisnikDAO {	
@@ -152,4 +153,35 @@ public class KorisnikDAO {
 	    }
 	    return pretrazeni;
 	}
+	
+	public List<Korisnik> nadjiMenadzere(List<RentaCar> objekti) {
+	    List<Korisnik> pretrazeni = new ArrayList<Korisnik>();
+	    for (Korisnik korisnik : korisnici) {
+	        if (korisnik.getUloga().equals(Uloga.menadzer)) {
+	            boolean dodijeljen = false;
+	            for (RentaCar objekat : objekti) {
+	                if (objekat.getMenadzer() != null && objekat.getMenadzer().equals(korisnik)) {
+	                    dodijeljen = true;
+	                    break;
+	                }
+	            }
+	            if (!dodijeljen) {
+	                pretrazeni.add(korisnik);
+	            }
+	        }
+	    }
+	    System.out.println("nadjeno je: " + pretrazeni.size() + "slobodnih menadzera");
+	    return pretrazeni;
+	}
+
+	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+
