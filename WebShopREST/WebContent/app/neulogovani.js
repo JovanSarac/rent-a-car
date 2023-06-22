@@ -14,7 +14,7 @@ Vue.component("neulogovani", {
 	template: ` 
   <div>
     <ul class="menu-bar">
-      <li class="right"><a v-on:click="prijava()">Prijavi se</a></li>
+      <li class="right"><button v-on:click="prijava()">Prijavi se</button></li>
         <li>
           <button v-on:click="togglePretraga">Pretraži</button>
         </li>
