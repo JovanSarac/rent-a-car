@@ -15,13 +15,14 @@ public class Korisnik {
 	public String pol;
 	public String datumRodjenja;
 	public TipKupca vrstaKupca;
+	public RentaCar objekatRentaCar;
 	
 	public Korisnik() {
 		super();
 	}
 
 	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
-			String datumRodjenja, Uloga ulog, TipKupca tip) {
+			String datumRodjenja, Uloga ulog, TipKupca tip, RentaCar objekat) {
 		super();
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -31,9 +32,8 @@ public class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 		this.uloga = ulog;
 		this.vrstaKupca = tip;
-	    
-
-		
+		this.objekatRentaCar = objekat;
+	 		
 	}
 	public Korisnik(String korisnickoIme, String ime, String prezime, String pol,
 			String datumRodjenja) {

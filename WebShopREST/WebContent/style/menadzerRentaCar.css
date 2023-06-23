@@ -1,0 +1,116 @@
+.maininfo{
+	display: flex;
+}
+
+.add-vehicle{
+	 border: 2px solid  #3498db;
+     padding: 20px;
+     border-radius: 5px;
+     width: 700px; /* Promijenjeno */
+     margin-left: 100px; /* Promijenjeno */
+}
+
+.rentacar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      width: 250px;
+      height: 250px;
+      margin-right: 20px;
+    }
+    
+    .rentacar-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .rentacar-details h2 {
+      margin: 0;
+      font-size: 30px;
+      color: #333;
+      text-decoration: underline;
+    }
+    
+    .rentacar-details p {
+      margin: 5px 0;
+      font-size: 20px;
+      color: #666;
+    }
+    
+    
+    
+    .rentacar-box {
+      border: 2px solid  #3498db;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 700px; /* Promijenjeno */
+      margin-left: 100px; /* Promijenjeno */
+    }
+    
+     
+ 
+	  .vehicle-container {
+		  display: flex;
+		  flex-wrap: wrap;
+		  flex-direction: column; 
+		  width: 300px; /* Promijenjeno */
+   		  align-items: flex-start;
+	  }
+	  
+	  .vehicle-card {
+		  display: flex;
+		  align-items: center;
+		  gap: 10px;
+		  margin-bottom: 10px;
+		  padding: 10px;
+		  border: 1px solid #ccc;
+		  border-radius: 5px;
+		  width: 1400px ;
+		  margin-left: 100px;
+	  }
+	  .vehicle-image {
+		  width: 400px;
+		  height: 300px;
+		  object-fit: cover;
+		  border-radius: 5px;
+	  }
+	  
+	  .vehicle-details {
+	    flex: 1;  
+	  }
+		
+	  .vehicle-details h3 {
+		  font-size: 50px;
+		  margin-bottom: 5px;
+		  color: #3498db;
+		  
+	  }
+	  .vehicle-details h4 {
+		  border: 1px solid #3498db;
+		  border-radius: 5px;
+		  background-color: #3498db;
+		  font-size: 40px;
+		  color: white;
+		  margin-left: 700px;
+		  text-align: center;		  
+	  }
+		
+	  .vehicle-details p {
+		  margin: 0;
+		  font-size: 25px;
+	  }
+	  
+	  
+
+
+    
+
+    
+    

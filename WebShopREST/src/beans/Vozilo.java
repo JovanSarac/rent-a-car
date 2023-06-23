@@ -5,6 +5,7 @@ public class Vozilo {
 	public enum TipGoriva {dizel,benzin,hibrid,elektricni}
 	public enum Status {Dostupljeno,Iznajmljeno}
 	
+	public String id;
 	public String marka;
 	public String model;
 	public double cena;
@@ -41,7 +42,15 @@ public class Vozilo {
 		this.slika = slika;
 		this.status = status;
 	}
+	
+	public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getMarka() {
 		return marka;
 	}

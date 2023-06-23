@@ -56,6 +56,7 @@ Vue.component("login", {
             router.push('/pocetna-administrator')
           } else if (response.data == '3') {
             console.log('Uspjesna prijava kao menadzer');
+            router.push('/pocetna-menadzer');
           } else {
             console.log('Neuspjesna prijava');
             document.getElementsByName('porukagreska')[0].hidden = false;
