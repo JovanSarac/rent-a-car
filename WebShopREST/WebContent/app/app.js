@@ -8,6 +8,7 @@ const ProfilAdministrator = {template: "<profil-administrator></profil-administr
 const PocetnaMenadzer = {template: '<pocetna-menadzer></pocetna-menadzer>'}
 const ProfilMenadzer = {template: "<profil-menadzer></profil-menadzer>"}
 const RentACarMenadzer = {template: "<renta-car-menadzer></renta-car-menadzer>"}
+const DodajVoziloMenadzer = {template: "<add-vehicle-manager></add-vehicle-manager>"}
 const SviKorisnici = { template: "<pregled-korisnika></pregled-korisnika>" }
 
 const router = new VueRouter({
@@ -23,6 +24,7 @@ const router = new VueRouter({
 		{ path: '/pocetna-menadzer', component: PocetnaMenadzer},
 		{ path: '/profil-menadzer', component: ProfilMenadzer},
 		{ path: '/renta-car-menadzer', component: RentACarMenadzer},
+		{ path: '/add-vehicle-manager', component: DodajVoziloMenadzer},
 		{ path:  '/pregled-korisnika', component: SviKorisnici}
 		
 		

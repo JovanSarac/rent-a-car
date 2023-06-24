@@ -2,7 +2,7 @@ Vue.component("renta-car-menadzer", {
 	data: function () {
 		    return {
 				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
-				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija: null, logoUrl: null, ocena: null, menadzer: null},
+				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
 				 
 			}
 	},
@@ -17,7 +17,7 @@ Vue.component("renta-car-menadzer", {
 	      <img class="logo" :src="objekat.logoUrl" alt="Logo Rent-a-Car objekta">
 	    <div class="rentacar-details">
 	      <h2>{{ objekat.naziv }}</h2>
-	      <p>Lokacija: {{ objekat.lokacija.ulica }} {{objekat.lokacija.broj}}, {{objekat.lokacija.mjesto}} {{objekat.lokacija.postanskiBroj}}</p>
+	      <p>Lokacija: {{objekat.lokacija.ulica}} {{objekat.lokacija.broj}}, {{objekat.lokacija.mjesto}} {{objekat.lokacija.postanskiBroj}}</p>
           <p>Koordinate: {{ objekat.lokacija.geografskaDuzina }}, {{objekat.lokacija.geografskaSirina}}</p>
           <p>Ocjena: {{ objekat.ocena }}</p>
           <p>Radno vrijeme: {{ objekat.radnoVremeOd }} - {{ objekat.radnoVremeDo }}</p>
@@ -27,7 +27,7 @@ Vue.component("renta-car-menadzer", {
 	  </div>
 	  <div class="add-vehicle">
 	  	<h2>Neke od funkcionalnosti vezane za Vas objekat</h2>
-	  	<p>Ukoliko zelite da dodate novo vozilo u ponudu pritisnite sledeci link: <a href="" style="text-decoration: underline;">dodaj vozilo</a></p>
+	  	<p>Ukoliko zelite da dodate novo vozilo u ponudu pritisnite: <button class="buttonAddVehicle" v-on:click="AddVehicle">dodaj vozilo</button></p>
 	  </div>
 	  </div>
 	  
@@ -65,9 +65,11 @@ Vue.component("renta-car-menadzer", {
     .catch((error) => {
       console.error(error);
     });
-    console.log(this.objekat.vozila)
     },
 		
 	methods : {		
+	AddVehicle(){
+		this.$router.push('/add-vehicle-manager');
+	}
 	}
 });

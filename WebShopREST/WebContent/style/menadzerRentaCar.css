@@ -55,7 +55,7 @@
     }
     
      
- 
+ 	 /*za prikaz vozila*/
 	  .vehicle-container {
 		  display: flex;
 		  flex-wrap: wrap;
@@ -107,6 +107,72 @@
 		  font-size: 25px;
 	  }
 	  
+	  .buttonAddVehicle{
+		  background-color:#3498db ;
+		  color: white;
+		  border-radius: 5px;
+		  cursor: pointer;
+	  }
+	  
+	  .buttonAddVehicle:hover{
+		  background-color:white ;
+		  color: #3498db;
+		  border-radius: 5px;
+		  cursor: pointer;
+	  }
+	  
+	  
+	  /*za formu za dodavanje vozila*/
+	  
+	  .formaVozilo form {
+      max-width: 800px;
+      margin: 0 auto;
+      border: 1px solid #3498db;
+      border-radius: 5px;
+      background-color: cadetblue;
+    }
+    
+    .formaVozilo label {
+      display: block;
+      margin-bottom: 5px;
+      margin-left: 5%;
+      margin-top: 10px;
+    }
+    
+    .formaVozilo input[type="text"],
+    .formaVozilo input[type="number"],
+    .formaVozilo select {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      width: 80%;
+      padding: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-left: 6%;
+    }
+
+    .formaVozilo textarea {
+      resize: none; /* Onemogući proširivanje */
+      border: none;
+      border-bottom: 1px solid #ccc;
+      width: 80%;
+      height: 100px;
+      padding: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-left: 6%;
+    }
+    
+    .formaVozilo input[type="submit"],.formaVozilo button {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 170px;
+      margin-bottom: 10px;
+    }
 	  
 
 

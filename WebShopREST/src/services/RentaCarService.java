@@ -81,5 +81,16 @@ public class RentaCarService {
 	  RentaCarDAO dao = (RentaCarDAO) ctx.getAttribute("objectDAO");
 	  return dao.nadjiMenadzerovObjekat(korisnikId);
 	}
+	
+	@POST
+	@Path("/izmeniobjekat")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+	public boolean izmeniRentaCar(RentaCar noviObjekat)
+    {
+		RentaCarDAO repo = (RentaCarDAO) ctx.getAttribute("objectDAO");
+        return repo.izmeniRentaCar(noviObjekat);
+    }
+	
 
 }

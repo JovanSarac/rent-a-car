@@ -11,7 +11,7 @@ public class Vozilo {
 	public double cena;
 	public String tipVozila;
 	public VrstaMjenjaca vrsta;
-	public RentaCar objekat;
+	public String objekatId;
 	public TipGoriva tipGoriva;
 	public double potrosnja;
 	public int brojVrata;
@@ -24,7 +24,7 @@ public class Vozilo {
 		
 	}
 
-	public Vozilo(String marka, String model, double cena, String tipVozila, VrstaMjenjaca vrsta, RentaCar objekat,
+	public Vozilo(String marka, String model, double cena, String tipVozila, VrstaMjenjaca vrsta, String objekatId,
 			TipGoriva tipGoriva, double potrosnja, int brojVrata, int brojOsoba, String opis, String slika,
 			Status status) {
 		super();
@@ -33,7 +33,7 @@ public class Vozilo {
 		this.cena = cena;
 		this.tipVozila = tipVozila;
 		this.vrsta = vrsta;
-		this.objekat = objekat;
+		this.objekatId = objekatId;
 		this.tipGoriva = tipGoriva;
 		this.potrosnja = potrosnja;
 		this.brojVrata = brojVrata;
@@ -91,12 +91,12 @@ public class Vozilo {
 		this.vrsta = vrsta;
 	}
 
-	public RentaCar getObjekat() {
-		return objekat;
+	public String getObjekatId() {
+		return objekatId;
 	}
 
-	public void setObjekat(RentaCar objekat) {
-		this.objekat = objekat;
+	public void setObjekat(String objekatId) {
+		this.objekatId = objekatId;
 	}
 
 	public TipGoriva getTipGoriva() {
@@ -158,7 +158,7 @@ public class Vozilo {
 	@Override
 	public String toString() {
 		return "Vozilo [marka=" + marka + ", model=" + model + ", cena=" + cena + ", tipVozila=" + tipVozila
-				+ ", vrsta=" + vrsta + ", objekat=" + objekat + ", tipGoriva=" + tipGoriva + ", potrosnja=" + potrosnja
+				+ ", vrsta=" + vrsta + ", objekatId=" + objekatId + ", tipGoriva=" + tipGoriva + ", potrosnja=" + potrosnja
 				+ ", brojVrata=" + brojVrata + ", brojOsoba=" + brojOsoba + ", opis=" + opis + ", slika=" + slika
 				+ ", status=" + status + "]";
 	}
