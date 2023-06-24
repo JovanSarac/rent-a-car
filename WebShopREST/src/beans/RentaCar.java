@@ -35,6 +35,13 @@ public class RentaCar {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return "RentaCar [id=" + id + ", naziv=" + naziv + ", vozila=" + vozila + ", radnoVremeOd=" + radnoVremeOd
+				+ ", radnoVremeDo=" + radnoVremeDo + ", status=" + status + ", lokacija=" + lokacija + ", logoUrl="
+				+ logoUrl + ", ocena=" + ocena + ", menadzer=" + menadzer + "]";
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}

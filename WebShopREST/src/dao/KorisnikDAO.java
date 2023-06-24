@@ -155,24 +155,26 @@ public class KorisnikDAO {
 	}
 	
 	public List<Korisnik> nadjiMenadzere(List<RentaCar> objekti) {
-	    List<Korisnik> pretrazeni = new ArrayList<Korisnik>();
+	    List<Korisnik> pretrazeni = new ArrayList<>();
 	    for (Korisnik korisnik : korisnici) {
-	        if (korisnik.getUloga().equals(Uloga.menadzer)) {
-	            boolean dodijeljen = false;
+	        if (korisnik.getUloga() == Uloga.menadzer) {
+	            boolean slobodan = true;
 	            for (RentaCar objekat : objekti) {
-	                if (objekat.getMenadzer() != null && objekat.getMenadzer().equals(korisnik)) {
-	                    dodijeljen = true;
+	                if (objekat.getMenadzer() != null && objekat.getMenadzer().getId().equals(korisnik.getId())) {
+	                	System.out.println("NADJEN JEDAN KOJI NIJE SLOBODAN");
+	                    slobodan = false;
 	                    break;
 	                }
 	            }
-	            if (!dodijeljen) {
+	            if (slobodan) {
 	                pretrazeni.add(korisnik);
 	            }
 	        }
 	    }
-	    System.out.println("nadjeno je: " + pretrazeni.size() + "slobodnih menadzera");
+	    System.out.println("Pronađeno je: " + pretrazeni.size() + " slobodnih menadžera");
 	    return pretrazeni;
 	}
+
 
 	
 }

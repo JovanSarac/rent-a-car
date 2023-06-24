@@ -6,7 +6,7 @@ const ProfilKupac = {template: "<profil-kupac></profil-kupac>"}
 const PocetnaAdministrator = {template: "<pocetna-administrator></pocetna-administrator>"}
 const ProfilAdministrator = {template: "<profil-administrator></profil-administrator>"}
 const SviKorisnici = { template: "<pregled-korisnika></pregled-korisnika>" }
-const NoviObjekat = { template: "<novi-objekat></novi-objekat>" }
+const NoviObjekat = { template: '<novi-objekat></novi-objekat>' }
 
 
 const router = new VueRouter({
