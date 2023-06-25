@@ -6,7 +6,8 @@ Vue.component("pregled-korisnika", {
 			    pretragaIme: '',
                 pretragaPrezime: '',
                 pretragaKorisnickoIme: '',
-                sortiranjeKriterijum: ''
+                sortiranjeKriterijum: '',
+                filtriranjeUloga: ''
 				
 			}
 			
@@ -25,7 +26,13 @@ Vue.component("pregled-korisnika", {
           <option value="prezimee">prezime</option>
           <option value="korisničko-imee">korisničko ime</option>
   </select>
-        <button v-on:click="pretraziObjekte">Traži</button>
+         <select v-model="filtriranjeUloga">
+         <option value="" disabled selected>Filtriraj po ulozi</option>
+          <option value="kupac">Kupac</option>
+          <option value="menadzer">Menadžer</option>
+          <option value="administrator">Administrator</option>
+  </select>
+  <button v-on:click="pretraziObjekte">Traži</button>
       </div>
     <div class="objects-container">
       <div v-for="objekat in objekti" :key="objekat.id" class="object-card">
@@ -65,7 +72,8 @@ Vue.component("pregled-korisnika", {
        params: {
         ime: this.pretragaIme,
         prezime: this.pretragaPrezime,
-        korisnickoIme: this.pretragaKorisnickoIme
+        korisnickoIme: this.pretragaKorisnickoIme,
+        filterUloga: this.filtriranjeUloga
       }
     })
     .then((response) => {                                            

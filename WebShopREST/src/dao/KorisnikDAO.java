@@ -44,8 +44,10 @@ public class KorisnikDAO {
         return korisnik;
     }
 	
-	 public List<Korisnik> nadjiSveKorisnike() {
-	        return korisnici;
+	 public List<Korisnik> nadjiSveKorisnike(Korisnik korisnik) {
+		 ArrayList<Korisnik> korisnici2 = new ArrayList<Korisnik>(korisnici);
+	       korisnici2.remove(korisnik);
+	       return korisnici2;
 	    }
 
     private boolean korisnickoImeJedinstveno(Korisnik korisnik){
@@ -140,19 +142,31 @@ public class KorisnikDAO {
 	    }
 	}
 	
-	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme) {
+	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme, String filterUloga) {
 	    ArrayList<Korisnik> pretrazeni = new ArrayList<Korisnik>(); 
 	    for (Korisnik object : korisnici) {
 	        boolean nameCondition = ime == null || ime.isEmpty() || object.getIme().toLowerCase().contains(ime.toLowerCase());
 	        boolean cityCondition = prezime == null || prezime.isEmpty() || object.getPrezime().toLowerCase().contains(prezime.toLowerCase());
 	        boolean korImeCondition = korIme == null || korIme.isEmpty() || object.getKorisnickoIme().toLowerCase().contains(korIme.toLowerCase());
-
+	        
 	        if (nameCondition && cityCondition && korImeCondition) {
 	            pretrazeni.add(object);
 	        }
 	    }
+	    
+	    if (!filterUloga.isEmpty()) {
+	        ArrayList<Korisnik> filtrirani = new ArrayList<Korisnik>();
+	        for (Korisnik odabran : pretrazeni) {
+	            if (odabran.getUloga().toString().equals(filterUloga)) {
+	                filtrirani.add(odabran);
+	            }
+	        }
+	        return filtrirani;
+	    }
+	    
 	    return pretrazeni;
 	}
+
 	
 	public List<Korisnik> nadjiMenadzere(List<RentaCar> objekti) {
 	    List<Korisnik> pretrazeni = new ArrayList<>();

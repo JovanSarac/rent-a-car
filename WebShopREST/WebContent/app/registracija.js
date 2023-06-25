@@ -156,6 +156,7 @@ Vue.component("registracija", {
 				.then(response=>{
 					if (response.data === true) {
       					toast('Korisnik ' + this.noviKorisnik.korisnickoIme + ' je uspješno registrovan');
+      					
    				    }else{
 						toast('Korisnik sa korisnickim imenom ' + this.noviKorisnik.korisnickoIme + ' vec postoji, pa nije moguce izvrsiti registraciju!');	 
 					}

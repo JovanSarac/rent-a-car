@@ -62,8 +62,9 @@ public class KorisnikService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Korisnik> nadjiSveKorisnike() {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");	
-		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike().size() + "korisnika");
-		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike();
+		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
+		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike(ulogovaniKorisnik).size() + "korisnika");
+		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike(ulogovaniKorisnik);
 	}
 	
 	
@@ -231,9 +232,9 @@ public class KorisnikService {
 	 @GET
 	 @Path("/trazi")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme) {
+	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme, @QueryParam("filterUloga") String filterUloga) {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
-		 return dao.pretrazi(ime, prezime, korisnickoIme);
+		 return dao.pretrazi(ime, prezime, korisnickoIme,filterUloga);
 		}
 	 
 	 @GET
