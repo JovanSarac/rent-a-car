@@ -9,9 +9,8 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.RentaCar;
+
 import beans.Vozilo;
-import beans.Vozilo.Status;
 
 public class VoziloDAO {
 	private List<Vozilo> vozila;
@@ -46,9 +45,35 @@ public class VoziloDAO {
 	        return vozila;
 	 }
 	 
+	 public Vozilo nadjiVozilopoId(String id) {
+	    	for(Vozilo v : vozila) {
+	    		if(v.getId().equals(id)) {
+	    			return v;
+	    		}
+	    	}
+	    	return null;
+	 }
+	 
 	 private Integer nextId(){
 			return vozila.size()+1;
 	}
+	 
+	 public String nadjiIdPoslednjegVozila() {
+		 System.out.println(vozila.get(vozila.size()-1).getId());
+		 return vozila.get(vozila.size()-1).getId();
+	 }
+	 
+	 public boolean izmeniVozilo(Vozilo novoVozilo) {
+	    	Vozilo staroVozilo = nadjiVozilopoId(novoVozilo.getId());
+	    	int index = vozila.indexOf(staroVozilo);
+	    	System.out.println(staroVozilo);
+	    	System.out.println(novoVozilo);
+	    	staroVozilo = novoVozilo;
+	    	vozila.set(index,staroVozilo);
+	    	writeToFileJSON();
+			return true;
+	 	
+	    }
 
 	private void writeToFileJSON()
 	{

@@ -19,6 +19,7 @@ public class Vozilo {
 	public String opis;
 	public String slika;
 	public Status status;
+	public boolean deleted;
 	
 	public Vozilo() {
 		
@@ -26,7 +27,7 @@ public class Vozilo {
 
 	public Vozilo(String marka, String model, double cena, String tipVozila, VrstaMjenjaca vrsta, String objekatId,
 			TipGoriva tipGoriva, double potrosnja, int brojVrata, int brojOsoba, String opis, String slika,
-			Status status) {
+			Status status, boolean deleted) {
 		super();
 		this.marka = marka;
 		this.model = model;
@@ -41,6 +42,7 @@ public class Vozilo {
 		this.opis = opis;
 		this.slika = slika;
 		this.status = status;
+		this.deleted = deleted;
 	}
 	
 	public String getId() {
@@ -153,6 +155,15 @@ public class Vozilo {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

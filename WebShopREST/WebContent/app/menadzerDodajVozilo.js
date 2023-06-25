@@ -3,7 +3,7 @@ Vue.component("add-vehicle-manager", {
 		    return {
 				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
 				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija: null, logoUrl: null, ocena: null, menadzer: null},
-				 vozilo: {id: null, marka:null, model:null, cena:null, tipVozila:null, vrsta:null, objekatId:null, tipGoriva:null, potrosnja:null, brojVrata:null, brojOsoba:null, slika:null, opis:null, status:"Dostupljeno"}
+				 vozilo: {id: null, marka:null, model:null, cena:null, tipVozila:null, vrsta:null, objekatId:null, tipGoriva:null, potrosnja:null, brojVrata:null, brojOsoba:null, slika:null, opis:null, status:"Dostupljeno", deleted:false}
 				 
 			}
 	},
@@ -167,18 +167,30 @@ Vue.component("add-vehicle-manager", {
 				this.vozilo.objekatId = this.objekat.id;
 				axios.post('rest/vozila/kreirajvozilo',  this.vozilo)
 				.then(response=>{
-					console.log(response.data);
 					if (response.data === true) {
       					console.log('Vozilo ' + this.vozilo.marka + this.vozilo.model + ' je uspješno registrovan');
-      					this.objekat.vozila.push(this.vozilo);
-      					axios.post('rest/objekti/izmeniobjekat',  this.objekat)
+      					
+      					//postavljanje id na trenutno dodano vozilo da bi se posle azurirala lista vozila unutar objekta
+      					axios.get('rest/vozila/nadjiIdVozila')
       					.then(response=>{
 							  console.log(response.data);
-							  if (response.data === true) {
-								  console.log("Upjesno dodato vozilo u listu vozila rent a car objekta");
-								  this.$router.push('/renta-car-menadzer');
+							  if(response.data != null){
+								  this.vozilo.id = response.data;
+								  console.log(this.vozilo);
+      							  this.objekat.vozila.push(this.vozilo);
+      							  
+      							  axios.post('rest/objekti/izmeniobjekat',  this.objekat)
+      							  .then(response=>{
+								  console.log(response.data);
+								  if (response.data === true) {
+									  console.log("Upjesno dodato vozilo u listu vozila rent a car objekta");
+									  this.$router.push('/renta-car-menadzer');
+								  }
+      							  }).catch(error => {console.error(error);});
 							  }
-      					}).catch(error => {console.error(error);});
+						 }).catch(error=>{console.error(error);});
+						
+      					
       				
    				    }else{
 						console.log('Greska prilikom cuvanja vozila ' );	 

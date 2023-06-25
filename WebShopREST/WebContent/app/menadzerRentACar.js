@@ -33,10 +33,10 @@ Vue.component("renta-car-menadzer", {
 	  
 	  <h1 class="vehicle-title">Vozila koja su u ponudi:</h1>	  
 	  <div vehicle-container>
-	  <div v-for="vozilo in objekat.vozila" :key="vozilo.id" class="vehicle-card">
+	  <div v-for="vozilo in objekat.vozila" :key="vozilo.id" class="vehicle-card" v-on:click="prikazVozila(vozilo)">
         <img :src="vozilo.slika" class="vehicle-image">
         <div class="vehicle-details">
-          <h3>{{ vozilo.marka }} {{vozilo.model}}</h3>
+          <h3 class="markaimodelVozila">{{ vozilo.marka }} {{vozilo.model}}</h3>
           <p>-Tip vozila: {{ vozilo.tipVozila }} </p>
           <p>-Vrsta mjenjaca: {{ vozilo.vrsta }}</p>
           <p>-Tip goriva: {{ vozilo.tipGoriva }}</p>
@@ -70,6 +70,9 @@ Vue.component("renta-car-menadzer", {
 	methods : {		
 	AddVehicle(){
 		this.$router.push('/add-vehicle-manager');
+	},
+	prikazVozila : function(vozilo){
+		this.$router.push({ name: 'show-vehicle', params: { vehicleId: vozilo.id } });
 	}
 	}
 });
