@@ -67,7 +67,7 @@ Vue.component("novi-objekat", {
         
       <label>Menadžer:</label>
         <select v-model="objekat.menadzer" required>
-          <option v-for="menadzer in slobodniMenadzeri" :value="menadzer">{{ menadzer.ime }}</option>
+          <option v-for="menadzer in slobodniMenadzeri" :value="menadzer">{{ menadzer.ime }} {{menadzer.prezime}}</option>
         </select> 
         
         <button type="submit">Kreiraj objekat</button>
@@ -159,7 +159,7 @@ Vue.component("novi-objekat", {
       .then(response => (this.korisnik = response.data));
 	
         
-    this.ucitajSlobodneMenadzere(); // Pozivamo metodu za učitavanje slobodnih menadžera prilikom inicijalizacije komponente
+    this.ucitajSlobodneMenadzere();
   },
   methods: {
     ucitajSlobodneMenadzere() {
@@ -177,8 +177,30 @@ Vue.component("novi-objekat", {
   axios.post('rest/objekti/registruj', this.objekat)
   .then(response => {
     if (response.data === true) {
-		toast('USPIJEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEH');
       console.log('SVE ok uspijesno je registrovan')
+      
+       this.ucitajSlobodneMenadzere();
+      
+      
+       this.objekat = {
+          id: null,
+          naziv: null,
+          vozila: [],
+          radnoVremeOd: null,
+          radnoVremeDo: null,
+          status: true,
+          lokacija: {
+            geografskaDuzina: null,
+            geografskaSirina: null,
+            mjesto: null,
+            postanskiBroj: null,
+            ulica: null,
+            broj: null
+          },
+          logoUrl: null,
+          ocena: 0,
+          menadzer: null
+        };
     } else {
 		console.log('NESTO NIJE U REDU ')
       toast('GRESKA');
