@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import beans.Vozilo;
+import beans.Vozilo.Status;
 
 public class VoziloDAO {
 	private List<Vozilo> vozila;
@@ -43,6 +44,16 @@ public class VoziloDAO {
 	
 	 public List<Vozilo> nadjiSvaVozila() {
 	        return vozila;
+	 }
+	 
+	 public List<Vozilo> nadjiSvaDostupnaVozila() {
+	        List<Vozilo> voz = new ArrayList<Vozilo>();
+	        for(Vozilo v : vozila) {
+	    		if(v.getStatus().equals(Status.Dostupljeno)) {
+	    			voz.add(v);
+	    		}
+	    	}
+	    	return voz;
 	 }
 	 
 	 public Vozilo nadjiVozilopoId(String id) {

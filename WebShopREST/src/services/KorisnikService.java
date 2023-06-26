@@ -26,6 +26,7 @@ import beans.RentaCar;
 import dao.KorisnikDAO;
 import dao.LokacijaDAO;
 import dao.RentaCarDAO;
+import dao.VoziloDAO;
 import dto.KorisnikDTO;
 @Path ("/korisnici")
 public class KorisnikService {
@@ -243,7 +244,14 @@ public class KorisnikService {
 		 RentaCarDAO daoObjekat = (RentaCarDAO) ctx.getAttribute("rentaCarDao");
 		 return (ArrayList<Korisnik>) dao.nadjiMenadzere(daoObjekat.nadjiSveObjekte());
 		 
-		}
+	}
 
+	 @GET
+		@Path("/nadjiIdPoslednjegKorisnika")
+		@Produces(MediaType.TEXT_PLAIN)
+		public String nadjiId() {
+		 	KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+			return dao.nadjiIdPoslednjegKorisnika();
+		}
 
 }

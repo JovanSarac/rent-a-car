@@ -16,13 +16,14 @@ public class Korisnik {
 	public String datumRodjenja;
 	public TipKupca vrstaKupca;
 	public RentaCar objekatRentaCar;
+	public Korpa korpa;
 	
 	public Korisnik() {
 		super();
 	}
 
 	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
-			String datumRodjenja, Uloga ulog, TipKupca tip, RentaCar objekat) {
+			String datumRodjenja, Uloga ulog, TipKupca tip, RentaCar objekat, Korpa korpa) {
 		super();
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -33,6 +34,7 @@ public class Korisnik {
 		this.uloga = ulog;
 		this.vrstaKupca = tip;
 		this.objekatRentaCar = objekat;
+		this.korpa = korpa;
 	 		
 	}
 	public Korisnik(String korisnickoIme, String ime, String prezime, String pol,
@@ -121,6 +123,14 @@ public class Korisnik {
 
 	public void setDatumRodjenja(String datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
+	}
+
+	public Korpa getKorpa() {
+		return korpa;
+	}
+
+	public void setKorpa(Korpa korpa) {
+		this.korpa = korpa;
 	}
 	
 	

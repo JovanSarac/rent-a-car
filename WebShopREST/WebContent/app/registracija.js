@@ -1,7 +1,24 @@
 Vue.component("registracija", {
 	data: function () {
 		    return{
-				noviKorisnik:{id: null, korisnickoIme: null, lozinka:null, ime:null, prezime:null, pol:null, datumRodjenja:null, uloga: 'kupac',  vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0} }
+				noviKorisnik:{
+					id: null, 
+					korisnickoIme: null, 
+					lozinka:null, 
+					ime:null, 
+					prezime:null, 
+					pol:null, 
+					datumRodjenja:null, 
+					uloga: 'kupac',  
+					vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0},
+					korpa :{
+						vozilauKorpi:[],
+						vlasnikKorpeId: null,
+						cena: 0.0,
+						pocetniDatum : null,
+						krajnjiDatum : null
+					} 
+				}
 			}
 	},
 	template: ` 
@@ -82,8 +99,13 @@ Vue.component("registracija", {
        </form>
        <p>Već imate nalog? <a style="text-decoration: underline; color: blue; cursor: pointer;" v-on:click="prijava()">Prijavite se</a></p>
 </div>		  
-`
-	, 
+`,
+	mounted(){
+		axios.get('rest/korisnici/nadjiIdPoslednjegKorisnika')
+		.then(response=>{
+			this.noviKorisnik.korpa.vlasnikKorpeId = response.data + 1;
+		})
+	}, 
 	methods : {
 		prijava:function(){
 			this.$router.push(`/login`);

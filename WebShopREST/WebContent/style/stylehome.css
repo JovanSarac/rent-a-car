@@ -19,6 +19,7 @@ ul.menu-bar li button {
   text-decoration: none;
 }
 
+
 ul.menu-bar li button {
   background-color: #3498db; 
   border: none;
@@ -84,6 +85,13 @@ ul.menu-bar li.right {
   font-size: 16px;
 }
 
+.pretraga-container input[type="date"] {
+  width: 250px;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
 .pretraga-container input[type="number"] {
   width: 250px;
   padding: 10px;
@@ -101,4 +109,10 @@ ul.menu-bar li.right {
   padding: 10px 20px;
   font-size: 16px;
    background-color: #3498db; 
-}        
+} 
+.pretraga-container button:hover {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1e5696; 
+  cursor: pointer;
+}         

@@ -53,6 +53,14 @@ public class VoziloService {
 	}
 	
 	@GET
+	@Path("/nadjiDostupnaVozila")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Vozilo> nadjiSvaDostupnaVozila() {
+		 VoziloDAO dao = (VoziloDAO) ctx.getAttribute("voziloDao");	
+		 return (ArrayList<Vozilo>) dao.nadjiSvaDostupnaVozila();
+	}
+	
+	@GET
 	@Path("/nadjiVozilopoIdu/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vozilo nadjiVozilopoIdu(@PathParam("id") String id) {

@@ -4,6 +4,8 @@ const Neulogovani = {template: '<neulogovani></neulogovani>'}
 const PocetnaKupac = {template: '<pocetna-kupac></pocetna-kupac>'}
 const ProfilKupac = {template: "<profil-kupac></profil-kupac>"}
 const PrikazRentaCaraKupac = {template: "<show-rentacar-kupac></show-rentacar-kupac>"}
+const IznajmljivanjeKupac = {template: "<iznajmi-kupac></iznajmi-kupac>"}
+const KorpaKupac = {template: "<korpa-kupac></korpa-kupac>"}
 const PocetnaAdministrator = {template: "<pocetna-administrator></pocetna-administrator>"}
 const ProfilAdministrator = {template: "<profil-administrator></profil-administrator>"}
 const PocetnaMenadzer = {template: '<pocetna-menadzer></pocetna-menadzer>'}
@@ -26,6 +28,8 @@ const router = new VueRouter({
 		{ path: '/show-rentacar-kupac/:objekatId', name: 'show-rentacar-kupac', component: PrikazRentaCaraKupac},
 		{ path: '/pocetna-administrator', component: PocetnaAdministrator},
 		{ path: '/profil-kupac', component: ProfilKupac},
+		{ path: '/iznajmi-kupac', component: IznajmljivanjeKupac},
+		{ path: '/korpa-kupac', component: KorpaKupac},
 		{ path: '/profil-administrator', component: ProfilAdministrator},
 		{ path:  '/pregled-korisnika', component: SviKorisnici},
 		{ path:  '/novi-objekat', component: NoviObjekat},

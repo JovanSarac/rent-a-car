@@ -49,6 +49,9 @@ public class KorisnikDAO {
 	       korisnici2.remove(korisnik);
 	       return korisnici2;
 	    }
+	 public String nadjiIdPoslednjegKorisnika() {
+		 return korisnici.get(korisnici.size()-1).getId();
+	 }
 
     private boolean korisnickoImeJedinstveno(Korisnik korisnik){
     	System.out.println("ime jedinstveno");
