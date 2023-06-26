@@ -170,6 +170,7 @@ public class KorisnikDAO {
 
 	
 	public List<Korisnik> nadjiMenadzere(List<RentaCar> objekti) {
+		readFromFileJSON();
 	    List<Korisnik> pretrazeni = new ArrayList<>();
 	    for (Korisnik korisnik : korisnici) {
 	        if (korisnik.getUloga() == Uloga.menadzer) {

@@ -179,8 +179,6 @@ Vue.component("novi-objekat", {
     if (response.data === true) {
       console.log('SVE ok uspijesno je registrovan')
       
-       this.ucitajSlobodneMenadzere();
-      
       
        this.objekat = {
           id: null,
@@ -201,6 +199,23 @@ Vue.component("novi-objekat", {
           ocena: 0,
           menadzer: null
         };
+        
+          setTimeout(() => {
+          this.ucitajSlobodneMenadzere();
+        }, 1000); 
+        
+        this.noviKorisnik = {
+         id: null,
+         korisnickoIme: null,
+         lozinka: null,
+         ime: null,
+         prezime: null,
+         pol: null,
+         datumRodjenja: null,
+         uloga: 'menadzer',
+         vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0 }
+         };
+      
     } else {
 		console.log('NESTO NIJE U REDU ')
       toast('GRESKA');
