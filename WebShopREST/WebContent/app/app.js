@@ -13,6 +13,8 @@ const DodajVoziloMenadzer = {template: "<add-vehicle-manager></add-vehicle-manag
 const PrikazVozilaMenadzer = {template: "<show-vehicle></show-vehicle>"}
 const PrikazRentaCaraMenadzer = {template: "<show-rentacar-manager></show-rentacar-manager>"}
 const SviKorisnici = { template: "<pregled-korisnika></pregled-korisnika>" }
+const NoviObjekat = { template: '<novi-objekat></novi-objekat>' }
+
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -25,6 +27,8 @@ const router = new VueRouter({
 		{ path: '/pocetna-administrator', component: PocetnaAdministrator},
 		{ path: '/profil-kupac', component: ProfilKupac},
 		{ path: '/profil-administrator', component: ProfilAdministrator},
+		{ path:  '/pregled-korisnika', component: SviKorisnici},
+		{ path:  '/novi-objekat', component: NoviObjekat},
 		{ path: '/pocetna-menadzer', component: PocetnaMenadzer},
 		{ path: '/profil-menadzer', component: ProfilMenadzer},
 		{ path: '/renta-car-menadzer', component: RentACarMenadzer},

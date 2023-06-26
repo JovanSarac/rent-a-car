@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
 import beans.RentaCar;
+import beans.Korisnik.Uloga;
 
 
 public class KorisnikDAO {	
@@ -43,8 +44,10 @@ public class KorisnikDAO {
         return korisnik;
     }
 	
-	 public List<Korisnik> nadjiSveKorisnike() {
-	        return korisnici;
+	 public List<Korisnik> nadjiSveKorisnike(Korisnik korisnik) {
+		 ArrayList<Korisnik> korisnici2 = new ArrayList<Korisnik>(korisnici);
+	       korisnici2.remove(korisnik);
+	       return korisnici2;
 	    }
 
     private boolean korisnickoImeJedinstveno(Korisnik korisnik){
@@ -77,25 +80,26 @@ public class KorisnikDAO {
     	
     }
     
-    public boolean izmeniKorisnika(Korisnik noviKorisnik) {
-    	Korisnik stariKorisnik = nadjiKorisnikaKorIme(noviKorisnik.getKorisnickoIme());
-    	int index = korisnici.indexOf(stariKorisnik);
-    	
-    	stariKorisnik.setIme(noviKorisnik.getIme());
-    	stariKorisnik.setPrezime(noviKorisnik.getPrezime());
-    	System.out.println(noviKorisnik.getPol());
-    	stariKorisnik.setPol(noviKorisnik.getPol());
-    	stariKorisnik.setDatumRodjenja(noviKorisnik.getDatumRodjenja());
-    	
-    	if(index!=-1) {
-    		korisnici.set(index, stariKorisnik);
-    		writeToFileJSON();
-    		return true;
-    	}else {
-    		return false;
-    	}
-    	
-    	
+    public Korisnik izmeniKorisnika(Korisnik korisnik) {
+        try {
+            int index = -1;
+            for (int i = 0; i < korisnici.size(); i++) {
+                if (korisnici.get(i).getId().equals(korisnik.getId())) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                korisnici.set(index, korisnik);
+                writeToFileJSON();
+                return korisnik;
+            } else {
+                throw new IllegalArgumentException("Korisnik nije pronađen.");
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
@@ -139,17 +143,63 @@ public class KorisnikDAO {
 	    }
 	}
 	
-	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme) {
+	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme, String filterUloga) {
 	    ArrayList<Korisnik> pretrazeni = new ArrayList<Korisnik>(); 
 	    for (Korisnik object : korisnici) {
 	        boolean nameCondition = ime == null || ime.isEmpty() || object.getIme().toLowerCase().contains(ime.toLowerCase());
 	        boolean cityCondition = prezime == null || prezime.isEmpty() || object.getPrezime().toLowerCase().contains(prezime.toLowerCase());
 	        boolean korImeCondition = korIme == null || korIme.isEmpty() || object.getKorisnickoIme().toLowerCase().contains(korIme.toLowerCase());
-
+	        
 	        if (nameCondition && cityCondition && korImeCondition) {
 	            pretrazeni.add(object);
 	        }
 	    }
+	    
+	    if (!filterUloga.isEmpty()) {
+	        ArrayList<Korisnik> filtrirani = new ArrayList<Korisnik>();
+	        for (Korisnik odabran : pretrazeni) {
+	            if (odabran.getUloga().toString().equals(filterUloga)) {
+	                filtrirani.add(odabran);
+	            }
+	        }
+	        return filtrirani;
+	    }
+	    
 	    return pretrazeni;
 	}
+
+	
+	public List<Korisnik> nadjiMenadzere(List<RentaCar> objekti) {
+		readFromFileJSON();
+	    List<Korisnik> pretrazeni = new ArrayList<>();
+	    for (Korisnik korisnik : korisnici) {
+	        if (korisnik.getUloga() == Uloga.menadzer) {
+	            boolean slobodan = true;
+	            for (RentaCar objekat : objekti) {
+	                if (objekat.getMenadzer() != null && objekat.getMenadzer().getId().equals(korisnik.getId())) {
+	                	System.out.println("NADJEN JEDAN KOJI NIJE SLOBODAN");
+	                    slobodan = false;
+	                    break;
+	                }
+	            }
+	            if (slobodan) {
+	                pretrazeni.add(korisnik);
+	            }
+	        }
+	    }
+	    System.out.println("Pronađeno je: " + pretrazeni.size() + " slobodnih menadžera");
+	    return pretrazeni;
+	}
+
+
+	
 }
+	
+	
+	
+	
+	
+	
+	
+	
+

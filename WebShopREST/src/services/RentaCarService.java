@@ -57,6 +57,7 @@ public class RentaCarService {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean registruj(RentaCar noviObjekat)
     {
+		System.out.println("Usao u funkciju za registrovanje");
 		RentaCarDAO repo = (RentaCarDAO) ctx.getAttribute("objectDAO");
         return (repo.Sacuvaj(noviObjekat) != null);
     }

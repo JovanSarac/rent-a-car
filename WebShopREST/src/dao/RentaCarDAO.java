@@ -71,6 +71,7 @@ public class RentaCarDAO {
     }
     
     public List<RentaCar> nadjiSveObjekte() {
+    	readFromFileJSON();
         return objekti;
     }
     

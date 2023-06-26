@@ -6,7 +6,7 @@ import java.util.List;
 public class RentaCar {
 	public String id;
 	public String naziv;
-	public ArrayList<Vozilo> vozila;
+	public List<Vozilo> vozila;
 	public String radnoVremeOd;
 	public String radnoVremeDo;
 	public boolean status;
@@ -18,10 +18,9 @@ public class RentaCar {
 	public RentaCar() {
 	}
 	
-	public RentaCar(String id, String naziv, ArrayList<Vozilo> vozila, String radnoVremeOd, String radnoVremeDo,
-			boolean status, Lokacija lokacija, String logoUrl, double ocena, Korisnik menadzer) {
+
+	public RentaCar(String naziv, List<Vozilo> vozila, String radnoVremeOd, String radnoVremeDo, boolean status, Lokacija lokacija, String logoUrl, double ocena, Korisnik menadzer) {
 		super();
-		this.id = id;
 		this.naziv = naziv;
 		this.vozila = vozila;
 		this.radnoVremeOd = radnoVremeOd;
@@ -49,7 +48,7 @@ public class RentaCar {
 		this.naziv = naziv;
 	}
 
-	public ArrayList<Vozilo> getVozila() {
+	public List<Vozilo> getVozila() {
 		return vozila;
 	}
 
@@ -112,12 +111,13 @@ public class RentaCar {
 	public void setMenadzer(Korisnik menadzer) {
 		this.menadzer = menadzer;
 	}
-
+ 
 	@Override
 	public String toString() {
 		return "RentaCar [id=" + id + ", naziv=" + naziv + ", vozila=" + vozila + ", radnoVremeOd=" + radnoVremeOd
 				+ ", radnoVremeDo=" + radnoVremeDo + ", status=" + status + ", lokacija=" + lokacija + ", logoUrl="
 				+ logoUrl + ", ocena=" + ocena + ", menadzer=" + menadzer + "]";
 	}
+
 	
 }

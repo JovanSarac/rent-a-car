@@ -3,6 +3,11 @@
 /dao/
 /services/
 =======
+<<<<<<< HEAD
+/dao/
+/services/
+=======
 /services/
 /dao/
 >>>>>>> feature-for-manager
+>>>>>>> main

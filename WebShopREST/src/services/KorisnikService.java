@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -43,6 +44,10 @@ public class KorisnikService {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("korisnikDao", new KorisnikDAO(contextPath));
 		}
+		if(ctx.getAttribute("rentaCarDao")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("rentaCarDao", new RentaCarDAO(contextPath));
+		}
 
 	}
 
@@ -58,8 +63,9 @@ public class KorisnikService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Korisnik> nadjiSveKorisnike() {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");	
-		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike().size() + "korisnika");
-		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike();
+		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
+		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike(ulogovaniKorisnik).size() + "korisnika");
+		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike(ulogovaniKorisnik);
 	}
 	
 	
@@ -151,23 +157,20 @@ public class KorisnikService {
 		return stringhtml;
 		
 	}
-	@POST
-    @Path("/{korisnickoIme}")
-	@Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String izmenaKorisnika(@PathParam("korisnickoIme") String korisnickoIme,
-    		@FormParam("ime") String ime,@FormParam("prezime") String prezime,
-    		@FormParam("pol") String pol,@FormParam("datumrodj") String datumrodj)
-    {
-        System.out.println("Zapoceta izmena");
-        KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
-        Korisnik k = new Korisnik(korisnickoIme,ime,prezime,pol,datumrodj);
-        if(dao.izmeniKorisnika(k)) {
-        	return "Uspjesno je izvresna izmjena korisnika:" + k.getKorisnickoIme();
-        }else {
-        	return "Doslo je do greske prilikom izmjene korisnika:" + k.getKorisnickoIme();
-        }
-    }
+	
+	@PUT
+	@Path("/izmjena")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response izmijeniProfil(Korisnik korisnik) {
+	    try {
+	    	KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+	        Korisnik azuriraniKorisnik = dao.izmeniKorisnika(korisnik);
+	        return Response.ok(azuriraniKorisnik).build();
+	    } catch (Exception e) {
+	        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
 	
 	 @POST
 	 @Path("/prijava")
@@ -227,10 +230,20 @@ public class KorisnikService {
 	 @GET
 	 @Path("/trazi")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme) {
+	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme, @QueryParam("filterUloga") String filterUloga) {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
-		 return dao.pretrazi(ime, prezime, korisnickoIme);
+		 return dao.pretrazi(ime, prezime, korisnickoIme,filterUloga);
 		}
 	 
+	 @GET
+	 @Path("/traziSlobodne")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Korisnik> traziMenadzere() {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 RentaCarDAO daoObjekat = (RentaCarDAO) ctx.getAttribute("rentaCarDao");
+		 return (ArrayList<Korisnik>) dao.nadjiMenadzere(daoObjekat.nadjiSveObjekte());
+		 
+		}
+
 
 }
