@@ -26,7 +26,7 @@ Vue.component("pocetna-menadzer", {
         <button v-on:click="pretraziObjekte">Traži</button>
       </div>
       <div class="objects-container">
-      <div v-for="objekat in objekti" :key="objekat.id"  class="object-card">
+      <div v-for="objekat in objekti" :key="objekat.id"  class="object-card" v-on:click="prikazRentaCara(objekat)">
         <img :src="objekat.logoUrl" class="object-image">
         <div class="object-details">
           <h3>{{ objekat.naziv }}</h3>
@@ -78,6 +78,11 @@ Vue.component("pocetna-menadzer", {
     .catch((error) => {
       console.error(error);
     });
-  }
+    },
+    
+    prikazRentaCara : function(objekat){
+		this.$router.push({ name: 'show-rentacar-manager', params: { objekatId: objekat.id } });
+	}
+  
  }
 });
