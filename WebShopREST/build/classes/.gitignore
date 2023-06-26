@@ -1,13 +1,5 @@
+/.DS_Store
 /beans/
-<<<<<<< HEAD
 /dao/
+/dto/
 /services/
-=======
-<<<<<<< HEAD
-/dao/
-/services/
-=======
-/services/
-/dao/
->>>>>>> feature-for-manager
->>>>>>> main
