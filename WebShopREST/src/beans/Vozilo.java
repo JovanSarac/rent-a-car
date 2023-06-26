@@ -5,12 +5,13 @@ public class Vozilo {
 	public enum TipGoriva {dizel,benzin,hibrid,elektricni}
 	public enum Status {Dostupljeno,Iznajmljeno}
 	
+	public String id;
 	public String marka;
 	public String model;
 	public double cena;
 	public String tipVozila;
 	public VrstaMjenjaca vrsta;
-	public RentaCar objekat;
+	public String objekatId;
 	public TipGoriva tipGoriva;
 	public double potrosnja;
 	public int brojVrata;
@@ -18,21 +19,22 @@ public class Vozilo {
 	public String opis;
 	public String slika;
 	public Status status;
+	public boolean deleted;
 	
 	public Vozilo() {
 		
 	}
 
-	public Vozilo(String marka, String model, double cena, String tipVozila, VrstaMjenjaca vrsta, RentaCar objekat,
+	public Vozilo(String marka, String model, double cena, String tipVozila, VrstaMjenjaca vrsta, String objekatId,
 			TipGoriva tipGoriva, double potrosnja, int brojVrata, int brojOsoba, String opis, String slika,
-			Status status) {
+			Status status, boolean deleted) {
 		super();
 		this.marka = marka;
 		this.model = model;
 		this.cena = cena;
 		this.tipVozila = tipVozila;
 		this.vrsta = vrsta;
-		this.objekat = objekat;
+		this.objekatId = objekatId;
 		this.tipGoriva = tipGoriva;
 		this.potrosnja = potrosnja;
 		this.brojVrata = brojVrata;
@@ -40,8 +42,17 @@ public class Vozilo {
 		this.opis = opis;
 		this.slika = slika;
 		this.status = status;
+		this.deleted = deleted;
+	}
+	
+	public String getId() {
+		return id;
 	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getMarka() {
 		return marka;
 	}
@@ -82,12 +93,12 @@ public class Vozilo {
 		this.vrsta = vrsta;
 	}
 
-	public RentaCar getObjekat() {
-		return objekat;
+	public String getObjekatId() {
+		return objekatId;
 	}
 
-	public void setObjekat(RentaCar objekat) {
-		this.objekat = objekat;
+	public void setObjekat(String objekatId) {
+		this.objekatId = objekatId;
 	}
 
 	public TipGoriva getTipGoriva() {
@@ -145,11 +156,20 @@ public class Vozilo {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	@Override
 	public String toString() {
 		return "Vozilo [marka=" + marka + ", model=" + model + ", cena=" + cena + ", tipVozila=" + tipVozila
-				+ ", vrsta=" + vrsta + ", objekat=" + objekat + ", tipGoriva=" + tipGoriva + ", potrosnja=" + potrosnja
+				+ ", vrsta=" + vrsta + ", objekatId=" + objekatId + ", tipGoriva=" + tipGoriva + ", potrosnja=" + potrosnja
 				+ ", brojVrata=" + brojVrata + ", brojOsoba=" + brojOsoba + ", opis=" + opis + ", slika=" + slika
 				+ ", status=" + status + "]";
 	}

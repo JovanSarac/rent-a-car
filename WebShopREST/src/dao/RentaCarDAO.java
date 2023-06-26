@@ -9,7 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.Lokacija;
+
 import beans.RentaCar;
 
 public class RentaCarDAO {
@@ -22,7 +22,7 @@ public class RentaCarDAO {
 
 		objectMapper = new ObjectMapper();
 		objekti = new ArrayList<RentaCar>();
-		
+
 		String putanjaFajla = CtxPath + "\\resources\\RentACar.JSON";
 		System.out.println(putanjaFajla);
 		file = new File(putanjaFajla);
@@ -37,13 +37,34 @@ public class RentaCarDAO {
         objekti.add(objekat);
         writeToFileJSON();
         return objekat;
-    }   
+    }  
+	
+	public boolean izmeniRentaCar(RentaCar noviObjekat) {
+    	RentaCar stariObjekat = nadjiObjekat(noviObjekat.getId());
+    	int index = objekti.indexOf(stariObjekat);
+    	System.out.println(stariObjekat);
+    	System.out.println(noviObjekat);
+    	stariObjekat = noviObjekat;
+    	objekti.set(index,stariObjekat);
+    	writeToFileJSON();
+		return true;
+ 	
+    }
 
     
     public RentaCar nadjiObjekat(String id) {
     	for(RentaCar k : objekti) {
     		if(k.getId().equals(id)) {
     			return k;
+    		}
+    	}
+    	return null;
+    }
+    
+    public RentaCar nadjiMenadzerovObjekat(String korisnikId) {
+    	for(RentaCar r : objekti) {
+    		if(r.menadzer.getId().equals(korisnikId)) {
+    			return r;
     		}
     	}
     	return null;

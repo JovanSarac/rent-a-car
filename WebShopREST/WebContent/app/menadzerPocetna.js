@@ -1,25 +1,18 @@
-Vue.component("neulogovani", {
-	data: function () {
-		    return {
-				objekti: [],
-				prikaziPretragu: false,
-			    pretragaNaziv: '',
-                pretragaLokacija: '',
-                pretragaOcena: 0,
-                sortiranjeKriterijum: ''
-				
-			}
-			
-	},
-	template: ` 
-  <div>
-    <ul class="menu-bar">
-      <li class="right"><button v-on:click="prijava()">Prijavi se</button></li>
-        <li>
-          <button v-on:click="togglePretraga">Pretraži</button>
-        </li>
-      </ul>
-      <div v-if="prikaziPretragu" class="pretraga-container">
+Vue.component("pocetna-menadzer", {
+  data: function () {
+    return {
+      objekti: [],
+      korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
+      pretragaNaziv: '',
+      pretragaLokacija: '',
+      pretragaOcena: 0,
+      sortiranjeKriterijum: ''
+    }
+  },
+  template: `
+    <div>
+      <menadzer-menu :korisnik="korisnik"></menadzer-menu>
+      <div class="pretraga-container">
         <input v-model="pretragaNaziv" type="text" placeholder="Pretraga po nazivu">
         <input v-model="pretragaLokacija" type="text" placeholder="Pretraga po lokaciji">
         <input v-model="pretragaOcena" type="number" placeholder="Pretraga po oceni(veći od)">
@@ -29,11 +22,11 @@ Vue.component("neulogovani", {
           <option value="naziv">Naziv objekta</option>
           <option value="lokacija">Lokacija</option>
           <option value="ocena">Prosječna ocena</option>
-  </select>
+  		  </select>
         <button v-on:click="pretraziObjekte">Traži</button>
       </div>
-    <div class="objects-container">
-      <div v-for="objekat in objekti" :key="objekat.id" class="object-card">
+      <div class="objects-container">
+      <div v-for="objekat in objekti" :key="objekat.id"  class="object-card" v-on:click="prikazRentaCara(objekat)">
         <img :src="objekat.logoUrl" class="object-image">
         <div class="object-details">
           <h3>{{ objekat.naziv }}</h3>
@@ -42,30 +35,25 @@ Vue.component("neulogovani", {
           <p>Ocjena: {{ objekat.ocena }}</p>
         </div>
       </div>
+     </div>
     </div>
-  </div>
   `,
-
-      mounted() {
-     console.log('rest/objekti')
+  mounted() {
+    console.log('rest/korisnici/prijava');
+    axios.get('rest/korisnici/prijava')
+      .then(response => (this.korisnik = response.data));
+      
     axios
-      .get('rest/objekti/')
+      .get("rest/objekti/")
       .then(response => {
         this.objekti = response.data;
       })
       .catch(error => {
         console.error(error);
       });
-	},
-	  methods: {
-    prijava() {
-      this.$router.push('/login');
-    },
-     togglePretraga() {
-      this.prikaziPretragu = !this.prikaziPretragu;
-      
-    },
- pretraziObjekte() {
+  },
+  methods: {
+	   pretraziObjekte() {
   axios
     .get("rest/objekti/trazi", {
       params: {
@@ -90,9 +78,11 @@ Vue.component("neulogovani", {
     .catch((error) => {
       console.error(error);
     });
-}
-
-  },		
-			
-		
+    },
+    
+    prikazRentaCara : function(objekat){
+		this.$router.push({ name: 'show-rentacar-manager', params: { objekatId: objekat.id } });
+	}
+  
+ }
 });
