@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RentaCar {
@@ -17,8 +18,8 @@ public class RentaCar {
 	public RentaCar() {
 	}
 	
-	public RentaCar(String naziv, List<Vozilo> vozila, String radnoVremeOd, String radnoVremeDo,
-			boolean status, Lokacija lokacija, String logoUrl, double ocena, Korisnik menadzer) {
+
+	public RentaCar(String naziv, List<Vozilo> vozila, String radnoVremeOd, String radnoVremeDo, boolean status, Lokacija lokacija, String logoUrl, double ocena, Korisnik menadzer) {
 		super();
 		this.naziv = naziv;
 		this.vozila = vozila;
@@ -33,13 +34,6 @@ public class RentaCar {
 
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String toString() {
-		return "RentaCar [id=" + id + ", naziv=" + naziv + ", vozila=" + vozila + ", radnoVremeOd=" + radnoVremeOd
-				+ ", radnoVremeDo=" + radnoVremeDo + ", status=" + status + ", lokacija=" + lokacija + ", logoUrl="
-				+ logoUrl + ", ocena=" + ocena + ", menadzer=" + menadzer + "]";
 	}
 
 	public void setId(String id) {
@@ -58,7 +52,7 @@ public class RentaCar {
 		return vozila;
 	}
 
-	public void setVozila(List<Vozilo> vozila) {
+	public void setVozila(ArrayList<Vozilo> vozila) {
 		this.vozila = vozila;
 	}
 
@@ -117,8 +111,13 @@ public class RentaCar {
 	public void setMenadzer(Korisnik menadzer) {
 		this.menadzer = menadzer;
 	}
-
-	
+ 
+	@Override
+	public String toString() {
+		return "RentaCar [id=" + id + ", naziv=" + naziv + ", vozila=" + vozila + ", radnoVremeOd=" + radnoVremeOd
+				+ ", radnoVremeDo=" + radnoVremeDo + ", status=" + status + ", lokacija=" + lokacija + ", logoUrl="
+				+ logoUrl + ", ocena=" + ocena + ", menadzer=" + menadzer + "]";
+	}
 
 	
 }

@@ -80,13 +80,13 @@ Vue.component("registracija", {
                 </tr>
             </table>
        </form>
-       <p>Već imate nalog? <a href="" v-on:click="prijava()">Prijavite se</a></p>
+       <p>Već imate nalog? <a style="text-decoration: underline; color: blue; cursor: pointer;" v-on:click="prijava()">Prijavite se</a></p>
 </div>		  
 `
 	, 
 	methods : {
 		prijava:function(){
-			router.push(`/login`);
+			this.$router.push(`/login`);
 		},
 		validacija:function(event){
 			let uspjeh =  true;
