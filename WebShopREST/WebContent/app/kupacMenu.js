@@ -4,6 +4,7 @@ Vue.component("kupac-menu", {
       <ul class="menu-bar">
         <li><button v-on:click="pocetnaClick">Pocetna</button</li>
         <li><button v-on:click="iznajmiClick">Iznajmi vozila</button</li>
+        <li><button v-on:click="iznajmljivanjaClick">Vaša iznajmljivanja</button</li>
         <li class="right"><button v-on:click="logOutClick">Odjava</button></li>
         <li class="right"><button v-on:click="profileClick">Nalog</button></li>
         <li class="right"><button v-on:click="pregledKorpe">Korpa</button></li>
@@ -27,6 +28,9 @@ Vue.component("kupac-menu", {
 	},
 	pregledKorpe(){
 		this.$router.push('/korpa-kupac');
+	},
+	iznajmljivanjaClick() {
+		this.$router.push('/iznajmlivanja-kupac');
 	}
-  }
+  } 
 });

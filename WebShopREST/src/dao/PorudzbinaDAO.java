@@ -10,7 +10,11 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Korisnik;
 import beans.Porudzbina;
+import beans.RentaCar;
+import beans.Vozilo;
+import beans.Korisnik.Uloga;
 
 public class PorudzbinaDAO {
 	private List<Porudzbina> porudzbine;
@@ -37,6 +41,15 @@ public class PorudzbinaDAO {
         writeToFileJSON();
         return p;
     }   
+	
+	 public boolean izmeniPorudzbinu(Porudzbina p) {
+	    	Porudzbina stara = nadjiPorudzbinu(p.getIdNarudzbe());
+	    	int index = porudzbine.indexOf(stara);
+	    	stara = p;
+	    	porudzbine.set(index,stara);
+	    	writeToFileJSON();
+			return true;
+	    }
 
     
     public Porudzbina nadjiPorudzbinu(String id) {
@@ -101,5 +114,18 @@ public class PorudzbinaDAO {
 	    }else {
 	    	System.out.println("ne kreira");
 	    }
+	}
+	
+	public List<Porudzbina> nadjiPorudzbineZaKupca(String KupacId) {
+		readFromFileJSON();
+	    List<Porudzbina> pretrazeni = new ArrayList<>();
+	    for (Porudzbina p : porudzbine) {
+	        if (p.getKupacId().equals(KupacId) && !p.isDeleted()) {
+	        	 pretrazeni.add(p);
+	        }
+	    }
+
+	     System.out.println("Pronađeno je: " + pretrazeni.size() + " porudzbina za ulogovanog kupca");
+	    return pretrazeni;
 	}
 }

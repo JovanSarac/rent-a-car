@@ -1,0 +1,57 @@
+.porudzbine-container {
+  margin-top: 20px;
+}
+
+.porudzbina-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.vozilo-card {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.vozilo-image img {
+  width: 100px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.vozilo-info p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.narudzba-id {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cena-narudzbe {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.status-narudzbe {
+  margin-top: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Additional styles for hover effect */
+.vozilo-card:hover {
+  background-color: #f5f5f5;
+}
+
+
+.oktazi-narudzbinu:hover {
+  background-color: #0056b3;
+}

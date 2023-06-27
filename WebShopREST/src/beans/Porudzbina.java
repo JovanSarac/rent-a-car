@@ -12,6 +12,7 @@ public class Porudzbina {
 	public double cena;
 	public String kupacId;
 	public Status status;
+	public boolean deleted;
 	
 	public Porudzbina() {
 		
@@ -27,6 +28,15 @@ public class Porudzbina {
 		this.cena = cena;
 		this.kupacId = kupacid;
 		this.status = status;
+		this.deleted = false;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public String getIdNarudzbe() {
