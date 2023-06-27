@@ -42,7 +42,7 @@ Vue.component("korpa-kupac", {
           <h4 class="right" v-on:click="IzbaciizKorpe(vozilo)">Izbaci iz korpe</h4>
         </div>
       </div>
-	  <h3>Ukupna cena porudzbine je: {{ korisnik.korpa.cena }} </h3>
+	  <h3>Ukupna cena porudzbine je: {{ korisnik.korpa.cena }} €</h3>
 	  </div>
 	  
     </div>
@@ -58,6 +58,11 @@ Vue.component("korpa-kupac", {
 	  IzbaciizKorpe : function(vozilo){
 		  this.korisnik.korpa.vozilauKorpi = this.korisnik.korpa.vozilauKorpi.filter(v => v.id !== vozilo.id); // Izbacuje vozilo iz liste
 		  this.korisnik.korpa.cena -= vozilo.cena; 
+		  console.log(this.korisnik.korpa.vozilauKorpi);
+		  if(this.korisnik.korpa.vozilauKorpi.length === 0){
+			  this.korisnik.korpa.pocetniDatum = null;
+			  this.korisnik.korpa.krajnjiDatum = null;
+		  }
 		  axios.put('rest/korisnici/izmjena', this.korisnik)
 	      .then(response => {
 			this.korisnik = response.data;
