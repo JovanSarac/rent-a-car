@@ -52,7 +52,7 @@ Vue.component("korpa-kupac", {
         </div>
       </div>
 	  <h3>Ukupna cena porudzbine je: {{ korisnik.korpa.cena }} €</h3>
-	  <button v-on:click="poruci()">Poruci</button>
+	  <button v-on:click="poruci()" class="buttonAddVehicle" style="font-size: 18px; padding: 12px 24px;" >Poruči</button>
 	  </div>
 	  
     </div>

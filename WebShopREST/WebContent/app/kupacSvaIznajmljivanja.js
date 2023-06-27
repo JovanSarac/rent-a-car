@@ -40,7 +40,7 @@ Vue.component("iznajmlivanja-kupac", {
           </div>
           <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
           <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
-          <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle">Izbrisi</button>
+          <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Otkaži</button>
         </div>
       </div>
     </div>
