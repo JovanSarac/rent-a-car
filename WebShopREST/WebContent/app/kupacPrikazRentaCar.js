@@ -9,7 +9,7 @@ Vue.component("show-rentacar-kupac", {
 	},
 	template: `
 	 <div>
-	  <menadzer-menu :korisnik="korisnik"></menadzer-menu> 
+	  <kupac-menu :korisnik="korisnik"></kupac-menu> 
 	   <p v-on:click="BackClick" style="text-decoration: underline; color: #3498db; cursor: pointer;">Vrati se nazad na prikaz svih rent a car objekata</p>
 	  <h1>Prikaz rent a car objekta </h1>
  		
