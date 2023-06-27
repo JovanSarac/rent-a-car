@@ -5,11 +5,11 @@ public class TipKupca {
 	
 	public Tip tipKupca;
 	public double procenat;
-	public int brojBodova;
+	public double brojBodova;
 	
 	public TipKupca () {}
 	
-	public TipKupca(Tip tipKupca, double procenat, int brojBodova) {
+	public TipKupca(Tip tipKupca, double procenat, double brojBodova) {
 		super();
 		this.tipKupca = tipKupca;
 		this.procenat = procenat;
@@ -32,11 +32,11 @@ public class TipKupca {
 		this.procenat = procenat;
 	}
 
-	public int getBrojBodova() {
+	public double getBrojBodova() {
 		return brojBodova;
 	}
 
-	public void setBrojBodova(int brojBodova) {
+	public void setBrojBodova(double brojBodova) {
 		this.brojBodova = brojBodova;
 	}
 

@@ -96,6 +96,17 @@ Vue.component("korpa-kupac", {
 	        
 	                    if (response.data === true) {
 	      					toast('Uspijesna porudzbina');
+	      					
+	      					const ukupnaCena = this.Porudzbina.cena;
+                            const brojBodova = ukupnaCena / 1000 * 133;
+                            axios.put(`rest/korisnici/azurirajBodove/` + brojBodova)
+                           .then((response) => {
+
+                             this.korisnik.brojBodova = response.data.brojBodova;
+                             })
+                          .catch((error) => {
+                           console.error(error);
+                           });
 	   				    }else{
 							toast('Neuspijesna porudzbina ')
 						}
@@ -111,6 +122,8 @@ Vue.component("korpa-kupac", {
 					      .catch(error => {
 					        console.error(error);
 					      });
+					      
+					     
 							
 			   }).catch(error => {
 	                        console.error(error);

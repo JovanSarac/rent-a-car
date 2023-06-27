@@ -81,84 +81,6 @@ public class KorisnikService {
         return (repo.Sacuvaj(noviKorisnik) != null);
     }
 	
-	@GET
-	@Path("/{id}")
-	@Produces(MediaType.TEXT_HTML)
-	public String prikazNaloga(@PathParam("id") String id) {
-		System.out.println("Prikaz naloga");
-		KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
-		Korisnik korisnik = dao.nadjiKorisnika(id);
-		if(korisnik == null) {
-			return "<html><head></head><body><h1>Korisnik sa trazenim id-om ne postoji.</h1></body></html>";
-		}
-		String stringhtml = "<html>\r\n"
-				+ "    <head>\r\n"
-				+ "\r\n"
-				+ "    </head>\r\n"
-				+ "    <body>\r\n"
-				+ "        <h1>Izmjenite podatke o profilu:</h1>\r\n"
-				+ "<form action=\"/WebShopREST/rest/korisnici/" + korisnik.getKorisnickoIme() + "\" method=\"post\">"
-				+ "        <table>\r\n"
-				+ "            <tr>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <label>Korisnicko ime: </label>\r\n"
-				+ "                </td>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"korIme\" disabled type=\"text\" value=\"" + korisnik.getKorisnickoIme() + "\">\r\n"
-				+ "                </td>\r\n"
-				+ "            </tr>\r\n"
-				+ "            <tr>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <label>Ime: </label>\r\n"
-				+ "                </td>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"ime\" type=\"text\" value=\"" + korisnik.getIme() + "\">\r\n"
-				+ "                </td>\r\n"
-				+ "            </tr>\r\n"
-				+ "            <tr>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <label>Prezime: </label>\r\n"
-				+ "                </td>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"prezime\" type=\"text\" value=\"" + korisnik.getPrezime() + "\">\r\n"
-				+ "                </td>\r\n"
-				+ "            </tr>\r\n"
-				+ "            <tr>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <label>Pol: </label>\r\n"
-				+ "                </td>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                   <select name=\"pol\">\r\n"
-				+ "              			<option value=\"Musko\">Musko</option>\r\n"
-				+ "              			<option value=\"Zensko\">Zensko</option>\r\n"
-				+ "            		  </select>"
-				+ "                </td>\r\n"
-				+ "            </tr>\r\n"
-				+ "            <tr>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <label>Datum rodjenja: </label>\r\n"
-				+ "                </td>\r\n"
-				+ "                <td align=\"left\">\r\n"
-				+ "                    <input name=\"datumrodj\" type=\"date\" value=\"" + korisnik.getDatumRodjenja() + "\">\r\n"
-				+ "                </td>\r\n"
-				+ "            </tr>\r\n"
-				+ "<tr>"
-				+ "	<td>"
-				+ "</td>"
-				+ " <td>"
-				+ "		<input type=\"submit\" value=\"Izmeni\">"
-				+ "</td>"
-				+ "</tr>"
-				+ "        </table>\r\n"
-				+ "</form>"
-				+ "<a href=\"/WebShopREST/pocetnastrana.html#/profil\">Vrati se nazad na prikaz profila</a>"
-				+ "    </body>\r\n"
-				+ "</html>";
-		
-		return stringhtml;
-		
-	}
-	
 	@PUT
 	@Path("/izmjena")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -253,5 +175,17 @@ public class KorisnikService {
 		 	KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
 			return dao.nadjiIdPoslednjegKorisnika();
 		}
+	 
+	 @PUT
+	 @Path("/azurirajBodove/{brojBodova}")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public Response azurirajBrojBodova(@PathParam("brojBodova") double brojBodova) {
+		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
+		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
+		 ulogovaniKorisnik.getVrstaKupca().setBrojBodova(ulogovaniKorisnik.getVrstaKupca().getBrojBodova()+brojBodova);
+		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
+	      return Response.ok(azuriraniKorisnik).build();
+	 }
 
 }
