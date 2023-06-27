@@ -1,35 +1,31 @@
 package beans;
 
-
-import java.time.LocalDateTime;
 import java.util.List;
-
-
 
 public class Porudzbina {
 	public enum Status{Obrada, Odobreno, Preuzeto, Vraceno, Odbijeno, Otkazano};	
 	
 	public String idNarudzbe;
 	public List<Vozilo> iznajmljenaVozila;
-	public LocalDateTime datumIznajmljivanja;
-	public int trajanjeNajma;
+	public String datumIznajmljivanja;
+	public String datumVracanja;
 	public double cena;
-	public String kupacImePrz;
+	public String kupacId;
 	public Status status;
 	
 	public Porudzbina() {
 		
 	}
 
-	public Porudzbina(String idNarudzbe, List<Vozilo> iznajmljenaVozila, LocalDateTime datumIznajmljivanja,
-			int trajanjeNajma, double cena, String kupacImePrz, Status status) {
+	public Porudzbina(String idNarudzbe, List<Vozilo> iznajmljenaVozila, String datumIznajmljivanja,
+			String datumVracanja, double cena, String kupacid, Status status) {
 		super();
 		this.idNarudzbe = idNarudzbe;
 		this.iznajmljenaVozila = iznajmljenaVozila;
 		this.datumIznajmljivanja = datumIznajmljivanja;
-		this.trajanjeNajma = trajanjeNajma;
+		this.datumVracanja = datumVracanja;
 		this.cena = cena;
-		this.kupacImePrz = kupacImePrz;
+		this.kupacId = kupacid;
 		this.status = status;
 	}
 
@@ -49,20 +45,20 @@ public class Porudzbina {
 		this.iznajmljenaVozila = iznajmljenaVozila;
 	}
 
-	public LocalDateTime getDatumIznajmljivanja() {
+	public String getDatumIznajmljivanja() {
 		return datumIznajmljivanja;
 	}
 
-	public void setDatumIznajmljivanja(LocalDateTime datumIznajmljivanja) {
+	public void setDatumIznajmljivanja(String datumIznajmljivanja) {
 		this.datumIznajmljivanja = datumIznajmljivanja;
 	}
 
-	public int getTrajanjeNajma() {
-		return trajanjeNajma;
+	public String getDatumVracanja() {
+		return datumVracanja;
 	}
 
-	public void setTrajanjeNajma(int trajanjeNajma) {
-		this.trajanjeNajma = trajanjeNajma;
+	public void setDatumVracanja(String datumVracanja) {
+		this.datumVracanja = datumVracanja;
 	}
 
 	public double getCena() {
@@ -73,12 +69,12 @@ public class Porudzbina {
 		this.cena = cena;
 	}
 
-	public String getKupacImePrz() {
-		return kupacImePrz;
+	public String getKupacId() {
+		return kupacId;
 	}
 
-	public void setKupacImePrz(String kupacImePrz) {
-		this.kupacImePrz = kupacImePrz;
+	public void setKupacId(String kupacId) {
+		this.kupacId = kupacId;
 	}
 
 	public Status getStatus() {
@@ -88,13 +84,4 @@ public class Porudzbina {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	@Override
-	public String toString() {
-		return "Porudzbina [idNarudzbe=" + idNarudzbe + ", iznajmljenaVozila=" + iznajmljenaVozila
-				+ ", datumIznajmljivanja=" + datumIznajmljivanja + ", trajanjeNajma=" + trajanjeNajma + ", cena=" + cena
-				+ ", kupacImePrz=" + kupacImePrz + ", status=" + status + "]";
-	}
-
-	
 }

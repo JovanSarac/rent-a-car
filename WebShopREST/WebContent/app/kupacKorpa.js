@@ -19,6 +19,15 @@ Vue.component("korpa-kupac", {
 				krajnjiDatum : null
 		  }
 	  },
+	   Porudzbina: {
+		   idNarudzbe: null,
+		   iznajmljenaVozila: [],
+		   datumIznajmljivanja: null,
+		   datumVracanja: null,
+		   cena: null,
+		   kupacId: null,
+		   status: 'Obrada'
+	   }
       
     }
   },
@@ -43,6 +52,7 @@ Vue.component("korpa-kupac", {
         </div>
       </div>
 	  <h3>Ukupna cena porudzbine je: {{ korisnik.korpa.cena }} €</h3>
+	  <button v-on:click="poruci()">Poruci</button>
 	  </div>
 	  
     </div>
@@ -70,6 +80,43 @@ Vue.component("korpa-kupac", {
 	      .catch(error => {
 	        console.error(error);
 	      });
-	  } 
+	  },
+	  poruci() {
+
+           this.Porudzbina.iznajmljenaVozila = this.korisnik.korpa.vozilauKorpi;
+           this.Porudzbina.datumIznajmljivanja = this.korisnik.korpa.pocetniDatum;
+           this.Porudzbina.datumVracanja = this.korisnik.korpa.krajnjiDatum;
+           this.Porudzbina.cena = this.korisnik.korpa.cena;
+           this.Porudzbina.kupacId = this.korisnik.id;
+          
+          if(this.Porudzbina.iznajmljenaVozila.length != 0){
+			  axios
+	          .post("rest/porudzbine/registruj", this.Porudzbina)
+	    	  .then((response) => {                                            
+	        
+	                    if (response.data === true) {
+	      					toast('Uspijesna porudzbina');
+	   				    }else{
+							toast('Neuspijesna porudzbina ')
+						}
+						
+						this.korisnik.korpa.vozilauKorpi = [];
+						this.korisnik.korpa.pocetniDatum = null;
+						this.korisnik.korpa.krajnjiDatum = null;
+						this.korisnik.korpa.cena = 0;
+						axios.put('rest/korisnici/izmjena', this.korisnik)
+					      .then(response => {
+							this.korisnik = response.data;
+					      })
+					      .catch(error => {
+					        console.error(error);
+					      });
+							
+			   }).catch(error => {
+	                        console.error(error);
+	           });
+          }
+	  }
+	   
  }
 });
