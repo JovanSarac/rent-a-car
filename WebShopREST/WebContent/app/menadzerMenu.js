@@ -4,6 +4,7 @@ Vue.component("menadzer-menu", {
       <ul class="menu-bar">
         <li><button v-on:click="pocetnaClick">Pocetna</button</li>
         <li><button v-on:click="rentACarClick">Vas objekat</button</li>
+        <li><button v-on:click="iznajmljivanjaClick">Iznajmljivanja za Vas objekat</button</li>
         <li class="right"><button v-on:click="logOutClick">Odjava</button></li>
         <li class="right"><button v-on:click="profileClick">Nalog</button></li>
         <li class="right"><p>{{korisnik.ime}} {{korisnik.prezime}}</p></li>
@@ -23,6 +24,9 @@ Vue.component("menadzer-menu", {
 	},
 	rentACarClick(){
 		this.$router.push('/renta-car-menadzer');
+	},
+	iznajmljivanjaClick(){
+		this.$router.push('/iznajmljivanja-menadzer');
 	}
   }
 });

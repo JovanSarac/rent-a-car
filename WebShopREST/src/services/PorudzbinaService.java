@@ -65,6 +65,14 @@ public class PorudzbinaService {
 		 return (ArrayList<Porudzbina>) dao.nadjiPorudzbineZaKupca(ulogovan.id);
 	 }
 	 
+	 @GET
+	 @Path("/nadjiPorudzbinezaRentaCar/{id}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Porudzbina> nadjiPorudzbinezaRentaCar(@PathParam("id") String id) {	
+		 PorudzbinaDAO dao = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");		
+		 return (ArrayList<Porudzbina>) dao.nadjiPorudzbinezaRentaCar(id);
+	 }
+	 
 	 @POST
 	 @Path("/registruj")
 	 @Produces(MediaType.APPLICATION_JSON)

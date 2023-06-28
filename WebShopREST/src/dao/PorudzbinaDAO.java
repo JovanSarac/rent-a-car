@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import beans.Porudzbina;
+import beans.Porudzbina.Status;
 
 
 public class PorudzbinaDAO {
@@ -128,6 +129,18 @@ public class PorudzbinaDAO {
 	    }
 
 	     System.out.println("Pronađeno je: " + pretrazeni.size() + " porudzbina za ulogovanog kupca");
+	    return pretrazeni;
+	}
+	
+	public List<Porudzbina> nadjiPorudzbinezaRentaCar(String rentaCarId){
+		List<Porudzbina> pretrazeni = new ArrayList<>();
+	    for (Porudzbina p : porudzbine) {
+	        if (p.rentaCarIds.contains(rentaCarId)) {
+	        	 pretrazeni.add(p);
+	        }
+	    }
+
+	    System.out.println("Pronađeno je: " + pretrazeni.size() + " porudzbina za rentacar objekat sa idom:" + rentaCarId);
 	    return pretrazeni;
 	}
 }

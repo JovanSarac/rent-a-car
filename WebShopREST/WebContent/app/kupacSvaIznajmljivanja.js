@@ -38,9 +38,9 @@ Vue.component("iznajmlivanja-kupac", {
               <p class="marka-model">Model: {{ vozilo.model }}</p>
             </div>
           </div>
-          <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
+          <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }} €</p>
           <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
-          <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Otkaži</button>
+          <button v-on:click="otkaziNarudzbinu(porudzbina)" v-if="porudzbina.status === 'Obrada'" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Otkaži</button>
         </div>
       </div>
     </div>
@@ -79,10 +79,10 @@ Vue.component("iznajmlivanja-kupac", {
               .catch(error => {
                 console.error(error);
               });
-            const index = this.porudzbine.indexOf(porudzbina);
+            /*const index = this.porudzbine.indexOf(porudzbina);
             if (index !== -1) {
               this.porudzbine.splice(index, 1);
-            }
+            }*/
           }
         })
         .catch(error => {

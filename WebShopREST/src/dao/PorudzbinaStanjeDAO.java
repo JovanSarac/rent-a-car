@@ -35,26 +35,36 @@ public class PorudzbinaStanjeDAO {
     }   
 	
 	 public boolean izmeniStanjePorudzbine(PorudzbinaStanje p) {
-		 	PorudzbinaStanje stara = nadjiPorudzbinu(p.getPorudzbinaId());
+		 	PorudzbinaStanje stara = nadjiStanjePorudzbine(p.getPorudzbinaId(),p.getRentaCarId());
 	    	int index = porudzbine.indexOf(stara);
 	    	stara = p;
 	    	porudzbine.set(index,stara);
 	    	writeToFileJSON();
 			return true;
-	    }
+	 }
 
     
-    public PorudzbinaStanje nadjiPorudzbinu(String id) {
+    /*public PorudzbinaStanje nadjiPorudzbinu(String porudzbinaId,String rentaCarId) {
     	for(PorudzbinaStanje p : porudzbine) {
-    		if(p.getPorudzbinaId().equals(id)) {
+    		if(p.getPorudzbinaId().equals(porudzbinaId) ) {
     			return p;
     		}
     	}
     	return null;
-    }
+    }*/
     
     public List<PorudzbinaStanje> nadjiSvePorudzbine() {
         return porudzbine;
+    }
+    
+    public List<PorudzbinaStanje> nadjiSvePorudzbinezaRentaCar(String objekatId){
+    	ArrayList<PorudzbinaStanje> por = new ArrayList<PorudzbinaStanje>();
+    	for(PorudzbinaStanje p : porudzbine) {
+    		if(p.getRentaCarId().equals(objekatId)) {
+    			por.add(p);
+    		}
+    	}
+    	return por;
     }
     
 
@@ -89,5 +99,25 @@ public class PorudzbinaStanjeDAO {
 	    }else {
 	    	System.out.println("ne kreira");
 	    }
+	}
+
+	public PorudzbinaStanje nadjiStanjePorudzbine(String porudzbinaId, String objekatId) {
+		for(PorudzbinaStanje p : porudzbine) {
+    		if(p.getPorudzbinaId().equals(porudzbinaId) && p.getRentaCarId().equals(objekatId)) {
+    			return p;
+    		}
+    	}
+    	return null;
+		
+	}
+
+	public ArrayList<PorudzbinaStanje> nadjiPorudzbineSpramidPorudzbine(String porudzbinaId) {
+		ArrayList<PorudzbinaStanje> por = new ArrayList<PorudzbinaStanje>();
+		for(PorudzbinaStanje p : porudzbine) {
+    		if(p.getPorudzbinaId().equals(porudzbinaId) ) {
+    			por.add(p);
+    		}
+    	}
+		return por;
 	}
 }
