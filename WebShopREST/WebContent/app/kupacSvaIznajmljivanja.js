@@ -62,13 +62,14 @@ Vue.component("iznajmlivanja-kupac", {
   methods: {
     otkaziNarudzbinu(porudzbina) {
       if (porudzbina.status === 'Obrada') {
-        porudzbina.deleted = true;
+        porudzbina.status = 'Otkazano';
       
        axios.put('rest/porudzbine/izmeniporudzbinu', porudzbina)
         .then(response => {
           console.log(response.data);
           if (response.data === true) {
-            console.log("Upsješno obrisana porudzbina.");
+            console.log("Upsješno otkazana porudzbina.");           
+            
             const ukupnaCena = porudzbina.cena;
             const brojBodova = -(ukupnaCena / 1000 * 133 * 4);
             axios.put(`rest/korisnici/azurirajBodove/` + brojBodova)

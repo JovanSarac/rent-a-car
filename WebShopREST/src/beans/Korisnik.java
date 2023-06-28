@@ -1,6 +1,5 @@
 package beans;
 
-import beans.TipKupca.Tip;
 
 public class Korisnik {
 	

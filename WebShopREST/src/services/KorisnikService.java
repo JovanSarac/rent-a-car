@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,12 +20,8 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import beans.Korisnik.Uloga;
-import beans.Lokacija;
-import beans.RentaCar;
 import dao.KorisnikDAO;
-import dao.LokacijaDAO;
 import dao.RentaCarDAO;
-import dao.VoziloDAO;
 import dto.KorisnikDTO;
 @Path ("/korisnici")
 public class KorisnikService {
@@ -185,7 +180,7 @@ public class KorisnikService {
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
 		 ulogovaniKorisnik.getVrstaKupca().setBrojBodova(ulogovaniKorisnik.getVrstaKupca().getBrojBodova()+brojBodova);
 		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
-	      return Response.ok(azuriraniKorisnik).build();
+	     return Response.ok(azuriraniKorisnik).build();
 	 }
 
 }

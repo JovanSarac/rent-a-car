@@ -7,6 +7,7 @@ public class Porudzbina {
 	
 	public String idNarudzbe;
 	public List<Vozilo> iznajmljenaVozila;
+	public List<String> rentaCarIds;
 	public String datumIznajmljivanja;
 	public String datumVracanja;
 	public double cena;
@@ -18,11 +19,13 @@ public class Porudzbina {
 		
 	}
 
-	public Porudzbina(String idNarudzbe, List<Vozilo> iznajmljenaVozila, String datumIznajmljivanja,
+	public Porudzbina(String idNarudzbe, List<Vozilo> iznajmljenaVozila, List<String> rentaCarIds,
+			String datumIznajmljivanja,
 			String datumVracanja, double cena, String kupacid, Status status) {
 		super();
 		this.idNarudzbe = idNarudzbe;
 		this.iznajmljenaVozila = iznajmljenaVozila;
+		this.rentaCarIds = rentaCarIds;
 		this.datumIznajmljivanja = datumIznajmljivanja;
 		this.datumVracanja = datumVracanja;
 		this.cena = cena;

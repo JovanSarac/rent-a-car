@@ -1,10 +1,6 @@
 package services;
 
-import beans.Vozilo;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -16,17 +12,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Korisnik;
 import beans.Porudzbina;
-import beans.RentaCar;
-import beans.Porudzbina.Status;
 import dao.KorisnikDAO;
 import dao.PorudzbinaDAO;
-import dao.RentaCarDAO;
 @Path ("/porudzbine")
 public class PorudzbinaService {
 	@Context
@@ -83,5 +75,13 @@ public class PorudzbinaService {
 	     PorudzbinaDAO repo = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");
 	     return (repo.Sacuvaj(porudzbina) != null);
 	 }
+	 
+	@GET
+	@Path("/nadjiIdPorudzbine")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String nadjiId() {
+		PorudzbinaDAO repo = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");
+		return repo.nadjiIdPoslednjePorudzbine();
+	}
 	
 }

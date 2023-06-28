@@ -22,11 +22,17 @@ Vue.component("korpa-kupac", {
 	   Porudzbina: {
 		   idNarudzbe: null,
 		   iznajmljenaVozila: [],
+		   rentaCarIds: [],
 		   datumIznajmljivanja: null,
 		   datumVracanja: null,
 		   cena: null,
 		   kupacId: null,
 		   status: 'Obrada'
+	   },
+	   porudzbinaStanje: {
+		   porudzbinaId : null,
+		   rentaCarId : null,
+		   statusPorudzbine: 'Obrada'
 	   }
       
     }
@@ -88,14 +94,45 @@ Vue.component("korpa-kupac", {
            this.Porudzbina.datumVracanja = this.korisnik.korpa.krajnjiDatum;
            this.Porudzbina.cena = this.korisnik.korpa.cena;
            this.Porudzbina.kupacId = this.korisnik.id;
+           
+           
           
           if(this.Porudzbina.iznajmljenaVozila.length != 0){
+			  for(let v of this.korisnik.korpa.vozilauKorpi){
+				  if (!this.Porudzbina.rentaCarIds.includes(v.objekatId)) {
+				    this.Porudzbina.rentaCarIds.push(v.objekatId);
+				  }
+			  }
 			  axios
 	          .post("rest/porudzbine/registruj", this.Porudzbina)
 	    	  .then((response) => {                                            
 	        
 	                    if (response.data === true) {
 	      					toast('Uspijesna porudzbina');
+	      					
+	      					
+	      					axios.get('rest/porudzbine/nadjiIdPorudzbine')
+	      					.then(response => {
+								  if(response.data!=null){
+									  //pronalazak i postavljanje prvo id porudzbine
+									  this.porudzbinaStanje.porudzbinaId = response.data;
+									  
+									  //prolazak kroz rentaCarIds i kreiranje toliko stanja porudzbina
+									  for(let rentacar of this.Porudzbina.rentaCarIds){
+										  let porudzbinaStanje = {}; // Stvaranje nove instance porudzbinaStanje unutar petlje
+										  porudzbinaStanje.porudzbinaId = this.porudzbinaStanje.porudzbinaId;
+										  porudzbinaStanje.statusPorudzbine = "Obrada";
+										  porudzbinaStanje.rentaCarId = rentacar;
+										  axios.post('rest/porudzbinestanje/registruj',porudzbinaStanje)
+										  .then(response => {
+											  if(response.data === true){
+												  console.log("Uspjesno registrovano stanje porudzbine.");
+											  }
+										  }).catch(error => {console.error(error);});
+									  }
+								  }
+							  })
+	      					
 	      					
 	      					const ukupnaCena = this.Porudzbina.cena;
                             const brojBodova = ukupnaCena / 1000 * 133;
@@ -128,6 +165,8 @@ Vue.component("korpa-kupac", {
 			   }).catch(error => {
 	                        console.error(error);
 	           });
+	           
+	           
           }
 	  }
 	   

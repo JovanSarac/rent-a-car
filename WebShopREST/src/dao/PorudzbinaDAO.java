@@ -10,11 +10,9 @@ import java.util.Random;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.Korisnik;
+
 import beans.Porudzbina;
-import beans.RentaCar;
-import beans.Vozilo;
-import beans.Korisnik.Uloga;
+
 
 public class PorudzbinaDAO {
 	private List<Porudzbina> porudzbine;
@@ -65,6 +63,10 @@ public class PorudzbinaDAO {
         return porudzbine;
     }
     
+    public String nadjiIdPoslednjePorudzbine() {
+		 System.out.println(porudzbine.get(porudzbine.size()-1).getIdNarudzbe());
+		 return porudzbine.get(porudzbine.size()-1).getIdNarudzbe();
+	 }
 
     private String generateRandomId() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
