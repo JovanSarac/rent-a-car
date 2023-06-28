@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import beans.RentaCar;
+import beans.Vozilo;
 
 public class RentaCarDAO {
 
@@ -60,6 +61,18 @@ public class RentaCarDAO {
     	}
     	return null;
     }
+    
+    public RentaCar nadjiObjekatPoVozilu(String id) {
+    	for(RentaCar k : objekti) {
+    		for(Vozilo v : k.getVozila())
+    		if(v.getId().equals(id)) {
+    			return k;
+    		}
+    	}
+    	return null;
+    }
+    
+    
     
     public RentaCar nadjiMenadzerovObjekat(String korisnikId) {
     	for(RentaCar r : objekti) {

@@ -20,7 +20,10 @@ Vue.component("iznajmlivanja-kupac", {
         }
       },
       porudzbine: [],
-      aktivanIndex: -1
+      aktivanIndex: -1,
+      Komentar: {id:null, kupacId: null, rentacarId: null, komentar:null, ocjena: null},
+       objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
+      prikaziFormu: []
     };
   },
    template: `
@@ -39,7 +42,14 @@ Vue.component("iznajmlivanja-kupac", {
               <p class="marka-model">Model: {{ vozilo.model }}</p>
               <p v-if="aktivanIndex === index">Datum iznajmljivanja: {{ porudzbina.datumIznajmljivanja }}</p>
               <p v-if="aktivanIndex === index">Datum vraćanja: {{ porudzbina.datumVracanja }}</p>
-              <button v-if="porudzbina.status === 'Vraceno' && aktivanIndex === index" class="buttonOceniObjekat" style="font-size: 13px; padding: 12px 24px;">Ocijeni objekat</button>
+              <button v-if="porudzbina.status === 'Vraceno' && aktivanIndex === index" @click="prikaziFormuZaOcijenjivanje(index)" class="buttonOceniObjekat" style="font-size: 13px; padding: 12px 24px;">Ocijeni objekat</button>
+              <form v-if="prikaziFormu[index]" @submit.prevent="submitOcjenaKomentar(vozilo, index)">
+                <label>Komentar:</label>
+                <textarea v-model="Komentar.komentar" required></textarea>
+                <label>Ocjena:</label>
+                <input type="number" v-model="Komentar.ocjena" required>
+                <button type="submit">Submit</button>
+              </form>
             </div>
           </div>
           <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
@@ -101,5 +111,45 @@ Vue.component("iznajmlivanja-kupac", {
           });
       }
     },
+    prikaziFormuZaOcijenjivanje(index) {
+      this.prikaziFormu = this.porudzbine.map(() => false);
+      this.prikaziFormu[index] = true;
+      this.aktivanIndex = index;
+    },
+    
+    sakrijFormu(index) {
+      this.prikaziFormu[index] = false;
+    },
+
+    submitOcjenaKomentar(vozilo, index) {
+      if (!this.Komentar.komentar || !this.Komentar.ocjena) {
+        alert("Molimo popunite sva polja za komentar i ocjenu.");
+        return;
+      }
+      
+      axios.get('rest/objekti/nadjiRentaCarpoIduVozila/' + vozilo.id)
+		.then(response=>{
+			this.objekat = response.data;
+			this.Komentar.rentacarId = this.objekat.id;
+			console.log("nadjen rentacarid za komentar.", this.Komentar.rentacarId);
+			
+			 this.Komentar.kupacId = this.korisnik.id;
+      console.log("nadjen citav komentar.", this.Komentar);
+      axios
+        .post("rest/komentari/registruj", this.Komentar)
+        .then((response) => {
+          if (response.data === true) {
+            console.log("Uspješno ocijenjen objekat.", response.data);
+            this.Komentar = { id: null, kupacId: null, rentacarId: null, komentar: null, ocjena: null };
+            this.sakrijFormu(index); 
+          } else {
+            console.log("Greska u cuvanju.");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+		})
+  },
   }
 });

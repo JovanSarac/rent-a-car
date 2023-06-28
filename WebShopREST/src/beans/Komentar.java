@@ -1,63 +1,59 @@
 package beans;
 
+
 public class Komentar {
-	
-	public String id;
-	public int KupacId;
-	public int RentacarId;
-	public String komentar;
-	public int ocjena;
-	
-	public Komentar() {}
+    public String id;
+    public int kupacId;
+    public int rentacarId;
+    public String komentar;
+    public int ocjena;
 
-	public Komentar(int kupacId, int rentacarId, String komentar, int ocjena) {
-		super();
-		KupacId = kupacId;
-		RentacarId = rentacarId;
-		this.komentar = komentar;
-		this.ocjena = ocjena;
-	}
+    public Komentar() {}
 
-	public int getKupacId() {
-		return KupacId;
-	}
+    public Komentar(int kupacId, int rentacarId, String komentar, int ocjena) {
+        this.kupacId = kupacId;
+        this.rentacarId = rentacarId;
+        this.komentar = komentar;
+        this.ocjena = ocjena;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public int getKupacId() {
+        return kupacId;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setKupacId(int kupacId) {
-		KupacId = kupacId;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public int getRentacarId() {
-		return RentacarId;
-	}
+    public void setKupacId(int kupacId) {
+        this.kupacId = kupacId;
+    }
 
-	public void setRentacarId(int rentacarId) {
-		RentacarId = rentacarId;
-	}
+    public int getRentacarId() {
+        return rentacarId;
+    }
 
-	public String getKomentar() {
-		return komentar;
-	}
+    public void setRentacarId(int rentacarId) {
+        this.rentacarId = rentacarId;
+    }
 
-	public void setKomentar(String komentar) {
-		this.komentar = komentar;
-	}
+    public String getKomentar() {
+        return komentar;
+    }
 
-	public int getOcjena() {
-		return ocjena;
-	}
+    public void setKomentar(String komentar) {
+        this.komentar = komentar;
+    }
 
-	public void setOcjena(int ocjena) {
-		this.ocjena = ocjena;
-	}
-	
-	
+    public int getOcjena() {
+        return ocjena;
+    }
 
+    public void setOcjena(int ocjena) {
+        this.ocjena = ocjena;
+    }
 }
