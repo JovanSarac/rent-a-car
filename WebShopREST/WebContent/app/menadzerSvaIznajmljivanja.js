@@ -36,9 +36,11 @@ Vue.component("iznajmljivanja-menadzer", {
       porudzbinaStanje: {
 		  porudzbinaId : null,
 		  rentaCarId : null,
-		  statusPorudzbine : null
+		  statusPorudzbine : null,
+		  razlogOdbijanja : null
 	  },
-	  svaStanjaPorudzbina :[]
+	  svaStanjaPorudzbina :[],
+	  razlogOdbijanja:null
     };
   },
   template: `
@@ -63,10 +65,17 @@ Vue.component("iznajmljivanja-menadzer", {
           <p class="cena-narudzbe">Ukupna cena narudžbe: {{ porudzbina.cena }} €</p>
           <p class="status-narudzbe">Status cjelokupne narudžbe: {{ porudzbina.status }}</p>
           <div v-if="porudzbina.status != 'Otkazano'">
-	          <button v-on:click="potvrdiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odobri</button>
-			  <button class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odbij</button>
+	          <button :id="'potvrdi-'+ porudzbina.idNarudzbe" v-on:click="potvrdiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odobri</button>
+			  <button :id="'odbij-'+ porudzbina.idNarudzbe" v-on:click="prikaziOdbijenicu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odbij</button>
 			  <button class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;"  v-bind:disabled="!(porudzbina.datumIznajmljivanja === danasnjiDatum  && svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno' && porudzbina.status === 'Odobreno')">Preuzeto</button>
 			  <button class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="!(svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto')">Vraceno</button>
+			  <div :id="'porudzbina-' + porudzbina.idNarudzbe" hidden="true" style=" border: 1px solid #ccc; border-radius: 5px; padding: 10px;margin-bottom: 10px; width:500px;">
+			  	  <button v-on:click="skloniOdbijenicu(porudzbina)"><span>x</span></button>
+				  <p>Morate napisati razlog odbijanja:</p>
+				  <textarea :id="'textarea-' + porudzbina.idNarudzbe" style="width:300px ; height:150px" v-model="razlogOdbijanja"></textarea>
+				  <button v-on:click="odbij(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Odbij</button>
+			  </div>
+			  
 	      </div>
         </div>
       </div>
@@ -161,7 +170,71 @@ Vue.component("iznajmljivanja-menadzer", {
 
 		});
 		
+	},
+	
+	prikaziOdbijenicu(porudzbina){
+		let odbijenica = document.getElementById('porudzbina-' + porudzbina.idNarudzbe);
+		odbijenica.hidden = false;
+		let dugmePotvrda = document.getElementById('potvrdi-'+ porudzbina.idNarudzbe);
+		dugmePotvrda.disabled = true;
+		let dugmeOdbij = document.getElementById('odbij-'+ porudzbina.idNarudzbe);
+		dugmeOdbij.disabled = true;		
+	},
+	skloniOdbijenicu(porudzbina){
+		let odbijenica = document.getElementById('porudzbina-' + porudzbina.idNarudzbe);
+		odbijenica.hidden = true;
+		let dugmePotvrda = document.getElementById('potvrdi-'+ porudzbina.idNarudzbe);
+		dugmePotvrda.disabled = false;
+		let dugmeOdbij = document.getElementById('odbij-'+ porudzbina.idNarudzbe);
+		dugmeOdbij.disabled = false;
+	},
+	
+	
+	odbij(porudzbina){		
+		if(this.razlogOdbijanja === null){
+			let textarea = document.getElementById('textarea-' + porudzbina.idNarudzbe);
+			textarea.style.background = "red";
+		}else{
+			let textarea = document.getElementById('textarea-' + porudzbina.idNarudzbe);
+			textarea.style.background = "white";
+			porudzbina.status = 'Odbijeno';
+			axios.put('rest/porudzbine/izmeniporudzbinu', porudzbina)
+			.then(response =>{
+				if(response.data===true){
+					console.log("uspjesno promjenjen status porudzbine u Odbijeno");
+					
+					axios.get('rest/porudzbinestanje/nadjiPorudzbinuStanja/' + porudzbina.idNarudzbe)
+					.then(response =>{
+							let porudz = response.data;
+							
+							console.log(porudz);
+							for(let p of porudz){
+								p.statusPorudzbine = 'Odbijeno';
+								p.razlogOdbijanja = this.razlogOdbijanja;
+								axios.put('rest/porudzbinestanje/izmenistanjeporudzbine',p)
+								.then(response => {
+									if(response.data === true){
+										console.log("uspjesno ste izmjenili stanje kod porudzbinaStanje u odobreno ");
+									}
+								});
+							}
+							
+							axios.get('rest/porudzbinestanje/nadjisvaStanjaPorudzbinazaRentAcar/' + this.objekat.id)
+							.then(response =>{
+								this.svaStanjaPorudzbina = response.data;
+							});
+							
+							let odbijenica = document.getElementById('porudzbina-' + porudzbina.idNarudzbe);
+							odbijenica.hidden = true;
+							
+					});
+				}
+			});
+		
+		}
+		
 	}
+	
   }
   
 });

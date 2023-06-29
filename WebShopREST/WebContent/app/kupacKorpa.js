@@ -32,7 +32,8 @@ Vue.component("korpa-kupac", {
 	   porudzbinaStanje: {
 		   porudzbinaId : null,
 		   rentaCarId : null,
-		   statusPorudzbine: 'Obrada'
+		   statusPorudzbine: 'Obrada',
+		   razlogOdbijanja : null
 	   }
       
     }
