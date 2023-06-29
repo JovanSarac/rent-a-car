@@ -67,7 +67,7 @@ Vue.component("iznajmljivanja-menadzer", {
           <div v-if="porudzbina.status != 'Otkazano'">
 	          <button :id="'potvrdi-'+ porudzbina.idNarudzbe" v-on:click="potvrdiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odobri</button>
 			  <button :id="'odbij-'+ porudzbina.idNarudzbe" v-on:click="prikaziOdbijenicu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odbij</button>
-			  <button v-on:click="preuzmiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;"  v-bind:disabled="!(porudzbina.datumIznajmljivanja === danasnjiDatum  && svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno' && porudzbina.status === 'Odobreno')">Preuzeto</button>
+			  <button v-on:click="preuzmiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;"  v-bind:disabled="!(new Date(porudzbina.datumIznajmljivanja) <= new Date()  && svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno' && porudzbina.status === 'Odobreno')">Preuzeto</button>
 			  <button v-on:click="vratiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="!(svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' && porudzbina.status === 'Preuzeto')">Vraceno</button>
 			  <div :id="'porudzbina-' + porudzbina.idNarudzbe" hidden="true" style=" border: 1px solid #ccc; border-radius: 5px; padding: 10px;margin-bottom: 10px; width:500px;">
 			  	  <button v-on:click="skloniOdbijenicu(porudzbina)"><span>x</span></button>
@@ -104,6 +104,7 @@ Vue.component("iznajmljivanja-menadzer", {
 				let dan = String(danasnjiDatum.getDate()).padStart(2, '0');				
 				this.danasnjiDatum = `${godina}-${mjesec}-${dan}`;
 				
+				//console.log(new Date(this.danasnjiDatum));
 				axios.get('rest/porudzbinestanje/nadjisvaStanjaPorudzbinazaRentAcar/' + this.objekat.id)
 		    	.then(response =>{
 					this.svaStanjaPorudzbina = response.data;

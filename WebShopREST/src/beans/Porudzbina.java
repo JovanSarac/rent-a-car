@@ -97,4 +97,13 @@ public class Porudzbina {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "Porudzbina [idNarudzbe=" + idNarudzbe + ", iznajmljenaVozila=" + iznajmljenaVozila + ", rentaCarIds="
+				+ rentaCarIds + ", datumIznajmljivanja=" + datumIznajmljivanja + ", datumVracanja=" + datumVracanja
+				+ ", cena=" + cena + ", kupacId=" + kupacId + ", status=" + status + ", deleted=" + deleted + "]";
+	}
+	
+	
 }

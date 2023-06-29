@@ -23,6 +23,7 @@ Vue.component("iznajmi-kupac", {
       vozila: [],
       pocetniDatum: '',
       krajnjiDatum: '',
+      porudzbinesaUkrstenimDatumima: []
     }
   },
   template: `
@@ -111,6 +112,25 @@ Vue.component("iznajmi-kupac", {
 					  this.vozila = this.vozila.filter(voz => voz.id !== v.id);
 				  }
 				  console.log(this.vozila);
+				  
+				  
+				  axios.get('rest/porudzbine/nadjiPorudzbinezaIzmedjuDvaDatuma', {
+					  params: {
+				        pocetniDatum: this.pocetniDatum,
+				        krajnjiDatum: this.krajnjiDatum,
+				      }
+    			  }).then(response =>{
+					  this.porudzbinesaUkrstenimDatumima = response.data;
+					  console.log(this.porudzbinesaUkrstenimDatumima);
+					  for(let p of this.porudzbinesaUkrstenimDatumima){
+						  for(let v of p.iznajmljenaVozila){
+							  this.vozila = this.vozila.filter(voz => voz.id !== v.id);
+						  }
+					  }
+				  }).catch(error=>{console.error(error);});
+				  
+				  
+				  
 			  }).catch(error=>{console.error(error);});
 		  }
 	  },

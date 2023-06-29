@@ -3,6 +3,9 @@ package dao;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -143,4 +146,50 @@ public class PorudzbinaDAO {
 	    System.out.println("Pronađeno je: " + pretrazeni.size() + " porudzbina za rentacar objekat sa idom:" + rentaCarId);
 	    return pretrazeni;
 	}
+
+	public List<Porudzbina> nadjiPorudzbinezaIzmedjuDvaDatuma(String pocetniDatum, String krajnjiDatum) {
+		List<Porudzbina> pronadjene = new ArrayList<>();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate datumIznajmljivanja;
+        LocalDate datumVracanja;
+        LocalDate pDatum;
+        LocalDate kDatum;
+		for (Porudzbina p : porudzbine) {
+	        if(p.getStatus().equals(Status.Obrada) || p.getStatus().equals(Status.Odobreno)) {
+	    	        pDatum = LocalDate.parse(pocetniDatum);
+	    	        kDatum = LocalDate.parse(krajnjiDatum);
+	    	        datumIznajmljivanja = LocalDate.parse(p.datumIznajmljivanja);
+	    	    	datumVracanja = LocalDate.parse(p.datumVracanja);
+	    	    	if( proveriPreklapanjeDatuma(datumIznajmljivanja, datumVracanja, pDatum, kDatum) ) {
+		        		pronadjene.add(p);		        		
+		        	}
+	        	
+	        }
+	    }
+		System.out.println("#####################################");
+		return pronadjene;
+	}
+	
+	public static boolean proveriPreklapanjeDatuma(LocalDate datumIznajmljivanja, LocalDate datumVracanja, LocalDate pDatum, LocalDate kDatum) {
+        boolean prviSlucaj = (pDatum.isBefore(datumIznajmljivanja) || pDatum.isEqual(datumIznajmljivanja)) &&
+                ((kDatum.isBefore(datumVracanja) || kDatum.isEqual(datumVracanja)) && kDatum.isAfter(datumIznajmljivanja));
+
+        boolean drugiSlucaj =((pDatum.isAfter(datumIznajmljivanja) || pDatum.isEqual(datumIznajmljivanja)) && pDatum.isBefore(datumVracanja)) &&
+        		((kDatum.isBefore(datumVracanja) || kDatum.isEqual(datumVracanja)) && kDatum.isAfter(datumIznajmljivanja));
+        
+        boolean treciSlucaj =((pDatum.isAfter(datumIznajmljivanja) || pDatum.isEqual(datumIznajmljivanja)) && pDatum.isBefore(datumVracanja)) &&
+        		(kDatum.isAfter(datumVracanja) || kDatum.isEqual(datumVracanja));
+        
+        boolean cetvrtiSlucaj =(pDatum.isBefore(datumIznajmljivanja) || pDatum.isEqual(datumIznajmljivanja)) &&
+        		(kDatum.isAfter(datumVracanja) || kDatum.isEqual(datumVracanja));
+        
+        System.out.println("prvi slucaj=" + prviSlucaj);
+        System.out.println("drugi slucaj=" + drugiSlucaj);
+        System.out.println("treci slucaj=" + treciSlucaj);
+        System.out.println("cetvrti slucaj=" + cetvrtiSlucaj);
+        
+
+        return prviSlucaj || drugiSlucaj || treciSlucaj || cetvrtiSlucaj;
+    }
 }
