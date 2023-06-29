@@ -67,8 +67,8 @@ Vue.component("iznajmljivanja-menadzer", {
           <div v-if="porudzbina.status != 'Otkazano'">
 	          <button :id="'potvrdi-'+ porudzbina.idNarudzbe" v-on:click="potvrdiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odobri</button>
 			  <button :id="'odbij-'+ porudzbina.idNarudzbe" v-on:click="prikaziOdbijenicu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odbijeno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Vraceno' || svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno'">Odbij</button>
-			  <button class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;"  v-bind:disabled="!(porudzbina.datumIznajmljivanja === danasnjiDatum  && svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno' && porudzbina.status === 'Odobreno')">Preuzeto</button>
-			  <button class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="!(svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto')">Vraceno</button>
+			  <button v-on:click="preuzmiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;"  v-bind:disabled="!(porudzbina.datumIznajmljivanja === danasnjiDatum  && svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Odobreno' && porudzbina.status === 'Odobreno')">Preuzeto</button>
+			  <button v-on:click="vratiNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;" v-bind:disabled="!(svaStanjaPorudzbina.find(p => p.porudzbinaId === porudzbina.idNarudzbe)?.statusPorudzbine === 'Preuzeto' && porudzbina.status === 'Preuzeto')">Vraceno</button>
 			  <div :id="'porudzbina-' + porudzbina.idNarudzbe" hidden="true" style=" border: 1px solid #ccc; border-radius: 5px; padding: 10px;margin-bottom: 10px; width:500px;">
 			  	  <button v-on:click="skloniOdbijenicu(porudzbina)"><span>x</span></button>
 				  <p>Morate napisati razlog odbijanja:</p>
@@ -233,6 +233,122 @@ Vue.component("iznajmljivanja-menadzer", {
 		
 		}
 		
+	},
+	
+	preuzmiNarudzbinu(porudzbina){
+		axios
+	    .get("rest/porudzbinestanje/nadjiPorudzbinuStanje", {
+	      params: {
+	        porudzbinaId: porudzbina.idNarudzbe,
+	        objekatId: this.objekat.id
+	      }
+    	}).then(response =>{
+			this.porudzbinaStanje = response.data;
+			console.log(this.porudzbinaStanje);
+			this.porudzbinaStanje.statusPorudzbine = 'Preuzeto';
+			
+			axios.put('rest/porudzbinestanje/izmenistanjeporudzbine',this.porudzbinaStanje)
+				.then(response => {
+				if(response.data === true){
+					console.log("uspjesno ste izmjenili stanje kod porudzbinaStanje u preuzeto");
+					
+					axios.get('rest/porudzbinestanje/nadjiPorudzbinuStanja/' + porudzbina.idNarudzbe)
+					.then(response =>{
+						let porudz = response.data;
+						let br = 0;
+						console.log(porudz);
+						for(let p of porudz){
+							if(p.statusPorudzbine === 'Preuzeto'){
+								br++;
+							}
+						}
+
+						if(br === porudzbina.rentaCarIds.length){
+							porudzbina.status = 'Preuzeto';
+							for(let v of porudzbina.iznajmljenaVozila){
+								v.status = 'Iznajmljeno';
+								axios.post('rest/vozila/izmenivozilo',v);
+							}
+							axios.put('rest/porudzbine/izmeniporudzbinu', porudzbina)
+							.then(response =>{
+								if(response.data===true){
+									console.log("uspjesno promjenjen status porudzbine u Preuzeto");
+									
+								}
+							});
+						}else{
+							console.log("nije jos vrijeme za promjenu,ima jos nepreuzetih dijelova.");
+						}
+					})
+					
+					axios.get('rest/porudzbinestanje/nadjisvaStanjaPorudzbinazaRentAcar/' + this.objekat.id)
+		    		.then(response =>{
+					this.svaStanjaPorudzbina = response.data;
+				});
+				}else{
+					console.log("niste promjenili stanje u preuzeto kod porudzbinaStanje");
+				}
+			  });
+
+		});
+	},
+	
+	vratiNarudzbinu(porudzbina){
+		axios
+	    .get("rest/porudzbinestanje/nadjiPorudzbinuStanje", {
+	      params: {
+	        porudzbinaId: porudzbina.idNarudzbe,
+	        objekatId: this.objekat.id
+	      }
+    	}).then(response =>{
+			this.porudzbinaStanje = response.data;
+			console.log(this.porudzbinaStanje);
+			this.porudzbinaStanje.statusPorudzbine = 'Vraceno';
+			
+			axios.put('rest/porudzbinestanje/izmenistanjeporudzbine',this.porudzbinaStanje)
+				.then(response => {
+				if(response.data === true){
+					console.log("uspjesno ste izmjenili stanje kod porudzbinaStanje u vraceno");
+					
+					axios.get('rest/porudzbinestanje/nadjiPorudzbinuStanja/' + porudzbina.idNarudzbe)
+					.then(response =>{
+						let porudz = response.data;
+						let br = 0;
+						console.log(porudz);
+						for(let p of porudz){
+							if(p.statusPorudzbine === 'Vraceno'){
+								br++;
+							}
+						}
+
+						if(br === porudzbina.rentaCarIds.length){
+							porudzbina.status = 'Vraceno';
+							for(let v of porudzbina.iznajmljenaVozila){
+								v.status = 'Dostupljeno';
+								axios.post('rest/vozila/izmenivozilo',v);
+							}
+							axios.put('rest/porudzbine/izmeniporudzbinu', porudzbina)
+							.then(response =>{
+								if(response.data===true){
+									console.log("uspjesno promjenjen status porudzbine u Vraceno");
+									
+								}
+							});
+						}else{
+							console.log("nije jos vrijeme za promjenu,ima jos nevracenih dijelova.");
+						}
+					})
+					
+					axios.get('rest/porudzbinestanje/nadjisvaStanjaPorudzbinazaRentAcar/' + this.objekat.id)
+		    		.then(response =>{
+					this.svaStanjaPorudzbina = response.data;
+				});
+				}else{
+					console.log("niste promjenili stanje u vraceno kod porudzbinaStanje");
+				}
+			  });
+
+		});
 	}
 	
   }
