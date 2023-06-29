@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Komentar;
 import beans.Lokacija;
+import beans.Porudzbina;
 import beans.RentaCar;
 
 public class KomentarDAO {
@@ -115,6 +116,26 @@ public class KomentarDAO {
 		System.out.println("nije komentarisao, znaci da moze da komentarise");
 		return false;
 	}
+	
+	public List<Komentar> nadjiKomentareZaMenadzera(String id) {
+		List<Komentar> komentariZaMenadezra = new ArrayList<>();
+		
+		for (Komentar k : komentari) {
+			if (k.getRentacarId().contains(id)) {
+				komentariZaMenadezra.add(k);
+			}
+		}
+		return komentariZaMenadezra;
+	}
+	
+	 public boolean izmeniKomentar(Komentar p) {
+	    	Komentar stara = nadjiKomentar(p.getId());
+	    	int index = komentari.indexOf(stara);
+	    	stara = p;
+	    	komentari.set(index,stara);
+	    	writeToFileJSON();
+			return true;
+	    }
 	
 }
 

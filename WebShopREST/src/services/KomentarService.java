@@ -59,7 +59,13 @@ public class KomentarService {
         return repo.IzmeniKomentar(k);
     }
 	
-	
+	@GET
+	 @Path("/{id}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 public ArrayList<Komentar> nadjiSveKomentare(@PathParam("id") String id) {
+		 KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");		
+		 return (ArrayList<Komentar>) repo.nadjiKomentareZaMenadzera(id);
+	 }
 	 
 	 @POST
 	 @Path("/registruj")
@@ -82,8 +88,7 @@ public class KomentarService {
 	     KomentarDAO komDAO = (KomentarDAO) ctx.getAttribute("komentariDAO");
 	     return komDAO.ProvjeriJelKomentarisano(kupacId, objekat.getId());
 	 }
-
-	   
+	 
 	
 }
 

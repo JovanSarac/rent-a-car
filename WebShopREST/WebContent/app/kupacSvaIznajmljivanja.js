@@ -21,7 +21,7 @@ Vue.component("iznajmlivanja-kupac", {
       },
       porudzbine: [],
       aktivanIndex: -1,
-      Komentar: {id:null, kupacId: null, rentacarId: null, komentar:null, ocjena: null},
+      Komentar: {id:null, korisnickoIme: null, kupacId: null, rentacarId: null, komentar:null, ocjena: null},
       objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
       prikaziFormu: []
     };
@@ -157,8 +157,9 @@ Vue.component("iznajmlivanja-kupac", {
 			this.objekat = response.data;
 			this.Komentar.rentacarId = this.objekat.id;
 			console.log("nadjen rentacarid za komentar.", this.Komentar.rentacarId);
-			
+			 this.Komentar.korisnickoIme = this.korisnik.korisnickoIme;
 			 this.Komentar.kupacId = this.korisnik.id;
+			 
       console.log("nadjen citav komentar.", this.Komentar);
       axios
         .post("rest/komentari/registruj", this.Komentar)

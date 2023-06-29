@@ -178,8 +178,14 @@ public class KorisnikService {
 	 public Response azurirajBrojBodova(@PathParam("brojBodova") double brojBodova) {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
+		 System.out.println("broj bodova: " + brojBodova);
+		 if (brojBodova > 0) {
+			 System.out.println("broj bodova za koji treba uvecati trenutne bodove je " + brojBodova);
+		 }
 		 ulogovaniKorisnik.getVrstaKupca().setBrojBodova(ulogovaniKorisnik.getVrstaKupca().getBrojBodova()+brojBodova);
+         System.out.println("broj bodova je " + ulogovaniKorisnik.getVrstaKupca().getBrojBodova());
 		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
+		 System.out.println("broj bodova azuriranog " + azuriraniKorisnik.getVrstaKupca().getBrojBodova());
 	     return Response.ok(azuriraniKorisnik).build();
 	 }
 

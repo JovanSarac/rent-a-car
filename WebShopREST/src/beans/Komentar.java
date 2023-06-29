@@ -3,21 +3,41 @@ package beans;
 
 public class Komentar {
     public String id;
+    public String korisnickoIme;
     public String kupacId;
     public String rentacarId;
     public String komentar;
     public int ocjena;
+    public boolean odobreno;
 
     public Komentar() {}
 
-    public Komentar(String kupacId, String rentacarId, String komentar, int ocjena) {
-        this.kupacId = kupacId;
+    public Komentar(String korisnickoIme, String kupacId, String rentacarId, String komentar, int ocjena) {
+        this.korisnickoIme = korisnickoIme;
+    	this.kupacId = kupacId;
         this.rentacarId = rentacarId;
         this.komentar = komentar;
         this.ocjena = ocjena;
+        this.odobreno = false;
     }
 
-    public String getKupacId() {
+    public String getKorisnickoIme() {
+		return korisnickoIme;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+
+	public boolean isOdobreno() {
+		return odobreno;
+	}
+
+	public void setOdobreno(boolean odobreno) {
+		this.odobreno = odobreno;
+	}
+
+	public String getKupacId() {
         return kupacId;
     }
 

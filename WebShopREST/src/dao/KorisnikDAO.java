@@ -94,13 +94,16 @@ public class KorisnikDAO {
             }
 
             if (index != -1) {
+            	System.out.println("nasao korisnika, njegov broj bodova je: " + korisnik.getVrstaKupca().getBrojBodova());
                 korisnici.set(index, korisnik);
                 writeToFileJSON();
                 return korisnik;
             } else {
+            	System.out.println("GRESKA BRACA GRESKA");
                 throw new IllegalArgumentException("Korisnik nije pronađen.");
             }
         } catch (Exception e) {
+        	System.out.println("GRESKA BRACA GRESKA");
             return null;
         }
     }
