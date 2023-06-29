@@ -3,21 +3,21 @@ package beans;
 
 public class Komentar {
     public String id;
-    public int kupacId;
-    public int rentacarId;
+    public String kupacId;
+    public String rentacarId;
     public String komentar;
     public int ocjena;
 
     public Komentar() {}
 
-    public Komentar(int kupacId, int rentacarId, String komentar, int ocjena) {
+    public Komentar(String kupacId, String rentacarId, String komentar, int ocjena) {
         this.kupacId = kupacId;
         this.rentacarId = rentacarId;
         this.komentar = komentar;
         this.ocjena = ocjena;
     }
 
-    public int getKupacId() {
+    public String getKupacId() {
         return kupacId;
     }
 
@@ -29,15 +29,15 @@ public class Komentar {
         this.id = id;
     }
 
-    public void setKupacId(int kupacId) {
+    public void setKupacId(String kupacId) {
         this.kupacId = kupacId;
     }
 
-    public int getRentacarId() {
+    public String getRentacarId() {
         return rentacarId;
     }
 
-    public void setRentacarId(int rentacarId) {
+    public void setRentacarId(String rentacarId) {
         this.rentacarId = rentacarId;
     }
 

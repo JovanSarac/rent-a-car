@@ -102,6 +102,19 @@ public class KomentarDAO {
 	    }else {
 	    	System.out.println("ne kreira");
 	    }
-	}	
+	}
+	
+	public boolean ProvjeriJelKomentarisano(String kupacId, String objekatId) {
+		for (Komentar k : komentari) {
+			System.out.println("nadjen id od kupca je: " + kupacId + " a nadjen id od rentacar je: " + objekatId);
+			if (k.getKupacId().equals(kupacId) && k.getRentacarId().equals(objekatId)) {
+				System.out.println("vec komentarisao");
+				return true;
+			}
+		}
+		System.out.println("nije komentarisao, znaci da moze da komentarise");
+		return false;
+	}
+	
 }
 

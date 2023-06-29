@@ -22,42 +22,49 @@ Vue.component("iznajmlivanja-kupac", {
       porudzbine: [],
       aktivanIndex: -1,
       Komentar: {id:null, kupacId: null, rentacarId: null, komentar:null, ocjena: null},
-       objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
+      objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
       prikaziFormu: []
     };
   },
-   template: `
+  template: `
    <div>
-      <kupac-menu :korisnik="korisnik"></kupac-menu>
-      <div class="porudzbine-container">
-        <h2>Prikaz vaših porudžbina:</h2>
-        <div v-for="porudzbina in porudzbine" :key="porudzbina.idNarudzbe" class="porudzbina-card">
-          <h3 class="narudzba-id">Narudžba ID: {{ porudzbina.idNarudzbe }}</h3>
-          <div v-for="(vozilo, index) in porudzbina.iznajmljenaVozila" :key="vozilo.id" class="vozilo-card" @click="prikaziDatume(index)">
-            <div class="vozilo-image">
-              <img :src="vozilo.slika" alt="Vozilo slika" />
-            </div>
-            <div class="vozilo-info">
-              <p class="marka-model">Marka: {{ vozilo.marka }}</p>
-              <p class="marka-model">Model: {{ vozilo.model }}</p>
-              <p v-if="aktivanIndex === index">Datum iznajmljivanja: {{ porudzbina.datumIznajmljivanja }}</p>
-              <p v-if="aktivanIndex === index">Datum vraćanja: {{ porudzbina.datumVracanja }}</p>
-              <button v-if="porudzbina.status === 'Vraceno' && aktivanIndex === index" @click="prikaziFormuZaOcijenjivanje(index)" class="buttonOceniObjekat" style="font-size: 13px; padding: 12px 24px;">Ocijeni objekat</button>
+    <kupac-menu :korisnik="korisnik"></kupac-menu>
+    <div class="porudzbine-container">
+      <h2>Prikaz vaših porudžbina:</h2>
+      <div v-for="porudzbina in porudzbine" :key="porudzbina.idNarudzbe" class="porudzbina-card">
+        <h3 class="narudzba-id">Narudžba ID: {{ porudzbina.idNarudzbe }}</h3>
+        <div v-for="(vozilo, index) in porudzbina.iznajmljenaVozila" :key="vozilo.id" class="vozilo-card">
+          <div class="vozilo-image">
+            <img :src="vozilo.slika" alt="Vozilo slika" />
+          </div>
+          <div class="vozilo-info">
+            <p class="marka-model">Marka: {{ vozilo.marka }}</p>
+            <p class="marka-model">Model: {{ vozilo.model }}</p>
+            <button v-if="aktivanIndex !== index" @click="prikaziDetalje(index)" class="buttonDetalji">Detalji</button>
+            <div v-if="aktivanIndex === index">
+              <p>Datum iznajmljivanja: {{ porudzbina.datumIznajmljivanja }}</p>
+              <p>Datum vraćanja: {{ porudzbina.datumVracanja }}</p>
+              <button v-if="porudzbina.status === 'Vraceno'" @click="prikaziFormuZaOcijenjivanje(index,vozilo,$event)" class="buttonOceniObjekat">Ocijeni objekat</button>
               <form v-if="prikaziFormu[index]" @submit.prevent="submitOcjenaKomentar(vozilo, index)">
-                <label>Komentar:</label>
-                <textarea v-model="Komentar.komentar" required></textarea>
-                <label>Ocjena:</label>
-                <input type="number" v-model="Komentar.ocjena" required>
-                <button type="submit">Submit</button>
+                <div class="form-group">
+                  <label for="komentar">Komentar:</label>
+                  <textarea id="komentar" v-model="Komentar.komentar" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="ocjena">Ocjena:</label>
+                  <input type="number" id="ocjena" v-model="Komentar.ocjena" min="1" max="5" required>
+                </div>
+                <button type="submit" class="submitButton">Submit</button>
               </form>
             </div>
           </div>
-          <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
-          <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
-          <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Otkaži</button>
         </div>
+        <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
+        <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
+        <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle">Otkaži</button>
       </div>
     </div>
+  </div>
   `,
   mounted() {
     console.log('rest/korisnici/prijava');
@@ -74,9 +81,9 @@ Vue.component("iznajmlivanja-kupac", {
       });
   },
   methods: {
-	  prikaziDatume(index) {
+    prikaziDetalje(index) {
       if (this.aktivanIndex === index) {
-        this.aktivanIndex = -1; 
+        this.aktivanIndex = -1;
       } else {
         this.aktivanIndex = index;
       }
@@ -111,11 +118,29 @@ Vue.component("iznajmlivanja-kupac", {
           });
       }
     },
-    prikaziFormuZaOcijenjivanje(index) {
+   prikaziFormuZaOcijenjivanje(index, vozilo,event) {
+    axios.get('rest/komentari/VecKomentarisano/' + this.korisnik.id + '/' + vozilo.id)
+    .then((response) => {
+      if (response.data === false) {
       this.prikaziFormu = this.porudzbine.map(() => false);
       this.prikaziFormu[index] = true;
       this.aktivanIndex = index;
-    },
+    } else {
+      const paragraf = document.createElement("p");
+      paragraf.innerText = "Već ste ocijenili objekat";
+      paragraf.style.color = "red";
+      const button = event.target;
+      button.parentNode.insertBefore(paragraf, button.nextSibling);
+      setTimeout(() => {
+        paragraf.remove();
+      }, 2000);
+    }
+     })
+    .catch((error) => {
+      console.error(error);
+      return false;
+    });
+  },
     
     sakrijFormu(index) {
       this.prikaziFormu[index] = false;
@@ -151,5 +176,5 @@ Vue.component("iznajmlivanja-kupac", {
         });
 		})
   },
-  }
-});
+}
+}); 

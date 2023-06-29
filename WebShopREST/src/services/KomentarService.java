@@ -16,8 +16,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Komentar;
+import beans.RentaCar;
 import beans.Korisnik;
 import beans.Porudzbina;
+import beans.Vozilo;
 import dao.KomentarDAO;
 import dao.KorisnikDAO;
 import dao.PorudzbinaDAO;
@@ -40,6 +42,10 @@ public class KomentarService {
 		if(ctx.getAttribute("komentariDAO")==null) {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("komentariDAO", new KomentarDAO(contextPath));
+		}
+		if(ctx.getAttribute("objectDAO")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("objectDAO", new RentaCarDAO(contextPath));
 		}
 	}
 
@@ -65,6 +71,19 @@ public class KomentarService {
 	     KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");
 	     return (repo.Sacuvaj(k) != null);
 	 }
+	 
+	 @GET
+	 @Path("/VecKomentarisano/{kupacId}/{voziloId}")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public boolean provjeriMogucenostKomentarisanja(@PathParam("kupacId") String kupacId, @PathParam("voziloId") String voziloId) {
+	     RentaCarDAO repo = (RentaCarDAO) ctx.getAttribute("objectDAO");
+	     RentaCar objekat = repo.nadjiObjekatPoVozilu(voziloId);
+	     KomentarDAO komDAO = (KomentarDAO) ctx.getAttribute("komentariDAO");
+	     return komDAO.ProvjeriJelKomentarisano(kupacId, objekat.getId());
+	 }
+
+	   
 	
 }
 
