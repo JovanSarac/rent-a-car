@@ -73,7 +73,21 @@ Vue.component("korpa-kupac", {
   methods: {
 	  IzbaciizKorpe : function(vozilo){
 		  this.korisnik.korpa.vozilauKorpi = this.korisnik.korpa.vozilauKorpi.filter(v => v.id !== vozilo.id); // Izbacuje vozilo iz liste
-		  this.korisnik.korpa.cena -= vozilo.cena; 
+		  let novaUkupnaCijena = 0;
+          for (let v of this.korisnik.korpa.vozilauKorpi) {
+          novaUkupnaCijena += v.cena;
+           } 
+           
+          let popust = this.korisnik.vrstaKupca.procenat;
+          if (popust > 0) {
+          let iznosPopusta = novaUkupnaCijena * popust;
+          let novaCijena = novaUkupnaCijena - iznosPopusta;
+          this.korisnik.korpa.cena = novaCijena;
+          }
+          
+          else {
+			  this.korisnik.korpa.cena = novaUkupnaCijena;
+		  } 
 		  console.log(this.korisnik.korpa.vozilauKorpi);
 		  if(this.korisnik.korpa.vozilauKorpi.length === 0){
 			  this.korisnik.korpa.pocetniDatum = null;

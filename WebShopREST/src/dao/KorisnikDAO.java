@@ -76,6 +76,7 @@ public class KorisnikDAO {
     public Korisnik nadjiKorisnikaKorIme(String korisnickoIme) {
     	for(Korisnik k : korisnici) {
     		if(k.getKorisnickoIme().equals(korisnickoIme)) {
+    			
     			return k;
     		}
     	}
@@ -94,7 +95,6 @@ public class KorisnikDAO {
             }
 
             if (index != -1) {
-            	System.out.println("nasao korisnika, njegov broj bodova je: " + korisnik.getVrstaKupca().getBrojBodova());
                 korisnici.set(index, korisnik);
                 writeToFileJSON();
                 return korisnik;

@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import beans.Korisnik.Uloga;
+import beans.TipKupca.Tip;
 import dao.KorisnikDAO;
 import dao.RentaCarDAO;
 import dto.KorisnikDTO;
@@ -178,14 +179,20 @@ public class KorisnikService {
 	 public Response azurirajBrojBodova(@PathParam("brojBodova") double brojBodova) {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
-		 System.out.println("broj bodova: " + brojBodova);
-		 if (brojBodova > 0) {
-			 System.out.println("broj bodova za koji treba uvecati trenutne bodove je " + brojBodova);
-		 }
 		 ulogovaniKorisnik.getVrstaKupca().setBrojBodova(ulogovaniKorisnik.getVrstaKupca().getBrojBodova()+brojBodova);
-         System.out.println("broj bodova je " + ulogovaniKorisnik.getVrstaKupca().getBrojBodova());
+	     	if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 200) {
+	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Bronzani);
+	     		ulogovaniKorisnik.getVrstaKupca().setProcenat(0);
+		        	}
+	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 200) {
+			 ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Srebrni);
+			 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.05);
+	        	}
+	     	else  {
+	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Zlatni);
+	     		 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.1);
+	     	}
 		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
-		 System.out.println("broj bodova azuriranog " + azuriraniKorisnik.getVrstaKupca().getBrojBodova());
 	     return Response.ok(azuriraniKorisnik).build();
 	 }
 
