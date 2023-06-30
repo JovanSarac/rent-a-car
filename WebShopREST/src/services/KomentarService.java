@@ -55,15 +55,17 @@ public class KomentarService {
     @Consumes(MediaType.APPLICATION_JSON)
 	public boolean izmeniKomentar(Komentar k)
     {
+		
 		KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");
         return repo.IzmeniKomentar(k);
     }
 	
-	@GET
+	 @GET
 	 @Path("/{id}")
 	 @Produces(MediaType.APPLICATION_JSON)
 	 public ArrayList<Komentar> nadjiSveKomentare(@PathParam("id") String id) {
-		 KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");		
+		 KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");	
+		 
 		 return (ArrayList<Komentar>) repo.nadjiKomentareZaMenadzera(id);
 	 }
 	 
@@ -73,8 +75,13 @@ public class KomentarService {
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public boolean registruj(Komentar k)
 	 {
+		 RentaCarDAO carRepo = (RentaCarDAO) ctx.getAttribute("objectDAO");
+		 RentaCar objekat = carRepo.nadjiObjekat(k.getRentacarId());
 	     System.out.println("Usao u funkciju za registrovanje porudzbine");
 	     KomentarDAO repo = (KomentarDAO) ctx.getAttribute("komentariDAO");
+	     objekat.setOcena(repo.izracunajProsjecnuOcjenu(k.getRentacarId(), k.getOcjena()));
+		 boolean izracunataOcjena = carRepo.izmeniRentaCar(objekat);
+		 System.out.println("za objekat je uspjesno izracunata ocjena i ona iznosi: " + izracunataOcjena);
 	     return (repo.Sacuvaj(k) != null);
 	 }
 	 

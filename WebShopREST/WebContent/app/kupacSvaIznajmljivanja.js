@@ -152,6 +152,11 @@ Vue.component("iznajmlivanja-kupac", {
         return;
       }
       
+      if(this.Komentar.ocjena > 5 && this.Komentar.ocjena < 1) {
+		  alert("unesite ocjeno od 1 do 5");
+		  return;
+	  }
+      
       axios.get('rest/objekti/nadjiRentaCarpoIduVozila/' + vozilo.id)
 		.then(response=>{
 			this.objekat = response.data;

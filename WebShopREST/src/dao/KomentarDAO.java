@@ -39,6 +39,20 @@ public class KomentarDAO {
         writeToFileJSON();
         return k;
     }   
+	
+	public double izracunajProsjecnuOcjenu(String objekatId, double novaOcjena) {
+		double suma = novaOcjena;
+		int br = 1;
+		double prosjek;
+		for(Komentar komentar: komentari) {
+			if(komentar.getRentacarId().equals(objekatId)) {
+				suma += komentar.getOcjena();
+				br++;
+			}
+		}
+		prosjek = suma/br;
+		return prosjek;
+	}
 
  
     public Komentar nadjiKomentar(String id) {
