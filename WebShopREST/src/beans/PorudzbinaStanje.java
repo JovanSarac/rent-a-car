@@ -6,16 +6,18 @@ public class PorudzbinaStanje {
 	public String porudzbinaId;
 	public String rentaCarId;
 	public Status statusPorudzbine;
+	public String razlogOdbijanja;
 	
 	public PorudzbinaStanje() {
 		
 	}
 
-	public PorudzbinaStanje(String porudzbinaId, String rentaCarId, Status statusPorudzbine) {
+	public PorudzbinaStanje(String porudzbinaId, String rentaCarId, Status statusPorudzbine, String razlogOdbijanja) {
 		super();
 		this.porudzbinaId = porudzbinaId;
 		this.rentaCarId = rentaCarId;
 		this.statusPorudzbine = statusPorudzbine;
+		this.razlogOdbijanja = razlogOdbijanja;
 	}
 
 	public String getPorudzbinaId() {

@@ -58,10 +58,13 @@ Vue.component("iznajmlivanja-kupac", {
               </form>
             </div>
           </div>
+
         </div>
-        <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }}</p>
-        <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
-        <button v-on:click="otkaziNarudzbinu(porudzbina)" class="buttonAddVehicle">Otkaži</button>
+        
+        <p class="cena-narudzbe">Cena narudžbe: {{ porudzbina.cena }} €</p>
+          <p class="status-narudzbe">Status narudžbe: {{ porudzbina.status }}</p>
+          <button v-on:click="otkaziNarudzbinu(porudzbina)" v-if="porudzbina.status === 'Obrada'" class="buttonAddVehicle" style="font-size: 13px; padding: 12px 24px;">Otkaži</button>
+
       </div>
     </div>
   </div>
@@ -97,7 +100,7 @@ Vue.component("iznajmlivanja-kupac", {
             console.log(response.data);
             if (response.data === true) {
               console.log("Upsješno otkazana porudzbina.");           
-            
+           
               const ukupnaCena = porudzbina.cena;
               const brojBodova = -(ukupnaCena / 1000 * 133 * 4);
               axios.put(`rest/korisnici/azurirajBodove/` + brojBodova)

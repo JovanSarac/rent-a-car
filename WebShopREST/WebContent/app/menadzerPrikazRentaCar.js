@@ -15,7 +15,7 @@ Vue.component("show-rentacar-manager", {
 	  <h1>Prikaz rent a car objekta </h1>
  		
  	
-	  <div class="rentacar-comments-container">
+	  <div class="rentacar-box">
         <div class="rentacar-container">
           <img class="logo" :src="objekat.logoUrl" alt="Logo Rent-a-Car objekta">
           <div class="rentacar-details">
@@ -29,7 +29,9 @@ Vue.component("show-rentacar-manager", {
             <h4>{{ objekat.ocena }}</h4>
           </div>
         </div>
+      </div>
 
+	  <div class="rentacar-comments-container">
         <div class="comments-container" v-if="komentari.length > 0">
           <h1>Komentari</h1>
            <div v-for="komentar in komentari" :key="komentar.id" class="comment-card">
