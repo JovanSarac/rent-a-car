@@ -44,7 +44,7 @@ Vue.component("iznajmlivanja-kupac", {
             <div v-if="aktivanIndex === index">
               <p>Datum iznajmljivanja: {{ porudzbina.datumIznajmljivanja }}</p>
               <p>Datum vraćanja: {{ porudzbina.datumVracanja }}</p>
-              <button v-if="porudzbina.status === 'Vraceno'" @click="prikaziFormuZaOcijenjivanje(index,vozilo,$event)" class="buttonOceniObjekat">Ocijeni objekat</button>
+              <button v-if="porudzbina.status === 'Vraceno'" v-on:click="prikaziFormuZaOcijenjivanje(index,vozilo,$event)" class="buttonOceniObjekat">Ocijeni objekat</button>
               <form v-if="prikaziFormu[index]" @submit.prevent="submitOcjenaKomentar(vozilo, index)">
                 <div class="form-group">
                   <label for="komentar">Komentar:</label>

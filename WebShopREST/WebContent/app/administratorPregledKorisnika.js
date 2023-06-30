@@ -45,6 +45,7 @@ Vue.component("pregled-korisnika", {
               :class="{ 'comment-button-right': true }"
               :style="{ backgroundColor: objekat.blokiran ? 'red' : 'green' }"
               v-on:click="onClickButton(objekat)"
+              v-if="objekat.uloga !== 'administrator'"
             >
               {{ objekat.blokiran ? 'Blokiran' : 'Odblokiran' }}
             </button>
