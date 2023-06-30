@@ -11,7 +11,7 @@ Vue.component("iznajmi-kupac", {
 		  uloga: null, 
 		  pol: null, 
 		  datumRodjenja: null, 
-		  vrstaKupca: null,
+		  vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0},
 		  korpa :{
 				vozilauKorpi:[],
 				vlasnikKorpeId: null,
@@ -124,10 +124,24 @@ Vue.component("iznajmi-kupac", {
 		  if(!kraj.disabled){
 			  kraj.disabled = true;
 		  }
-		  
 		  this.vozila = this.vozila.filter(v => v.id !== vozilo.id); // Izbacuje vozilo iz liste
 		  this.korisnik.korpa.vozilauKorpi.push(vozilo);
-		  this.korisnik.korpa.cena += vozilo.cena; 
+		  let ukupnaCijena = 0;
+          for (let vozilo of this.korisnik.korpa.vozilauKorpi) {
+            ukupnaCijena += vozilo.cena;
+            }
+          
+          
+          let popust = this.korisnik.vrstaKupca.procenat;
+          if (popust > 0) {
+          let iznosPopusta = ukupnaCijena * popust;
+          let novaCijena = ukupnaCijena - iznosPopusta;
+          this.korisnik.korpa.cena = novaCijena;
+          }
+          
+          else {
+			  this.korisnik.korpa.cena = ukupnaCijena;
+		  }
 		  this.korisnik.korpa.pocetniDatum = this.pocetniDatum;
 		  this.korisnik.korpa.krajnjiDatum = this.krajnjiDatum;
 		  

@@ -96,5 +96,15 @@ public class RentaCarService {
 		 return repo.nadjiObjekat(id);
 	}
 	
+	@GET
+	@Path("/nadjiRentaCarpoIduVozila/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public RentaCar nadjiRentaCarpoIduVozila(@PathParam("id") String id) {
+		 RentaCarDAO repo = (RentaCarDAO) ctx.getAttribute("objectDAO");
+		 return repo.nadjiObjekatPoVozilu(id);
+	}
+	
+	
+	
 
 }

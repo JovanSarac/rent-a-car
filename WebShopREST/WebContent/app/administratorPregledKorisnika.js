@@ -1,7 +1,7 @@
 Vue.component("pregled-korisnika", {
 	data: function () {
 		    return {
-				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
+				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null,blokiran:null },
 				objekti: [],
 			    pretragaIme: '',
                 pretragaPrezime: '',
@@ -39,6 +39,16 @@ Vue.component("pregled-korisnika", {
         <div class="object-details">
           <h3>{{ objekat.ime }} {{ objekat.prezime }}</h3>
           <p>Korisničko ime:  {{objekat.korisnickoIme}}</p>
+          <h4>{{objekat.uloga}}</h4>
+           <button
+              class="comment-button"
+              :class="{ 'comment-button-right': true }"
+              :style="{ backgroundColor: objekat.blokiran ? 'red' : 'green' }"
+              v-on:click="onClickButton(objekat)"
+              v-if="objekat.uloga !== 'administrator'"
+            >
+              {{ objekat.blokiran ? 'Blokiran' : 'Odblokiran' }}
+            </button>
         </div>
       </div>
     </div>
@@ -92,7 +102,29 @@ Vue.component("pregled-korisnika", {
     .catch((error) => {
       console.error(error);
     });
-}
+},
+    onClickButton(objekat) {
+      if (objekat.blokiran) {
+           objekat.blokiran = false; 
+         axios.put('rest/korisnici/izmjena', objekat)
+                .then(response => {
+                  console.log("Odblokiran korisnik");
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+      } else {
+		  objekat.blokiran = true
+        axios.put('rest/korisnici/izmjena', objekat)
+                .then(response => {
+                 console.log("Blokiran korisnik");
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+      }
+    },
+    
 
   },		
 			

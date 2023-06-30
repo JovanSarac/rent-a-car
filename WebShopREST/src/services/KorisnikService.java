@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import beans.Korisnik.Uloga;
+import beans.TipKupca.Tip;
 import dao.KorisnikDAO;
 import dao.RentaCarDAO;
 import dto.KorisnikDTO;
@@ -118,6 +119,7 @@ public class KorisnikService {
 	        request.getSession().setAttribute("ulogovaniKorisnik", korisnik);
 	        System.out.println(request.getSession().getAttribute("ulogovaniKorisnik"));
 	        //System.out.println("Uspjesna prijava");
+	        if (korisnik.isBlokiran()) return Response.status(Response.Status.OK).entity("4").build();
 	        if (korisnik.getUloga().equals(Uloga.kupac)) {
 	        	System.out.println("NADJEN KUPAC EZ");
 	            return Response.status(Response.Status.OK).entity("1").build();
@@ -179,6 +181,18 @@ public class KorisnikService {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
 		 ulogovaniKorisnik.getVrstaKupca().setBrojBodova(ulogovaniKorisnik.getVrstaKupca().getBrojBodova()+brojBodova);
+	     	if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 200) {
+	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Bronzani);
+	     		ulogovaniKorisnik.getVrstaKupca().setProcenat(0);
+		        	}
+	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 400 && ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 1500) {
+			 ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Srebrni);
+			 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.05);
+	        	}
+	     	else  {
+	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Zlatni);
+	     		 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.1);
+	     	}
 		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
 	     return Response.ok(azuriraniKorisnik).build();
 	 }

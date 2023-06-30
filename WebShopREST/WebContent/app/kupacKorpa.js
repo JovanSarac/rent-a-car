@@ -10,7 +10,7 @@ Vue.component("korpa-kupac", {
 		  uloga: null, 
 		  pol: null, 
 		  datumRodjenja: null, 
-		  vrstaKupca: null,
+		  vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0},
 		  korpa :{
 				vozilauKorpi:[],
 				vlasnikKorpeId: null,
@@ -73,7 +73,21 @@ Vue.component("korpa-kupac", {
   methods: {
 	  IzbaciizKorpe : function(vozilo){
 		  this.korisnik.korpa.vozilauKorpi = this.korisnik.korpa.vozilauKorpi.filter(v => v.id !== vozilo.id); // Izbacuje vozilo iz liste
-		  this.korisnik.korpa.cena -= vozilo.cena; 
+		  let novaUkupnaCijena = 0;
+          for (let v of this.korisnik.korpa.vozilauKorpi) {
+          novaUkupnaCijena += v.cena;
+           } 
+           
+          let popust = this.korisnik.vrstaKupca.procenat;
+          if (popust > 0) {
+          let iznosPopusta = novaUkupnaCijena * popust;
+          let novaCijena = novaUkupnaCijena - iznosPopusta;
+          this.korisnik.korpa.cena = novaCijena;
+          }
+          
+          else {
+			  this.korisnik.korpa.cena = novaUkupnaCijena;
+		  } 
 		  console.log(this.korisnik.korpa.vozilauKorpi);
 		  if(this.korisnik.korpa.vozilauKorpi.length === 0){
 			  this.korisnik.korpa.pocetniDatum = null;
@@ -138,28 +152,28 @@ Vue.component("korpa-kupac", {
                             const brojBodova = ukupnaCena / 1000 * 133;
                             axios.put(`rest/korisnici/azurirajBodove/` + brojBodova)
                            .then((response) => {
-
-                             this.korisnik.brojBodova = response.data.brojBodova;
-                             })
-                          .catch((error) => {
-                           console.error(error);
-                           });
-	   				    }else{
-							toast('Neuspijesna porudzbina ')
-						}
-						
-						this.korisnik.korpa.vozilauKorpi = [];
-						this.korisnik.korpa.pocetniDatum = null;
-						this.korisnik.korpa.krajnjiDatum = null;
-						this.korisnik.korpa.cena = 0;
-						axios.put('rest/korisnici/izmjena', this.korisnik)
+							  this.korisnik = response.data; 
+                             this.korisnik.korpa.vozilauKorpi = [];
+						    this.korisnik.korpa.pocetniDatum = null;
+						    this.korisnik.korpa.krajnjiDatum = null;
+						    this.korisnik.korpa.cena = 0;
+					      
+                             
+                             
+                             axios.put('rest/korisnici/izmjena', this.korisnik)
 					      .then(response => {
 							this.korisnik = response.data;
 					      })
 					      .catch(error => {
 					        console.error(error);
 					      });
-					      
+                              })
+                          .catch((error) => {
+                           console.error(error);
+                           });
+	   				    }else{
+							toast('Neuspijesna porudzbina ')
+						}
 					     
 							
 			   }).catch(error => {

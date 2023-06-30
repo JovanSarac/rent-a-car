@@ -17,6 +17,7 @@ const PrikazRentaCaraMenadzer = {template: "<show-rentacar-manager></show-rentac
 const SviKorisnici = { template: "<pregled-korisnika></pregled-korisnika>" }
 const NoviObjekat = { template: '<novi-objekat></novi-objekat>' }
 const SvaIznajmljivanja = {template: '<iznajmlivanja-kupac></iznajmlivanja-kupac>'}
+const AllComments = {template: '<all-comments-manager></all-comments-manager>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -35,12 +36,14 @@ const router = new VueRouter({
 		{ path:  '/novi-objekat', component: NoviObjekat},
 		{ path: '/pocetna-menadzer', component: PocetnaMenadzer},
 		{ path: '/profil-menadzer', component: ProfilMenadzer},
+		{ path: '/all-comments-manager', component: AllComments},
 		{ path: '/renta-car-menadzer', component: RentACarMenadzer},
 		{ path: '/add-vehicle-manager', component: DodajVoziloMenadzer},
 		{ path: '/show-vehicle/:vehicleId', name: 'show-vehicle', component: PrikazVozilaMenadzer},
 		{ path: '/show-rentacar-manager/:objekatId', name: 'show-rentacar-manager', component: PrikazRentaCaraMenadzer},
 		{ path:  '/pregled-korisnika', component: SviKorisnici},
 		{ path:  '/iznajmlivanja-kupac', component: SvaIznajmljivanja}
+		
 		
 		
 	] 

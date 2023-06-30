@@ -98,9 +98,11 @@ public class KorisnikDAO {
                 writeToFileJSON();
                 return korisnik;
             } else {
+            	System.out.println("GRESKA BRACA GRESKA");
                 throw new IllegalArgumentException("Korisnik nije pronađen.");
             }
         } catch (Exception e) {
+        	System.out.println("GRESKA BRACA GRESKA");
             return null;
         }
     }

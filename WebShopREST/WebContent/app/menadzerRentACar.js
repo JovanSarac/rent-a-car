@@ -28,6 +28,7 @@ Vue.component("renta-car-menadzer", {
 	  <div class="add-vehicle">
 	  	<h2>Neke od funkcionalnosti vezane za Vas objekat</h2>
 	  	<p>Ukoliko zelite da dodate novo vozilo u ponudu pritisnite: <button class="buttonAddVehicle" v-on:click="AddVehicle">dodaj vozilo</button></p>
+	  	<p>Komentari vezani za vaš objekat: <button class="buttonAddVehicle" v-on:click="AllComments">Komentari</button></p>
 	  </div>
 	  </div>
 	  
@@ -73,6 +74,10 @@ Vue.component("renta-car-menadzer", {
 	},
 	prikazVozila : function(vozilo){
 		this.$router.push({ name: 'show-vehicle', params: { vehicleId: vozilo.id } });
-	}
+	},
+	AllComments(){
+		this.$router.push('/all-comments-manager');
+	},
+	
 	}
 });

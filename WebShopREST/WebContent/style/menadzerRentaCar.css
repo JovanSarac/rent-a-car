@@ -1,212 +1,251 @@
-.maininfo{
-	display: flex;
+  .maininfo {
+    display: flex;
+  }
+
+  .add-vehicle {
+    border: 2px solid #3498db;
+    padding: 20px;
+    border-radius: 5px;
+    width: 700px;
+    margin-left: 100px;
+  }
+
+  .rentacar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    max-width: 700px;
+     flex: 1;
+    margin-right: 20px;
+  }
+
+  .logo {
+    width: 250px;
+    height: 250px;
+    margin-right: 20px;
+  }
+
+  .rentacar-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+  }
+
+  .rentacar-details h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #333;
+    text-decoration: underline;
+  }
+
+  .rentacar-details p {
+    margin: 5px 0;
+    font-size: 20px;
+    color: #666;
+  }
+
+  .rentacar-details h4 {
+    border: 1px solid #3498db;
+    border-radius: 8px 8px 8px 0;
+    background-color: #3498db;
+    font-size: 35px;
+    color: white;
+    margin-left: 300px;
+    text-align: center;
+  }
+
+  .rentacar-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .vehicle-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 50px;
+    gap: 10px;
+  }
+
+  .vehicle-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .vehicle-image {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .vehicle-details {
+    flex: 1;
+  }
+
+  .vehicle-details h3 {
+    font-size: 50px;
+    margin-bottom: 5px;
+    color: #3498db;
+  }
+
+  .vehicle-details h4 {
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: #3498db;
+    font-size: 40px;
+    color: white;
+    margin-left: 700px;
+    text-align: center;
+  }
+
+  .vehicle-details h4:hover {
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: #1e5696;
+    font-size: 40px;
+    color: white;
+    margin-left: 700px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .vehicle-details p {
+    margin: 0;
+    font-size: 25px;
+  }
+
+  .buttonAddVehicle {
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .buttonAddVehicle:hover {
+    background-color: white;
+    color: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /*za formu za dodavanje vozila*/
+
+  .formaVozilo form {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: cadetblue;
+  }
+
+  .formaVozilo label {
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 5%;
+    margin-top: 10px;
+  }
+
+  .formaVozilo input[type="text"],
+  .formaVozilo input[type="number"],
+  .formaVozilo select {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 6%;
+  }
+
+  .formaVozilo textarea {
+    resize: none;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    height: 100px;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 6%;
+  }
+
+  .formaVozilo input[type="submit"],
+  .formaVozilo button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 170px;
+    margin-bottom: 10px;
+  }
+
+  .markaimodelVozila:hover {
+    cursor: pointer;
+    color: black;
+  }
+
+  .dugmad input[type="submit"]:disabled {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+  }
+
+  .comments-box {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border: 2px solid #3498db;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 700px;
+    margin-top: 50px;
+    margin-left: 20px; /* Added margin left */
+  }
+  
+   .comments-container {
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .comment-card {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .comment-card {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
 }
 
-.add-vehicle{
-	 border: 2px solid  #3498db;
-     padding: 20px;
-     border-radius: 5px;
-     width: 700px; /* Promijenjeno */
-     margin-left: 100px; /* Promijenjeno */
+.comment-user {
+  font-weight: bold;
 }
 
-.rentacar-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 50px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    
-    .logo {
-      width: 250px;
-      height: 250px;
-      margin-right: 20px;
-    }
-    
-    .rentacar-details {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .rentacar-details h2 {
-      margin: 0;
-      font-size: 30px;
-      color: #333;
-      text-decoration: underline;
-    }
-    
-    .rentacar-details p {
-      margin: 5px 0;
-      font-size: 20px;
-      color: #666;
-    }
-    
-    .rentacar-details h4 {
-		  border: 1px solid #3498db;
-		  border-radius: 8px 8px 8px 0;
-		  background-color: #3498db;
-		  font-size: 35px;
-		  color: white;
-		  margin-left: 300px;
-		  text-align: center;		  
-	  }
-    
-    
-    .rentacar-box {
-      border: 2px solid  #3498db;
-      padding: 20px;
-      border-radius: 5px;
-      max-width: 700px; /* Promijenjeno */
-      margin-left: 100px; /* Promijenjeno */
-    }
-    
-     
- 	 /*za prikaz vozila*/
-	  .vehicle-container {
-		  display: flex;
-		  flex-wrap: wrap;
-		  flex-direction: column; 
-		  width: 300px; /* Promijenjeno */
-   		  align-items: flex-start;
-	  }
-	  
-	  .vehicle-card {
-		  display: flex;
-		  align-items: center;
-		  gap: 10px;
-		  margin-bottom: 10px;
-		  padding: 10px;
-		  border: 1px solid #ccc;
-		  border-radius: 5px;
-		  width: 1400px ;
-		  margin-left: 100px;
-	  }
-	  .vehicle-image {
-		  width: 400px;
-		  height: 300px;
-		  object-fit: cover;
-		  border-radius: 5px;
-		  cursor: pointer;
-	  }
-	  
-	  .vehicle-details {
-	    flex: 1;  
-	  }
-		
-	  .vehicle-details h3 {
-		  font-size: 50px;
-		  margin-bottom: 5px;
-		  color: #3498db;
-		  
-	  }
-	  .vehicle-details h4 {
-		  border: 1px solid #3498db;
-		  border-radius: 5px;
-		  background-color: #3498db;
-		  font-size: 40px;
-		  color: white;
-		  margin-left: 700px;
-		  text-align: center;		  
-	  }
-	  
-	  .vehicle-details h4:hover {
-		  border: 1px solid #3498db;
-		  border-radius: 5px;
-		  background-color: #1e5696;
-		  font-size: 40px;
-		  color: white;
-		  margin-left: 700px;
-		  text-align: center;
-		  cursor: pointer;		  
-	  }
-		
-	  .vehicle-details p {
-		  margin: 0;
-		  font-size: 25px;
-	  }
-	  
-	  .buttonAddVehicle{
-		  background-color:#3498db ;
-		  color: white;
-		  border-radius: 5px;
-		  cursor: pointer;
-	  }
-	  
-	  .buttonAddVehicle:hover{
-		  background-color:white ;
-		  color: #3498db;
-		  border-radius: 5px;
-		  cursor: pointer;
-	  }
-	  
-	  
-	  /*za formu za dodavanje vozila*/
-	  
-	  .formaVozilo form {
-      max-width: 800px;
-      margin: 0 auto;
-      border: 1px solid #3498db;
-      border-radius: 5px;
-      background-color: cadetblue;
-    }
-    
-    .formaVozilo label {
-      display: block;
-      margin-bottom: 5px;
-      margin-left: 5%;
-      margin-top: 10px;
-    }
-    
-    .formaVozilo input[type="text"],
-    .formaVozilo input[type="number"],
-    .formaVozilo select {
-      border: none;
-      border-bottom: 1px solid #ccc;
-      width: 80%;
-      padding: 5px;
-      font-size: 16px;
-      margin-bottom: 10px;
-      margin-left: 6%;
-    }
+.comment-text {
+  margin-top: 5px;
+  font-weight: bold;
+}
 
-    .formaVozilo textarea {
-      resize: none; /* Onemogući proširivanje */
-      border: none;
-      border-bottom: 1px solid #ccc;
-      width: 80%;
-      height: 100px;
-      padding: 5px;
-      font-size: 16px;
-      margin-bottom: 10px;
-      margin-left: 6%;
-    }
-    
-    .formaVozilo input[type="submit"],.formaVozilo button {
-      background-color: #3498db;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-left: 170px;
-      margin-bottom: 10px;
-    }
-	  
-    .markaimodelVozila:hover{
-		cursor: pointer;
-		color: black;
-	}
-	
-	.dugmad input[type="submit"]:disabled
-	 {
-		  background-color: gray;
-		  color: white;
-		  cursor: not-allowed;
-	  }
-
-
-    
-    
+.comment-rating {
+  color: #FF0000;
+  margin-top: 5px;
+}
