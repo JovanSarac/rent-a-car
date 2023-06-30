@@ -14,7 +14,7 @@ public class Korisnik {
 	public String pol;
 	public String datumRodjenja;
 	public TipKupca vrstaKupca;
-	public RentaCar objekatRentaCar;
+	public boolean blokiran;
 	public Korpa korpa;
 	
 	public Korisnik() {
@@ -22,7 +22,7 @@ public class Korisnik {
 	}
 
 	public Korisnik(String korisnickoIme, String lozinka, String ime, String prezime, String pol,
-			String datumRodjenja, Uloga ulog, TipKupca tip, RentaCar objekat, Korpa korpa) {
+			String datumRodjenja, Uloga ulog, TipKupca tip, Korpa korpa) {
 		super();
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
@@ -32,10 +32,11 @@ public class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 		this.uloga = ulog;
 		this.vrstaKupca = tip;
-		this.objekatRentaCar = objekat;
+		this.blokiran = false;
 		this.korpa = korpa;
 	 		
 	}
+
 	public Korisnik(String korisnickoIme, String ime, String prezime, String pol,
 			String datumRodjenja) {
 		super();
@@ -132,6 +133,12 @@ public class Korisnik {
 		this.korpa = korpa;
 	}
 	
-	
+	public boolean isBlokiran() {
+		return blokiran;
+	}
+
+	public void setBlokiran(boolean blokiran) {
+		this.blokiran = blokiran;
+	}
 	
 }

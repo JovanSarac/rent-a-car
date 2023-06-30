@@ -76,7 +76,6 @@ public class KorisnikDAO {
     public Korisnik nadjiKorisnikaKorIme(String korisnickoIme) {
     	for(Korisnik k : korisnici) {
     		if(k.getKorisnickoIme().equals(korisnickoIme)) {
-    			
     			return k;
     		}
     	}

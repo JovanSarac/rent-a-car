@@ -119,6 +119,7 @@ public class KorisnikService {
 	        request.getSession().setAttribute("ulogovaniKorisnik", korisnik);
 	        System.out.println(request.getSession().getAttribute("ulogovaniKorisnik"));
 	        //System.out.println("Uspjesna prijava");
+	        if (korisnik.isBlokiran()) return Response.status(Response.Status.OK).entity("4").build();
 	        if (korisnik.getUloga().equals(Uloga.kupac)) {
 	        	System.out.println("NADJEN KUPAC EZ");
 	            return Response.status(Response.Status.OK).entity("1").build();

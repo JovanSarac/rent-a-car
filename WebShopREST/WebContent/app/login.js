@@ -57,7 +57,10 @@ Vue.component("login", {
           } else if (response.data == '3') {
             console.log('Uspjesna prijava kao menadzer');
             router.push('/pocetna-menadzer');
-          } else {
+          } else if (response.data == '4') {
+            console.log('BlokiranKorisnik');
+          }
+          else {
             console.log('Neuspjesna prijava');
             document.getElementsByName('porukagreska')[0].hidden = false;
           }
