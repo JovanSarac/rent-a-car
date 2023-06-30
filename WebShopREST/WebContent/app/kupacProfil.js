@@ -1,25 +1,30 @@
 Vue.component("profil-kupac", {
 	data: function () {
 		    return {
-				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
+				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0} },
 				 izmijeniProfil: false,
-				 originalniKorisnik: {} 
+				 originalniKorisnik: {},
+				 popust : null
 			}
 	},
 	template: `
-	 <div>
-    <kupac-menu :korisnik="korisnik"></kupac-menu> 
-   <div class="profile">
-  <h2>Profil korisnika</h2>
-  <div v-if="!izmijeniProfil" class="profile-info">
-    <p><strong>Korisničko ime:</strong> {{ korisnik.korisnickoIme }}</p>
-    <p><strong>Ime:</strong> {{ korisnik.ime }}</p>
-    <p><strong>Prezime:</strong> {{ korisnik.prezime }}</p>
-    <p><strong>Uloga:</strong> {{ korisnik.uloga }}</p>
-    <p><strong>Pol:</strong> {{ korisnik.pol }}</p>
-    <p><strong>Datum rođenja:</strong> {{ korisnik.datumRodjenja }}</p>
-    <button v-on:click="izmijeniProfil = true">Izmijeni profil</button>
-  </div>
+	<div>
+      <kupac-menu :korisnik="korisnik"></kupac-menu> 
+      <div class="profile">
+        <h2>Profil korisnika</h2>
+        <div v-if="!izmijeniProfil" class="profile-info">
+          <p><strong>Korisničko ime:</strong> {{ korisnik.korisnickoIme }}</p>
+          <p><strong>Ime:</strong> {{ korisnik.ime }}</p>
+          <p><strong>Prezime:</strong> {{ korisnik.prezime }}</p>
+          <p><strong>Uloga:</strong> {{ korisnik.uloga }}</p>
+          <p><strong>Pol:</strong> {{ korisnik.pol }}</p>
+          <p><strong>Datum rođenja:</strong> {{ korisnik.datumRodjenja }}</p>
+          <h3>Dodatne informacije:</h3>
+          <p><strong>Tip kupca:</strong> {{ korisnik.vrstaKupca.tipKupca }}</p>
+          <p><strong>Procenat popusta:</strong> {{ popust }}%</p>
+          <p><strong>Broj bodova:</strong> {{ korisnik.vrstaKupca.brojBodova }}</p>
+          <button v-on:click="izmijeniProfil = true">Izmijeni profil</button>
+        </div>
   <div v-else>
     <h3>Izmjena profila</h3>
     <form v-on:submit.prevent="sacuvajIzmjene">
@@ -68,6 +73,7 @@ Vue.component("profil-kupac", {
 		axios.get('rest/korisnici/prijava')
 		.then(response => {
       this.korisnik = response.data;
+      this.popust = this.korisnik.vrstaKupca.procenat * 100;
       this.originalniKorisnik = Object.assign({}, response.data);
       });
       },

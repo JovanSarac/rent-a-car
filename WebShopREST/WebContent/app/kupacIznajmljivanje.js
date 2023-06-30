@@ -130,11 +130,18 @@ Vue.component("iznajmi-kupac", {
           for (let vozilo of this.korisnik.korpa.vozilauKorpi) {
             ukupnaCijena += vozilo.cena;
             }
-
+          
+          
           let popust = this.korisnik.vrstaKupca.procenat;
+          if (popust > 0) {
           let iznosPopusta = ukupnaCijena * popust;
           let novaCijena = ukupnaCijena - iznosPopusta;
           this.korisnik.korpa.cena = novaCijena;
+          }
+          
+          else {
+			  this.korisnik.korpa.cena = ukupnaCijena;
+		  }
 		  this.korisnik.korpa.pocetniDatum = this.pocetniDatum;
 		  this.korisnik.korpa.krajnjiDatum = this.krajnjiDatum;
 		  

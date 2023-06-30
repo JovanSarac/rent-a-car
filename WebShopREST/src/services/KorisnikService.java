@@ -184,7 +184,7 @@ public class KorisnikService {
 	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Bronzani);
 	     		ulogovaniKorisnik.getVrstaKupca().setProcenat(0);
 		        	}
-	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 200) {
+	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 400 && ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 1500) {
 			 ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Srebrni);
 			 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.05);
 	        	}
