@@ -156,10 +156,10 @@ public class KorisnikService {
 	 
 	 @GET
 	 @Path("/trazi")
-	 @Produces(MediaType.APPLICATION_JSON)
-	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme, @QueryParam("filterUloga") String filterUloga) {
+	 @Produces(MediaType.APPLICATION_JSON)                                                                                                                                     
+	 public ArrayList<Korisnik> pretraziKorisnike(@QueryParam("ime") String ime, @QueryParam("prezime") String prezime, @QueryParam("korisnickoIme") String korisnickoIme, @QueryParam("filterUloga") String filterUloga,  @QueryParam("filterTipKorisnika") String filterTipKorisnika) {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");
-		 return dao.pretrazi(ime, prezime, korisnickoIme,filterUloga);
+		 return dao.pretrazi(ime, prezime, korisnickoIme,filterUloga,filterTipKorisnika);
 		}
 	 
 	 @GET

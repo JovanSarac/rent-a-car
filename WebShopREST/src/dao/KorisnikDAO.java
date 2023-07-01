@@ -181,7 +181,7 @@ public class KorisnikDAO {
 	    }
 	}
 	
-	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme, String filterUloga) {
+	public ArrayList<Korisnik> pretrazi(String ime, String prezime, String korIme, String filterUloga, String filtriranjeTipKorisnika) {
 	    ArrayList<Korisnik> pretrazeni = new ArrayList<Korisnik>(); 
 	    for (Korisnik object : korisnici) {
 	        boolean nameCondition = ime == null || ime.isEmpty() || object.getIme().toLowerCase().contains(ime.toLowerCase());
@@ -196,11 +196,21 @@ public class KorisnikDAO {
 	    if (!filterUloga.isEmpty()) {
 	        ArrayList<Korisnik> filtrirani = new ArrayList<Korisnik>();
 	        for (Korisnik odabran : pretrazeni) {
-	            if (odabran.getUloga().toString().equals(filterUloga)) {
+	            if (odabran.getUloga().toString().equalsIgnoreCase(filterUloga)) {
 	                filtrirani.add(odabran);
 	            }
 	        }
-	        return filtrirani;
+	        pretrazeni = filtrirani;
+	    }
+	    
+	    if (!filtriranjeTipKorisnika.isEmpty()) {
+	        ArrayList<Korisnik> filtrirani = new ArrayList<Korisnik>();
+	        for (Korisnik odabran : pretrazeni) {
+	            if (odabran.getVrstaKupca().getTipKupca().toString().toLowerCase().contains(filtriranjeTipKorisnika.toLowerCase())) {
+	                filtrirani.add(odabran);
+	            }
+	        }
+	        pretrazeni = filtrirani;
 	    }
 	    
 	    return pretrazeni;

@@ -1,13 +1,15 @@
 Vue.component("pregled-korisnika", {
 	data: function () {
 		    return {
-				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null,blokiran:null, sumnjiv: null },
+				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: { tipKupca: 'Bronzani', procenat: 0, brojBodova: 0}, blokiran:null, sumnjiv: null },
 				objekti: [],
 			    pretragaIme: '',
                 pretragaPrezime: '',
                 pretragaKorisnickoIme: '',
                 sortiranjeKriterijum: '',
-                filtriranjeUloga: ''
+                filtriranjeUloga: '',
+                filtriranjeTipKorisnika: '',
+                sortiranjeSmjer: '',
 				
 			}
 			
@@ -25,13 +27,25 @@ Vue.component("pregled-korisnika", {
           <option value="imee">ime</option>
           <option value="prezimee">prezime</option>
           <option value="korisničko-imee">korisničko ime</option>
+          <option value="brojBodova">broj bodova</option>
   </select>
+         <select v-model="sortiranjeSmjer">
+          <option value="" disabled selected>Rastući</option>
+          <option value="asc">Rastući</option>
+          <option value="desc">Opadajući</option>
+        </select>
          <select v-model="filtriranjeUloga">
          <option value="" disabled selected>Filtriraj po ulozi</option>
           <option value="kupac">Kupac</option>
           <option value="menadzer">Menadžer</option>
           <option value="administrator">Administrator</option>
   </select>
+   <select v-model="filtriranjeTipKorisnika">
+          <option value="" disabled selected>Filtriraj po tipu korisnika</option>
+          <option value="Bronzani">Bronzani</option>
+          <option value="Srebreni">Srebrni</option>
+          <option value="Zlatni">Zlatni</option>
+   </select>
   <button v-on:click="pretraziObjekte">Traži</button>
       </div>
     <div class="objects-container">
@@ -83,19 +97,27 @@ Vue.component("pregled-korisnika", {
         ime: this.pretragaIme,
         prezime: this.pretragaPrezime,
         korisnickoIme: this.pretragaKorisnickoIme,
-        filterUloga: this.filtriranjeUloga
+        filterUloga: this.filtriranjeUloga,
+        filterTipKorisnika: this.filtriranjeTipKorisnika
       }
     })
     .then((response) => {                                            
       let rezultati = response.data;
 
       if (this.sortiranjeKriterijum === 'imee') {
-        rezultati.sort((a, b) => a.ime.localeCompare(b.ime));
-      } else if (this.sortiranjeKriterijum === 'prezimee') {
-        rezultati.sort((a, b) => a.prezime.localeCompare(b.prezime));
-      } else if (this.sortiranjeKriterijum === 'korisničko-imee') {
-        rezultati.sort((a, b) => a.korisnickoIme.localeCompare(b.korisnickoIme));
-      }
+            rezultati.sort((a, b) => a.ime.localeCompare(b.ime));
+          } else if (this.sortiranjeKriterijum === 'prezimee') {
+            rezultati.sort((a, b) => a.prezime.localeCompare(b.prezime));
+          } else if (this.sortiranjeKriterijum === 'korisničko-imee') {
+            rezultati.sort((a, b) => a.korisnickoIme.localeCompare(b.korisnickoIme));
+          }
+             else if (this.sortiranjeKriterijum === "brojBodova") {
+            rezultati.sort((a, b) => a.vrstaKupca.brojBodova - b.vrstaKupca.brojBodova);
+          }
+
+          if (this.sortiranjeSmjer === 'desc') {
+            rezultati.reverse();
+          }
 
       this.objekti = rezultati;
     })
