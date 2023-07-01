@@ -20,8 +20,11 @@ import javax.ws.rs.core.Response;
 
 import beans.Korisnik;
 import beans.Korisnik.Uloga;
+import beans.PorudzbinaOtkaz;
 import beans.TipKupca.Tip;
 import dao.KorisnikDAO;
+import dao.PorudzbinaDAO;
+import dao.PorudzbinaOtkazDAO;
 import dao.RentaCarDAO;
 import dto.KorisnikDTO;
 @Path ("/korisnici")
@@ -45,6 +48,10 @@ public class KorisnikService {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("rentaCarDao", new RentaCarDAO(contextPath));
 		}
+		if(ctx.getAttribute("otkazDAO")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("otkazDAO", new PorudzbinaOtkazDAO(contextPath));
+		}
 
 	}
 
@@ -60,9 +67,9 @@ public class KorisnikService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Korisnik> nadjiSveKorisnike() {
 		 KorisnikDAO dao = (KorisnikDAO) ctx.getAttribute("korisnikDao");	
+		 PorudzbinaOtkazDAO repo = (PorudzbinaOtkazDAO) ctx.getAttribute("otkazDAO");
 		 Korisnik ulogovaniKorisnik = (Korisnik) request.getSession().getAttribute("ulogovaniKorisnik");
-		 System.out.println("IMA UKUONO " + dao.nadjiSveKorisnike(ulogovaniKorisnik).size() + "korisnika");
-		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike(ulogovaniKorisnik);
+		 return (ArrayList<Korisnik>) dao.nadjiSveKorisnike(ulogovaniKorisnik, repo.nadjiSveOtkaze());
 	}
 	
 	
@@ -185,7 +192,7 @@ public class KorisnikService {
 	     		ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Bronzani);
 	     		ulogovaniKorisnik.getVrstaKupca().setProcenat(0);
 		        	}
-	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 400 && ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 1500) {
+	     	else if (ulogovaniKorisnik.getVrstaKupca().getBrojBodova() > 200 && ulogovaniKorisnik.getVrstaKupca().getBrojBodova() < 1500) {
 			 ulogovaniKorisnik.getVrstaKupca().setTipKupca(Tip.Srebrni);
 			 ulogovaniKorisnik.getVrstaKupca().setProcenat(0.05);
 	        	}
@@ -196,5 +203,16 @@ public class KorisnikService {
 		 Korisnik azuriraniKorisnik = dao.izmeniKorisnika(ulogovaniKorisnik);
 	     return Response.ok(azuriraniKorisnik).build();
 	 }
+	 
+	    @POST
+	    @Path("/otkazi")
+	    @Produces(MediaType.APPLICATION_JSON)
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    public boolean otkazi(PorudzbinaOtkaz otkaz)
+	    {
+	        System.out.println("Zapoceta registracija");
+	        PorudzbinaOtkazDAO repo = (PorudzbinaOtkazDAO) ctx.getAttribute("otkazDAO");
+	        return (repo.Sacuvaj(otkaz) != null);
+	    }
 
 }

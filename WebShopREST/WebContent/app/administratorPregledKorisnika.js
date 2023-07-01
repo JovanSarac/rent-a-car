@@ -1,7 +1,7 @@
 Vue.component("pregled-korisnika", {
 	data: function () {
 		    return {
-				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null,blokiran:null },
+				korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null,blokiran:null, sumnjiv: null },
 				objekti: [],
 			    pretragaIme: '',
                 pretragaPrezime: '',
@@ -37,7 +37,7 @@ Vue.component("pregled-korisnika", {
     <div class="objects-container">
       <div v-for="objekat in objekti" :key="objekat.id" class="object-card">
         <div class="object-details">
-          <h3>{{ objekat.ime }} {{ objekat.prezime }}</h3>
+          <h3>{{ objekat.ime }} {{ objekat.prezime }}</h3> <p v-if="objekat.sumnjiv" style="color: red;">Sumnjiv korisnik</p>
           <p>Korisničko ime:  {{objekat.korisnickoIme}}</p>
           <h4>{{objekat.uloga}}</h4>
            <button
@@ -47,7 +47,7 @@ Vue.component("pregled-korisnika", {
               v-on:click="onClickButton(objekat)"
               v-if="objekat.uloga !== 'administrator'"
             >
-              {{ objekat.blokiran ? 'Blokiran' : 'Odblokiran' }}
+              {{ objekat.blokiran ? 'Blokiran' : 'Aktivan' }}
             </button>
         </div>
       </div>

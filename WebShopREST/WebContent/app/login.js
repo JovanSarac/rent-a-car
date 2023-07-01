@@ -1,7 +1,9 @@
 Vue.component("login", {
 	data: function () {
 		    return {
-				korisnik : {korisnickoIme:null, lozinka:null}
+				korisnik : {korisnickoIme:null, lozinka:null},
+		        blokiran : false,
+		        nepostojeci: false
 			}
 	},
 	template: ` 
@@ -17,7 +19,8 @@ Vue.component("login", {
       <input type="submit" value="Prijavi se">
     </form>
     <p>Nemate nalog? <a href="#/Registracija">Registracija</a></p>
-    <p hidden style="color:red" name="porukagreska">Ne postoji nalog sa unijetim podacima!</p>
+    <p v-if="blokiran" style="color: red;">Administrator vas je blokirao</p>
+    <p v-if="nepostojeci" style="color: red;"> Ne postoji nalog sa unijetim podacima!</p>
     </div>
 `, 
 	methods : {
@@ -59,13 +62,21 @@ Vue.component("login", {
             router.push('/pocetna-menadzer');
           } else if (response.data == '4') {
             console.log('BlokiranKorisnik');
+            this.blokiran = true;
+            setTimeout(() => {
+            this.blokiran = false;
+            }, 2000);
           }
           else {
             console.log('Neuspjesna prijava');
-            document.getElementsByName('porukagreska')[0].hidden = false;
+      
           }
         })
         .catch(error => {
+			this.nepostojeci = true;
+            setTimeout(() => {
+            this.nepostojeci = false;
+            }, 2000);
           console.error(error);
         });
     }

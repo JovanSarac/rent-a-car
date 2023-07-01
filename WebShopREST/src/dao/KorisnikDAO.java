@@ -3,13 +3,19 @@ package dao;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Korisnik;
+import beans.PorudzbinaOtkaz;
 import beans.RentaCar;
 import beans.Korisnik.Uloga;
 
@@ -44,14 +50,41 @@ public class KorisnikDAO {
         return korisnik;
     }
 	
-	 public List<Korisnik> nadjiSveKorisnike(Korisnik korisnik) {
+	 public List<Korisnik> nadjiSveKorisnike(Korisnik korisnik, List<PorudzbinaOtkaz> otkazi) {
 		 ArrayList<Korisnik> korisnici2 = new ArrayList<Korisnik>(korisnici);
 	       korisnici2.remove(korisnik);
+	       MarkirajSumnjiveKorisnike(korisnici2,otkazi);	       
 	       return korisnici2;
 	    }
+	
 	 public String nadjiIdPoslednjegKorisnika() {
 		 return korisnici.get(korisnici.size()-1).getId();
 	 }
+	 
+	 public void MarkirajSumnjiveKorisnike(List<Korisnik> korisnici, List<PorudzbinaOtkaz> otkazi) {
+	
+		    Map<String, Integer> brojOtkazaPoKorisniku = new HashMap<>();
+		    LocalDate danasnjiDatum = LocalDate.now();
+		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		    String danasnjiDatumString = danasnjiDatum.format(formatter);
+
+		    for (PorudzbinaOtkaz otkaz : otkazi) {
+		        LocalDate datumOtkaza = LocalDate.parse(otkaz.getDatum(), formatter);
+		        if (datumOtkaza.isAfter(danasnjiDatum.minusMonths(1))) {
+		            String korisnikId = otkaz.getKupacId();
+		            brojOtkazaPoKorisniku.put(korisnikId, brojOtkazaPoKorisniku.getOrDefault(korisnikId, 0) + 1);
+		            System.out.println("broj otkaza je: " + brojOtkazaPoKorisniku);
+		        }
+		    }
+
+		    for (Korisnik korisnik : korisnici) {
+		        String korisnikId = korisnik.getId();
+		        if (brojOtkazaPoKorisniku.containsKey(korisnikId) && brojOtkazaPoKorisniku.get(korisnikId) > 5) {
+		            korisnik.setSumnjiv(true);
+		            korisnik = izmeniKorisnika(korisnik);
+		        }
+		    }
+		}
 
     private boolean korisnickoImeJedinstveno(Korisnik korisnik){
     	System.out.println("ime jedinstveno");
