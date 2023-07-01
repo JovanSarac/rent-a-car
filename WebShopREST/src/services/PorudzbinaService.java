@@ -20,6 +20,7 @@ import beans.Korisnik;
 import beans.Porudzbina;
 import dao.KorisnikDAO;
 import dao.PorudzbinaDAO;
+import dao.RentaCarDAO;
 @Path ("/porudzbine")
 public class PorudzbinaService {
 	@Context
@@ -40,6 +41,10 @@ public class PorudzbinaService {
 		if(ctx.getAttribute("korisnikDao")==null) {
 			String contextPath = ctx.getRealPath("");
         	ctx.setAttribute("korisnikDao", new KorisnikDAO(contextPath));
+		}
+		if(ctx.getAttribute("objekatDAO")==null) {
+			String contextPath = ctx.getRealPath("");
+        	ctx.setAttribute("objekatDAO", new RentaCarDAO(contextPath));
 		}
 
 	}
@@ -99,6 +104,17 @@ public class PorudzbinaService {
 	public String nadjiId() {
 		PorudzbinaDAO repo = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");
 		return repo.nadjiIdPoslednjePorudzbine();
+	}
+	
+	@GET
+	@Path("/trazi")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Porudzbina> pretraziObjekte(@QueryParam("pretragaNaziv") String pretragaNaziv, @QueryParam("cenaOd") double cenaOd, @QueryParam("cenaDo") double cenaDo,
+			@QueryParam("datumOd") String datumOd, @QueryParam("datumDo") String datumDo, @QueryParam("korisnikId") String korisnikId) {
+		
+	  PorudzbinaDAO repo = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");
+	  RentaCarDAO rentaDao = (RentaCarDAO) ctx.getAttribute("objekatDAO");
+	  return repo.pretrazi(pretragaNaziv, cenaOd, cenaDo, datumOd, datumDo, korisnikId,rentaDao);
 	}
 	
 }
