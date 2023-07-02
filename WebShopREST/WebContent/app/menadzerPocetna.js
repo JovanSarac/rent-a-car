@@ -4,25 +4,49 @@ Vue.component("pocetna-menadzer", {
       objekti: [],
       korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
       pretragaNaziv: '',
-      pretragaLokacija: '',
-      pretragaOcena: 0,
-      sortiranjeKriterijum: ''
+                pretragaLokacija: '',
+                pretragaOcena: 0,
+                pretragaTipVozila: '',
+                sortiranjeKriterijum: '',
+                sortiranjeSmjer: '',
+                filterVrstaVozila: '',
+                filterTipGoriva: '',
+                filterStatus: ''
     }
   },
   template: `
     <div>
       <menadzer-menu :korisnik="korisnik"></menadzer-menu>
       <div class="pretraga-container">
-        <input v-model="pretragaNaziv" type="text" placeholder="Pretraga po nazivu">
+         <input v-model="pretragaNaziv" type="text" placeholder="Pretraga po nazivu">
         <input v-model="pretragaLokacija" type="text" placeholder="Pretraga po lokaciji">
+        <input v-model="pretragaTipVozila" type="text" placeholder="Pretraga po tipu vozila">
         <input v-model="pretragaOcena" type="number" placeholder="Pretraga po oceni(veći od)">
-        &#8595;
+        <button v-on:click="promeniSortiranjeSmjer" style="height: 40px;">
+          {{ sortiranjeSmjer === 'asc' ? '▼' : '▲' }}
+          </button>
           <select v-model="sortiranjeKriterijum" >
           <option value="" disabled selected>Sortiraj po parametru</option>
           <option value="naziv">Naziv objekta</option>
           <option value="lokacija">Lokacija</option>
           <option value="ocena">Prosječna ocena</option>
-  		  </select>
+  </select>
+        <select v-model="filterVrstaVozila">
+          <option value="">Filtriraj po vrsti vozila</option>
+          <option value="manuelni">Manuelni</option>
+          <option value="automatik">automatik</option>
+         </select>
+         <select v-model="filterTipGoriva">
+          <option value="">Filtriraj po tipu goriva</option>
+          <option value="dizel">Dizel</option>
+          <option value="benzin">Benzin</option>
+          <option value="elektricni">Električni</option>
+         </select>
+          <select v-model="filterStatus">
+          <option value="">Filtriraj po statusu</option>
+          <option value="true">Otvoreni objekti</option>
+          <option value="false">Zatvoreni objekti</option>
+         </select>
         <button v-on:click="pretraziObjekte">Traži</button>
       </div>
       <div class="objects-container">
@@ -59,7 +83,11 @@ Vue.component("pocetna-menadzer", {
       params: {
         naziv: this.pretragaNaziv,
         lokacija: this.pretragaLokacija,
-        ocena: this.pretragaOcena
+        ocena: this.pretragaOcena,
+        tipVozila: this.pretragaTipVozila,
+        filterVrVozila: this.filterVrstaVozila,
+        filterGorivo: this.filterTipGoriva,
+        filterStatusObjekta: this.filterStatus
       }
     })
     .then((response) => {                                            
@@ -72,13 +100,24 @@ Vue.component("pocetna-menadzer", {
       } else if (this.sortiranjeKriterijum === 'ocena') {
         rezultati.sort((a, b) => b.ocena - a.ocena);
       }
+      
+       if (this.sortiranjeSmjer === 'desc') {
+            rezultati.reverse();
+          }
 
       this.objekti = rezultati;
     })
     .catch((error) => {
       console.error(error);
     });
-    },
+},
+promeniSortiranjeSmjer() {
+      if (this.sortiranjeSmjer === "asc") {
+        this.sortiranjeSmjer = "desc";
+      } else {
+        this.sortiranjeSmjer = "asc";
+      }
+      },
     
     prikazRentaCara : function(objekat){
 		this.$router.push({ name: 'show-rentacar-manager', params: { objekatId: objekat.id } });

@@ -63,11 +63,12 @@ public class RentaCarService {
     }
 	
 	@GET
-	@Path("/trazi")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<RentaCar> pretraziObjekte(@QueryParam("naziv") String naziv, @QueryParam("lokacija") String lokacija, @QueryParam("ocena") double ocena) {
+	@Path("/trazi")  
+	@Produces(MediaType.APPLICATION_JSON) 
+	public ArrayList<RentaCar> pretraziObjekte(@QueryParam("naziv") String naziv, @QueryParam("lokacija") String lokacija, @QueryParam("ocena") double ocena, @QueryParam("tipVozila") String tipVozila,  @QueryParam("filterVrVozila") String filterVrVozila,
+			@QueryParam("filterGorivo") String filterGorivo, @QueryParam("filterStatusObjekta") String filterStatusObjekta) {
 	  RentaCarDAO dao = (RentaCarDAO) ctx.getAttribute("objectDAO");
-	  return dao.pretrazi(naziv, lokacija, ocena);
+	  return dao.pretrazi(naziv, lokacija, ocena, tipVozila, filterVrVozila, filterGorivo, filterStatusObjekta);
 	}
 	
 	@GET

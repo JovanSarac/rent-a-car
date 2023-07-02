@@ -19,6 +19,7 @@ const NoviObjekat = { template: '<novi-objekat></novi-objekat>' }
 const SvaIznajmljivanja = {template: '<iznajmlivanja-kupac></iznajmlivanja-kupac>'}
 const AllComments = {template: '<all-comments-manager></all-comments-manager>'}
 const IznajmljivanjaMenadzer = {template: '<iznajmljivanja-menadzer></iznajmljivanja-menadzer>'}
+const PrikazRentaCaraAdministrator = {template: '<show-rentacar-administrator></show-rentacar-administrator>'}
 
 const router = new VueRouter({
 	mode: 'hash',
@@ -42,6 +43,7 @@ const router = new VueRouter({
 		{ path: '/add-vehicle-manager', component: DodajVoziloMenadzer},
 		{ path: '/show-vehicle/:vehicleId', name: 'show-vehicle', component: PrikazVozilaMenadzer},
 		{ path: '/show-rentacar-manager/:objekatId', name: 'show-rentacar-manager', component: PrikazRentaCaraMenadzer},
+		{ path: '/show-rentacar-administrator/:objekatId', name: 'show-rentacar-administrator', component: PrikazRentaCaraAdministrator},
 		{ path:  '/pregled-korisnika', component: SviKorisnici},
 		{ path:  '/iznajmlivanja-kupac', component: SvaIznajmljivanja},
 		{ path:  '/iznajmljivanja-menadzer', component: IznajmljivanjaMenadzer}

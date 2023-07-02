@@ -21,7 +21,9 @@ Vue.component("pregled-korisnika", {
         <input v-model="pretragaIme" type="text" placeholder="Pretraga po imenu">
         <input v-model="pretragaPrezime" type="text" placeholder="Pretraga po prezimenu">
         <input v-model="pretragaKorisnickoIme" type="text" placeholder="Pretraga po korisničkom imenu">
-        &#8595;
+          <button v-on:click="promeniSortiranjeSmjer" style="height: 40px;">
+          {{ sortiranjeSmjer === 'asc' ? '▼' : '▲' }}
+          </button>
           <select v-model="sortiranjeKriterijum" >
           <option value="" disabled selected>Sortiraj po parametru</option>
           <option value="imee">ime</option>
@@ -29,11 +31,6 @@ Vue.component("pregled-korisnika", {
           <option value="korisničko-imee">korisničko ime</option>
           <option value="brojBodova">broj bodova</option>
   </select>
-         <select v-model="sortiranjeSmjer">
-          <option value="" disabled selected>Rastući</option>
-          <option value="asc">Rastući</option>
-          <option value="desc">Opadajući</option>
-        </select>
          <select v-model="filtriranjeUloga">
          <option value="" disabled selected>Filtriraj po ulozi</option>
           <option value="kupac">Kupac</option>
@@ -146,6 +143,13 @@ Vue.component("pregled-korisnika", {
                 });
       }
     },
+    promeniSortiranjeSmjer() {
+      if (this.sortiranjeSmjer === "asc") {
+        this.sortiranjeSmjer = "desc";
+      } else {
+        this.sortiranjeSmjer = "asc";
+      }
+      }
     
 
   },		
