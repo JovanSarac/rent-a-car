@@ -264,4 +264,63 @@ public class PorudzbinaDAO {
 	    }
 		return pretrazeni;
 	}
+
+	public ArrayList<Porudzbina> pretraziZaMenadzera(double cenaOd, double cenaDo, String datumOd, String datumDo,
+			String objekatId, RentaCarDAO rentaDao) {
+		List<Porudzbina> porudzbineZaMenadzera = nadjiPorudzbinezaRentaCar(objekatId); 
+		ArrayList<Porudzbina> pretrazeni = new ArrayList<Porudzbina>();
+		
+		
+	    for (Porudzbina p : porudzbineZaMenadzera) {	    	
+	    	boolean cenaOdCondition = false;
+	    	boolean cenaDoCondition = false;
+	    	if(cenaOd == 0 && cenaDo == 0) {
+	    		cenaOdCondition = true;
+	    		cenaDoCondition = true;
+	    		System.out.println("prvi slucaj");
+	    	}else if(cenaOd == 0 && cenaDo != 0) {
+	    		cenaOdCondition = true;
+	    		if(p.getCena() <= cenaDo) cenaDoCondition = true;
+	    		System.out.println("drugi slucaj");
+	    	}else if(cenaOd != 0 && cenaDo ==0) {
+	    		cenaDoCondition = true;
+	    		if(p.getCena() >= cenaOd) cenaOdCondition = true;
+	    		System.out.println("treci slucaj");
+	    	}else if(cenaOd != 0 && cenaDo !=0) {
+	    		if(p.getCena() >= cenaOd) cenaOdCondition = true;
+	    		if(p.getCena() <= cenaDo) cenaDoCondition = true;
+	    		System.out.println("cetvrti slucaj");
+	    	}	 
+	    	System.out.println("#####################");
+	    	boolean datumOdCondition = false;
+	    	boolean datumDoCondition = false;	  
+	    	if(datumOd.isEmpty() && datumDo.isEmpty()) {
+	    		datumOdCondition = true;
+	    		datumDoCondition = true;
+	    		System.out.println("prvi slucaj");
+	    	}else if(!datumOd.isEmpty() && datumDo.isEmpty()) {
+	    		datumDoCondition = true;
+	    		if((LocalDate.parse(p.getDatumIznajmljivanja()).isAfter(LocalDate.parse(datumOd)) || LocalDate.parse(p.getDatumIznajmljivanja()).isEqual(LocalDate.parse(datumOd))))
+	    				datumOdCondition = true;
+	    		System.out.println("drugi slucaj");
+	    	}else if(datumOd.isEmpty() && !datumDo.isEmpty()) {
+	    		datumOdCondition = true;
+	    		if((LocalDate.parse(p.getDatumIznajmljivanja()).isBefore(LocalDate.parse(datumDo)) || LocalDate.parse(p.getDatumIznajmljivanja()).isEqual(LocalDate.parse(datumDo))))
+    				datumDoCondition = true;
+	    		System.out.println("treci slucaj");
+	    	}else if(!datumOd.isEmpty() && !datumDo.isEmpty()) {
+	    		if((LocalDate.parse(p.getDatumIznajmljivanja()).isAfter(LocalDate.parse(datumOd)) || LocalDate.parse(p.getDatumIznajmljivanja()).isEqual(LocalDate.parse(datumOd))))
+    				datumOdCondition = true;
+	    		if((LocalDate.parse(p.getDatumIznajmljivanja()).isBefore(LocalDate.parse(datumDo)) || LocalDate.parse(p.getDatumIznajmljivanja()).isEqual(LocalDate.parse(datumDo))))
+	    			datumDoCondition = true;
+	    		System.out.println("cetvrti slucaj");
+	    	}
+	    	
+	    	
+	        if (cenaOdCondition && cenaDoCondition && datumOdCondition && datumDoCondition) {
+	            pretrazeni.add(p);
+	        }
+	    }
+		return pretrazeni;
+	}
 }

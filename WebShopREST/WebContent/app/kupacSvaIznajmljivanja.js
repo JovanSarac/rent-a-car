@@ -242,13 +242,13 @@ Vue.component("iznajmlivanja-kupac", {
 			  if (this.sortiranjeKriterijum === 'cena') {
 		        rezultati.sort((a, b) => b.cena - a.cena);
 		      } else if (this.sortiranjeKriterijum === 'datum') {
-		        rezultati.sort((a, b) => a.datumIznajmljivanja.localeCompare(b.datumIznajmljivanja));
+		        rezultati.sort((a, b) => b.datumIznajmljivanja.localeCompare(a.datumIznajmljivanja));
 		      }
 		  }else{
 			  if (this.sortiranjeKriterijum === 'cena') {
 		        rezultati.sort((a, b) => a.cena - b.cena);
 		      } else if (this.sortiranjeKriterijum === 'datum') {
-		        rezultati.sort((a, b) => b.datumIznajmljivanja.localeCompare(a.datumIznajmljivanja));
+		        rezultati.sort((a, b) => a.datumIznajmljivanja.localeCompare(b.datumIznajmljivanja));
 		      }
 		  }
 		  this.porudzbine = rezultati;

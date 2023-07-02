@@ -117,4 +117,15 @@ public class PorudzbinaService {
 	  return repo.pretrazi(pretragaNaziv, cenaOd, cenaDo, datumOd, datumDo, korisnikId,rentaDao);
 	}
 	
+	@GET
+	@Path("/traziZaMenadzera")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Porudzbina> pretraziObjekte(@QueryParam("cenaOd") double cenaOd, @QueryParam("cenaDo") double cenaDo,
+			@QueryParam("datumOd") String datumOd, @QueryParam("datumDo") String datumDo, @QueryParam("objekatId") String objekatId) {
+		
+	  PorudzbinaDAO repo = (PorudzbinaDAO) ctx.getAttribute("porudzbinaDao");
+	  RentaCarDAO rentaDao = (RentaCarDAO) ctx.getAttribute("objekatDAO");
+	  return repo.pretraziZaMenadzera(cenaOd, cenaDo, datumOd, datumDo, objekatId, rentaDao);
+	}
+	
 }
