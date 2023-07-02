@@ -15,6 +15,7 @@ public class Korisnik {
 	public String datumRodjenja;
 	public TipKupca vrstaKupca;
 	public boolean blokiran;
+	public boolean sumnjiv;
 	public Korpa korpa;
 	
 	public Korisnik() {
@@ -33,6 +34,7 @@ public class Korisnik {
 		this.uloga = ulog;
 		this.vrstaKupca = tip;
 		this.blokiran = false;
+		this.sumnjiv = false;
 		this.korpa = korpa;
 	 		
 	}
@@ -49,6 +51,14 @@ public class Korisnik {
 
 	public String getId() {
 		return id;
+	}
+
+	public boolean isSumnjiv() {
+		return sumnjiv;
+	}
+
+	public void setSumnjiv(boolean sumnjiv) {
+		this.sumnjiv = sumnjiv;
 	}
 
 	@Override

@@ -23,7 +23,8 @@ Vue.component("iznajmlivanja-kupac", {
       aktivanIndex: -1,
       Komentar: {id:null, korisnickoIme: null, kupacId: null, rentacarId: null, komentar:null, ocjena: null},
       objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
-      prikaziFormu: []
+      prikaziFormu: [],
+      otkazPorudzbine : {kupacId: null, datum: null}
     };
   },
   template: `
@@ -95,12 +96,26 @@ Vue.component("iznajmlivanja-kupac", {
       if (porudzbina.status === 'Obrada') {
         porudzbina.status = 'Otkazano';
         
+        
+       
+      
+       this.otkazPorudzbine.kupacId = this.korisnik.id,
+       this.otkazPorudzbine.datum = new Date().toISOString().split('T')[0]
+        axios.post('rest/korisnici/otkazi', this.otkazPorudzbine)
+          .then(response => {
+            console.log(response.data);
+            if (response.data === true) {
+              console.log("Uspješno otkazana porudzbina.");
+              }
+              });
+        
         axios.put('rest/porudzbine/izmeniporudzbinu', porudzbina)
           .then(response => {
             console.log(response.data);
             if (response.data === true) {
               console.log("Upsješno otkazana porudzbina.");           
-           
+               
+               
               const ukupnaCena = porudzbina.cena;
               const brojBodova = -(ukupnaCena / 1000 * 133 * 4);
               axios.put(`rest/korisnici/azurirajBodove/` + brojBodova)
@@ -110,10 +125,6 @@ Vue.component("iznajmlivanja-kupac", {
                 .catch(error => {
                   console.error(error);
                 });
-              const index = this.porudzbine.indexOf(porudzbina);
-              if (index !== -1) {
-                this.porudzbine.splice(index, 1);
-              }
             }
           })
           .catch(error => {

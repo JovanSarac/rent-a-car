@@ -1,15 +1,18 @@
 package dao;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import beans.Korisnik;
 import beans.RentaCar;
 import beans.Vozilo;
 
@@ -129,21 +132,70 @@ public class RentaCarDAO {
 	    }
 	}
 	
-	public ArrayList<RentaCar> pretrazi(String naziv, String lokacija, double ocjena) {
-	    ArrayList<RentaCar> pretrazeni = new ArrayList<RentaCar>(); 
+	public ArrayList<RentaCar> pretrazi(String naziv, String lokacija, double ocjena, String tipVozila, String filterVrstaVozila, String filterTipGoriva, String status) {
+	    Set<RentaCar> pretrazeni = new HashSet<>();
+	    
 	    for (RentaCar object : objekti) {
+	        boolean tip = false;
 	        boolean nameCondition = naziv == null || naziv.isEmpty() || object.getNaziv().toLowerCase().contains(naziv.toLowerCase());
 	        boolean cityCondition = lokacija == null || lokacija.isEmpty() || object.getLokacija().getMjesto().toLowerCase().contains(lokacija.toLowerCase());
-	        boolean vece = false;
-	        if (ocjena == 0) vece = true;
-	        else if (object.getOcena() > ocjena) vece = true;
-
-	        if (nameCondition && cityCondition && vece) {
+	        
+	        for (Vozilo vozilo : object.getVozila()) {
+	            boolean tipCondition = tipVozila == null || tipVozila.isEmpty() || vozilo.getTipVozila().toLowerCase().contains(tipVozila.toLowerCase());
+	            tip = tipCondition;
+	        }
+	        
+	        boolean vece = ocjena == 0 || object.getOcena() > ocjena;
+	        
+	        if (nameCondition && cityCondition && vece && tip) {
 	            pretrazeni.add(object);
 	        }
 	    }
-	    return pretrazeni;
+	    
+	    if (!filterVrstaVozila.isEmpty()) {
+	        Set<RentaCar> filtrirani = new HashSet<>();
+	        
+	        for (RentaCar object : pretrazeni) {
+	            for (Vozilo vozilo : object.getVozila()) {
+	                if (vozilo.getVrsta().toString().equalsIgnoreCase(filterVrstaVozila)) {
+	                    filtrirani.add(object);
+	                }
+	            }
+	        }
+	        
+	        pretrazeni = filtrirani;
+	    }
+	    
+	    if (!filterTipGoriva.isEmpty()) {
+	        Set<RentaCar> filtrirani = new HashSet<>();
+	        
+	        for (RentaCar object : pretrazeni) {
+	            for (Vozilo vozilo : object.getVozila()) {
+	                if (vozilo.getTipGoriva().toString().equalsIgnoreCase(filterTipGoriva)) {
+	                    filtrirani.add(object);
+	                }
+	            }
+	        }
+	        
+	        pretrazeni = filtrirani;
+	    }
+	    
+	    if (!status.isEmpty()) {
+	        Set<RentaCar> filtrirani = new HashSet<>();
+	        boolean statusValue = Boolean.parseBoolean(status);
+	        
+	        for (RentaCar object : pretrazeni) {
+	            if (object.isStatus() == statusValue) {
+	                filtrirani.add(object);
+	            }
+	        }
+	        
+	        pretrazeni = filtrirani;
+	    }
+	    
+	    return new ArrayList<>(pretrazeni);
 	}
+
 
 }
 
