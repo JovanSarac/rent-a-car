@@ -1,8 +1,53 @@
 Vue.component("renta-car-menadzer", {
 	data: function () {
 		    return {
-				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
-				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
+				 korisnik: { 
+					 id: null, 
+					 korisnickoIme: null, 
+					 lozinka: null, 
+					 ime: null, 
+					 prezime: null, 
+					 uloga: null, 
+					 pol: null, 
+					 datumRodjenja: null, 
+					 vrstaKupca: null 
+				 },
+				 objekat: { 
+					 id: null, 
+					 naziv: null, 
+					 vozila: [], 
+					 radnoVremeOd: null, 
+					 radnoVremeDo: null,
+					 status: null, 
+					 lokacija:{
+					    id : null,
+					    geografskaDuzina : null,
+					    geografskaSirina : null,
+					    mjesto : null,
+					    postanskiBroj : null,
+					    ulica : null,
+					    broj : null
+					 }, 
+					 logoUrl: null, 
+					 ocena: null, 
+					 menadzer: {
+					    id : null,
+					    korisnickoIme : null,
+					    lozinka : null,
+					    ime : null,
+					    prezime : null,
+					    uloga : null,
+					    pol : null,
+					    datumRodjenja : null,
+					    vrstaKupca : {
+					      tipKupca : null,
+					      procenat : null,
+					      brojBodova : null
+					    },
+					    blokiran : null,
+					    korpa : null
+					}
+				},
 				 
 			}
 	},
