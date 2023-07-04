@@ -219,8 +219,8 @@ Vue.component("novi-objekat", {
 				  let length = Math.abs(parseFloat(boundingbox[3]) - parseFloat(boundingbox[1]));
 			   	  let width = Math.abs(parseFloat(boundingbox[2]) - parseFloat(boundingbox[0]));
 					
-				  this.objekat.lokacija.geografskaDuzina = width;
-				  this.objekat.lokacija.geografskaSirina = length;
+				  this.objekat.lokacija.geografskaDuzina = length;
+				  this.objekat.lokacija.geografskaSirina = width;
 			  	})
 		},
 		
