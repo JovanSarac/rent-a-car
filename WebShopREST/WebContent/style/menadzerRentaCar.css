@@ -1,5 +1,6 @@
   .maininfo {
     display: flex;
+    gap: 20px;
   }
 
   .add-vehicle {
@@ -60,6 +61,7 @@
     border-radius: 5px;	
     max-width: 700px; /* Promijenjeno */	
     margin-left: 100px; /* Promijenjeno */
+    flex: 1;
   }
 
   .vehicle-container {
@@ -255,4 +257,8 @@
 .comment-rating {
   color: #FF0000;
   margin-top: 5px;
+}
+
+.map-container {
+  flex: 1;
 }

@@ -44,23 +44,9 @@ Vue.component("novi-objekat", {
         <label>Radno vreme do:</label>
         <input type="time" v-model="objekat.radnoVremeDo" required>
         
-        <label>Geografska dužina:</label>
-        <input type="text" v-model="objekat.lokacija.geografskaDuzina" required>
-        
-        <label>Geografska širina:</label>
-        <input type="text" v-model="objekat.lokacija.geografskaSirina" required>
-        
-        <label>Mjesto:</label>
-        <input type="text" v-model="objekat.lokacija.mjesto" required>
-        
-        <label>Poštanski broj:</label>
-        <input type="number" v-model="objekat.lokacija.postanskiBroj" required>
-        
-        <label>Ulica:</label>
-        <input type="text" v-model="objekat.lokacija.ulica" required>
-        
-        <label>Broj:</label>
-        <input type="text" v-model="objekat.lokacija.broj" required>
+        <label>Odaberite lokaciju: </label>
+	    		<div id="map" ref="map"></div>
+
         
         <label>Logo URL:</label>
         <input type="text" v-model="objekat.logoUrl" required>
@@ -157,11 +143,101 @@ Vue.component("novi-objekat", {
     mounted() {
 		axios.get('rest/korisnici/prijava')
       .then(response => (this.korisnik = response.data));
+      
+      const map = new ol.Map({
+		  target: 'map',
+		  layers: [
+		    new ol.layer.Tile({
+		      source: new ol.source.OSM(),
+		    })
+		  ],
+		  view: new ol.View({
+		    center: ol.proj.fromLonLat([0, 0]),
+		    zoom: 2,
+		  })
+		});
+		
+		const marker = new ol.layer.Vector({
+			source: new ol.source.Vector({
+				features: [
+					new ol.Feature({
+						geometry: new ol.geom.Point(
+							ol.proj.fromLonLat([0, 0])
+						)
+					})
+				]
+			}),
+			style: new ol.style.Style({
+				image: new ol.style.Icon({
+					src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+					anchor: [0.5,1]
+				})
+			})
+		})
+		
+		map.addLayer(marker);
+  		
+  		this.mapObject = map;
+  		this.markerObject = marker;
+  		
+  		const vec = new ol.layer.Vector({
+		  source: new ol.source.Vector(),
+		});
+		  		
+  		map.on('click', (event) => {
+			  var cor = ol.proj.toLonLat(event.coordinate);
+			  this.convertToMyCoordinates(cor);
+			  vec.getSource().clear();
+			  
+			  var mapMarker = new ol.Feature({
+				  geometry: new ol.geom.Point(event.coordinate),
+			  });
+			  
+			  vec.getSource().addFeature(mapMarker);
+			  
+			  this.moveMarker(event.coordinate);
+		  });
+
+      
 	
         
     this.ucitajSlobodneMenadzere();
   },
   methods: {
+	 convertToMyCoordinates : function(lonLatCoordinates){
+			fetch(
+				"http://nominatim.openstreetmap.org/reverse?format=json&lon=" + lonLatCoordinates[0] + "&lat=" + lonLatCoordinates[1]
+	      		).then(response => { return response.json(); }).then(json => 
+			  	{
+				  let adresa = json.address;
+				  this.objekat.lokacija.mjesto = adresa.village || adresa.town || adresa.city;
+				  this.objekat.lokacija.postanskiBroj = adresa.postcode;
+				  this.objekat.lokacija.broj = adresa.house_number;
+				  this.objekat.lokacija.ulica = adresa.road;
+				  
+				  let boundingbox = json.boundingbox;
+				  let length = Math.abs(parseFloat(boundingbox[3]) - parseFloat(boundingbox[1]));
+			   	  let width = Math.abs(parseFloat(boundingbox[2]) - parseFloat(boundingbox[0]));
+					
+				  this.objekat.lokacija.geografskaDuzina = width;
+				  this.objekat.lokacija.geografskaSirina = length;
+			  	})
+		},
+		
+		moveMarker: function (lonLatCoordinates) {
+		    const markerSource = this.markerObject.getSource();
+		    markerSource.clear();
+		
+		    const mapMarker = new ol.Feature({
+		      geometry: new ol.geom.Point(lonLatCoordinates)
+		    });
+		
+		    markerSource.addFeature(mapMarker);
+		  },
+ 
+	  
+	  
+	  
     ucitajSlobodneMenadzere() {
        axios
       .get("rest/korisnici/traziSlobodne")
