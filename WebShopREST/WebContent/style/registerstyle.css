@@ -44,3 +44,9 @@
     .containerregister p a {
       color: #0015ff;
     }
+    
+    #map {
+  width: 100%;
+  height: 300px;
+}
+

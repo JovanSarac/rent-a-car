@@ -2,7 +2,14 @@ Vue.component("show-rentacar-administrator", {
 	data: function () {
 		    return {
 				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
-				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
+				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija: {
+          geografskaDuzina: null,
+          geografskaSirina: null,
+          mjesto: null,
+          postanskiBroj: null,
+          ulica: null,
+          broj: null
+        }, logoUrl: null, ocena: null, menadzer: null},
 				 status:null,
 				 komentari: []
 				 
