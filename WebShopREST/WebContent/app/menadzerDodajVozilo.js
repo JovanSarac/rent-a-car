@@ -105,7 +105,7 @@ Vue.component("add-vehicle-manager", {
 			}
 			let cena = document.getElementsByName("cena")[0];
 			cena.style.background = "white";
-			if(!cena.value){
+			if(!cena.value || cena.value <= 0){
 				cena.style.background = "red";
 				uspjeh = false;
 			}
@@ -133,20 +133,20 @@ Vue.component("add-vehicle-manager", {
 			
 			let potrosnja = document.getElementsByName('potrosnja')[0];
 			potrosnja.style.background = "white";
-			if(!potrosnja.value){
+			if(!potrosnja.value || potrosnja.value <0){
 				potrosnja.style.background = "red";
 				uspjeh = false;
 			}
 			
 			let vrata = document.getElementsByName('vrata')[0];
 			vrata.style.background = "white";
-			if(!vrata.value){
+			if(!vrata.value || vrata.value < 0){
 				vrata.style.background = "red";
 				uspjeh = false;
 			}
 			let osobe = document.getElementsByName('osobe')[0];
 			osobe.style.background = "white";
-			if(!osobe.value){
+			if(!osobe.value || osobe.value <= 0){
 				osobe.style.background = "red";
 				uspjeh = false;
 			}

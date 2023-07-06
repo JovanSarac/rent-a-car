@@ -1,8 +1,53 @@
 Vue.component("show-rentacar-kupac", {
 	data: function () {
 		    return {
-				 korisnik: { id: null, korisnickoIme: null, lozinka: null, ime: null, prezime: null, uloga: null, pol: null, datumRodjenja: null, vrstaKupca: null },
-				 objekat: { id: null, naziv: null, vozila: [], radnoVremeOd: null, radnoVremeDo: null, status: null, lokacija:null, logoUrl: null, ocena: null, menadzer: null},
+				 korisnik: { 
+					 id: null, 
+					 korisnickoIme: null, 
+					 lozinka: null, 
+					 ime: null, 
+					 prezime: null, 
+					 uloga: null, 
+					 pol: null, 
+					 datumRodjenja: null, 
+					 vrstaKupca: null 
+				 },
+				 objekat: { 
+					 id: null, 
+					 naziv: null, 
+					 vozila: [], 
+					 radnoVremeOd: null, 
+					 radnoVremeDo: null, 
+					 status: null, 
+					 lokacija: {
+					    id : null,
+					    geografskaDuzina : null,
+					    geografskaSirina : null,
+					    mjesto : null,
+					    postanskiBroj : null,
+					    ulica : null,
+					    broj : null
+					 }, 
+					 logoUrl: null, 
+					 ocena: null,
+					 menadzer: {
+					    id : null,
+					    korisnickoIme : null,
+					    lozinka : null,
+					    ime : null,
+					    prezime : null,
+					    uloga : null,
+					    pol : null,
+					    datumRodjenja : null,
+					    vrstaKupca : {
+					      tipKupca : null,
+					      procenat : null,
+					      brojBodova : null
+					    },
+					    blokiran : null,
+					    korpa : null
+					 }
+				 },
 				 status:null,
 				 komentari: []
 				 
@@ -13,13 +58,12 @@ Vue.component("show-rentacar-kupac", {
       <kupac-menu :korisnik="korisnik"></kupac-menu>
       <p v-on:click="BackClick" style="text-decoration: underline; color: #3498db; cursor: pointer;">Vrati se nazad na prikaz svih rent a car objekata</p>
       <h1>Prikaz rent a car objekta</h1>
-
       <div class="rentacar-box">
         <div class="rentacar-container">
           <img class="logo" :src="objekat.logoUrl" alt="Logo Rent-a-Car objekta">
           <div class="rentacar-details">
             <h2>{{ objekat.naziv }}</h2>
-            <p>Lokacija: {{objekat.lokacija.ulica}} {{objekat.lokacija.broj}}, {{objekat.lokacija.mjesto}} {{objekat.lokacija.postanskiBroj}}</p>
+            <p>Lokacija: {{ objekat.lokacija.ulica }} {{ objekat.lokacija.broj }}, {{ objekat.lokacija.mjesto }} {{ objekat.lokacija.postanskiBroj }}</p>
             <p>Koordinate: {{ objekat.lokacija.geografskaDuzina }}, {{objekat.lokacija.geografskaSirina}}</p>
             <p>Ocjena: {{ objekat.ocena }}</p>
             <p>Radno vrijeme: {{ objekat.radnoVremeOd }} - {{ objekat.radnoVremeDo }}</p>
@@ -30,7 +74,7 @@ Vue.component("show-rentacar-kupac", {
         </div>
        </div>
         
-	   <div class="rentacar-comments-container">
+       <div class="rentacar-comments-container">
         <div class="comments-container" v-if="komentari.length > 0">
           <h1>Komentari</h1>
            <div v-for="komentar in komentari" :key="komentar.id" class="comment-card">
@@ -56,10 +100,11 @@ Vue.component("show-rentacar-kupac", {
           </div>
         </div>
       </div>
+	   
+      
     </div>
 `,
 	mounted(){
-		
 		axios.get('rest/korisnici/prijava')
 		.then(response=>{
 			this.korisnik = response.data;

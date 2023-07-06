@@ -40,12 +40,46 @@ Vue.component("iznajmljivanja-menadzer", {
 		  razlogOdbijanja : null
 	  },
 	  svaStanjaPorudzbina :[],
-	  razlogOdbijanja:null
+	  razlogOdbijanja:null,
+      cenaOd: 0,
+      cenaDo: 0,
+      datumOd: '',
+      datumDo: '',
+      sortiranjeKriterijum : '',
+      strelica : "&#8595;"
     };
   },
   template: `
     <div>
       <menadzer-menu :korisnik="korisnik"></menadzer-menu>
+      <div class="pretragaiznajmljivanja-container">
+	    
+	    <div class="cena">
+		    <label for="cena_od">Cena (od):</label>
+		    <input v-model="cenaOd" type="number" id="cena_od" name="cena_od" placeholder="Unesite minimalnu cenu"><br><br>
+		    <label for="cena_do">Cena (do):</label>
+		    <input v-model="cenaDo" type="number" id="cena_do" name="cena_do" placeholder="Unesite maksimalnu cenu"><br><br>
+	    </div>
+	    
+	    <div class="datumi">
+		    <label for="datum_od">Datum iznajmljivanja (od):</label>
+		    <input v-model="datumOd" type="date" id="datum_od" name="datum_od"><br><br>
+		    
+		    <label for="datum_do">Datum iznajmljivanja (do):</label>
+		    <input v-model="datumDo" type="date" id="datum_do" name="datum_do"><br><br>
+	    </div>
+	    
+	    <div class="sortiranja">
+	        <button v-on:click="dugmeZaPromjenuSortiranja"><span id="strelica" v-html="strelica"></span></button>
+	        <select v-model="sortiranjeKriterijum" >
+	          <option value="" disabled selected>Sortiraj po parametru</option>
+	          <option value="cena">Ceni</option>
+	          <option value="datum">Datumu iznajmljivanja</option>
+	  		</select>
+  		</div>
+        <button v-on:click="pretraziIznajmljivanja">Traži</button>
+      </div>
+      
       <div class="porudzbine-container">
         <h2>Prikaz porudžbina za Vas <i>{{objekat.naziv}}</i> objekat:</h2>
         <div v-for="porudzbina in porudzbine" :key="porudzbina.idNarudzbe" class="porudzbina-card">
@@ -350,8 +384,48 @@ Vue.component("iznajmljivanja-menadzer", {
 			  });
 
 		});
-	}
+	},
+	
+	
+	pretraziIznajmljivanja(){
+	  axios.get('rest/porudzbine/traziZaMenadzera', {
+		  params :{
+	        cenaOd: this.cenaOd,
+	        cenaDo: this.cenaDo,
+	        datumOd: this.datumOd,
+	        datumDo: this.datumDo,
+	        objekatId: this.objekat.id
+	  	  }
+	  }).then(response =>{
+		  let rezultati = response.data;
+		  if(this.strelica === "&#8595;"){
+			  if (this.sortiranjeKriterijum === 'cena') {
+		        rezultati.sort((a, b) => b.cena - a.cena);
+		      } else if (this.sortiranjeKriterijum === 'datum') {
+		        rezultati.sort((a, b) => b.datumIznajmljivanja.localeCompare(a.datumIznajmljivanja));
+		      }
+		  }else{
+			  if (this.sortiranjeKriterijum === 'cena') {
+		        rezultati.sort((a, b) => a.cena - b.cena);
+		      } else if (this.sortiranjeKriterijum === 'datum') {
+		        rezultati.sort((a, b) => a.datumIznajmljivanja.localeCompare(b.datumIznajmljivanja));
+		      }
+		  }
+		  this.porudzbine = rezultati;
+	  }).catch((error) => {console.error(error);});
+  },
+  
+  dugmeZaPromjenuSortiranja(){	  
+	    if (this.strelica === "&#8595;") {
+	      this.strelica = "&#8593;";
+	    } else if (this.strelica === "&#8593;") {
+	      this.strelica = "&#8595;";
+	    }
+	  	
+  }
+	
 	
   }
+  
   
 });
