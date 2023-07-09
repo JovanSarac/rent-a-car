@@ -187,6 +187,9 @@ Vue.component("novi-objekat", {
   		map.on('click', (event) => {
 			  var cor = ol.proj.toLonLat(event.coordinate);
 			  this.convertToMyCoordinates(cor);
+			  this.objekat.lokacija.geografskaDuzina = cor[0];
+			  this.objekat.lokacija.geografskaSirina = cor[1];
+			  
 			  vec.getSource().clear();
 			  
 			  var mapMarker = new ol.Feature({
@@ -219,8 +222,7 @@ Vue.component("novi-objekat", {
 				  let length = Math.abs(parseFloat(boundingbox[3]) - parseFloat(boundingbox[1]));
 			   	  let width = Math.abs(parseFloat(boundingbox[2]) - parseFloat(boundingbox[0]));
 					
-				  this.objekat.lokacija.geografskaDuzina = length;
-				  this.objekat.lokacija.geografskaSirina = width;
+				  
 			  	})
 		},
 		
