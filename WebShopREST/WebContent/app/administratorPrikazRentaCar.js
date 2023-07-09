@@ -75,6 +75,8 @@ Vue.component("show-rentacar-administrator", {
           </div>
         </div>
       </div>
+      
+      <div id="map"></div>
 
 	  <div class="rentacar-comments-container">
         <div class="comments-container" v-if="komentari.length > 0">
@@ -134,6 +136,42 @@ Vue.component("show-rentacar-administrator", {
 			}else{
 				this.status = "Ne radi"
 			}
+			const map = new ol.Map({
+			  target: 'map',
+			  layers: [
+			    new ol.layer.Tile({
+			      source: new ol.source.OSM(),
+			    })
+			  ],
+			  view: new ol.View({
+			    center: ol.proj.fromLonLat([this.objekat.lokacija.geografskaDuzina, this.objekat.lokacija.geografskaSirina]),
+			    zoom: 17,
+			  })
+			});
+			
+			const marker = new ol.layer.Vector({
+		          source: new ol.source.Vector({
+		            features: [
+		              new ol.Feature({
+		                geometry: new ol.geom.Point(
+		                  ol.proj.fromLonLat([this.objekat.lokacija.geografskaDuzina, this.objekat.lokacija.geografskaSirina])
+		                )
+		              })
+		            ]
+		          }),
+		          style: new ol.style.Style({
+		            image: new ol.style.Icon({
+		              src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+		              anchor: [0.5, 1]
+		            })
+		          })
+		        });
+		        map.addLayer(marker);
+
+			
+			
+			
+			
 			console.log(this.objekat);
 		})
 	    
